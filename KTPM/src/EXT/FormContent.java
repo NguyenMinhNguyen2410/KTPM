@@ -34,12 +34,11 @@ public class FormContent extends JPanel {
     protected JPanel TimKiem,Table;
     //Tạo bảng với định dạng MyTable
     protected MyTable table;
-    //Biến chứa header của table
-    protected String header[];
+    
     //Tạo cửa sổ khi thêm hoặc sửa
     protected JDialog Them_Frame,Sua_Frame;
     //Tạo cờ hiệu cho việc các Dialog có được tắt đúng cách hay không
-    private int cohieu = 0;
+    protected  int cohieu = 0;
     public FormContent(){
         initcomponent();
     }
@@ -92,8 +91,7 @@ public class FormContent extends JPanel {
         JPanel panel =new JPanel(null);
         //Tạo đối tượng cho table
         table= new MyTable();
-        //Tạo tiêu đề bảng
-        table.setHeaders(header);
+        
         //Hàm đọc database
         docDB();
         //Set kích thước và vị trí
@@ -123,6 +121,19 @@ public class FormContent extends JPanel {
         Them_Frame.setUndecorated(true);
         Them_Frame.setVisible(true);
         
+        //Tạo nút lưu
+        JButton Luu = new JButton("Lưu");
+        Luu.setBackground(Color.decode("#90CAF9"));
+        Luu.setBounds(100, 420, 100, 50);
+        //Sự kiện khi click
+        Luu.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent evt) {
+                luuThem_Frame();
+            }
+        });
+        Them_Frame.add(Luu);
+        
         //Tạo nút thoát
         JButton Thoat = new JButton("Thoát");
         Thoat.setBackground(Color.decode("#90CAF9"));
@@ -151,6 +162,9 @@ public class FormContent extends JPanel {
             }
         });
     }
+    protected void luuThem_Frame(){
+        
+    }
     //Tạo hàm này dùng để clear các textfield trong Them_Frame
     protected void clearThem_Frame(){
         
@@ -170,6 +184,19 @@ public class FormContent extends JPanel {
         //Tắt thanh công cụ mặc định
         Sua_Frame.setUndecorated(true);
         Sua_Frame.setVisible(true);
+        
+        //Tạo nút lưu
+        JButton Luu = new JButton("Lưu");
+        Luu.setBackground(Color.decode("#90CAF9"));
+        Luu.setBounds(100, 420, 100, 50);
+        //Sự kiện khi click
+        Luu.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent evt) {
+                luuSua_Frame();
+            }
+        });
+        Sua_Frame.add(Luu);
         
         //Tạo nút thoát
         JButton Thoat = new JButton("Thoát");
@@ -198,6 +225,9 @@ public class FormContent extends JPanel {
                 }
             }
         });
+    }
+    protected void luuSua_Frame(){
+        
     }
     //Tạo hàm này dùng để clear các textfield trong Sua_Frame
     protected void clearSua_Frame(){
@@ -346,7 +376,6 @@ public class FormContent extends JPanel {
         LamMoi.setFont(new Font("Segoe UI", 0, 14));
         LamMoi.setBorder(BorderFactory.createLineBorder(Color.decode("#BDBDBD"), 1));
         LamMoi.setBackground(Color.decode("#90CAF9"));
-        LamMoi.setBounds(965, 10, 110, 30);
         LamMoi.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {

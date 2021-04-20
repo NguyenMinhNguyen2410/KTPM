@@ -28,7 +28,7 @@ public class BUSChiTietDonBan {
                 ds=DAO.docDB();
             }
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Không đọc được dữ liệu bảng taikhoan BUS");
+            JOptionPane.showMessageDialog(null, "Không đọc được dữ liệu bảng chitietdonban BUS");
         }
     }
     public void them(DTOChiTietDonBan DTO) //cần ghi lại khi qua class khác
@@ -37,11 +37,11 @@ public class BUSChiTietDonBan {
             DAO.them(DTO);//ghi vào database
             ds.add(DTO);//cập nhật arraylist
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Không thêm được dữ liệu bảng taikhoan BUS");
+            JOptionPane.showMessageDialog(null, "Không thêm được dữ liệu bảng chitietdonban BUS");
         }
     }
 
-    public void xoa(String ID, int index) //cần ghi lại khi qua class khác
+    public void xoa(int ID, int index) //cần ghi lại khi qua class khác
     {
         try{
             DAO.xoa(ID); // Xóa dữ liệu trên database
@@ -49,7 +49,7 @@ public class BUSChiTietDonBan {
                 ds.remove(index);
     
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Không xóa được dữ liệu bảng taikhoan BUS");
+            JOptionPane.showMessageDialog(null, "Không xóa được dữ liệu bảng chitietdonban BUS");
         }
     }
 }

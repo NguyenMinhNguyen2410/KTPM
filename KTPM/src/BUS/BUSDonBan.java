@@ -6,6 +6,7 @@
 package BUS;
 
 import DAO.DAODonBan;
+import DTO.DTOChiTietDonBan;
 import DTO.DTODonBan;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -26,6 +27,12 @@ public class BUSDonBan {
             {
                 ds=new ArrayList<>();
                 ds=DAO.docDB();
+                if(BUSChiTietDonBan.ds==null)
+                {
+                    BUSChiTietDonBan BUS=new BUSChiTietDonBan();
+                    BUS.docDB();
+                }
+                tinhTongTien();
             }
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Không đọc được dữ liệu bảng taikhoan BUS");
@@ -41,7 +48,7 @@ public class BUSDonBan {
         }
     }
     
-    public void xoa(String ID, int index) //cần ghi lại khi qua class khác
+    public void xoa(int ID, int index) //cần ghi lại khi qua class khác
     {
         try{
             DAO.xoa(ID); // Xóa dữ liệu trên database
@@ -50,6 +57,16 @@ public class BUSDonBan {
     
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Không xóa được dữ liệu bảng taikhoan BUS");
+        }
+    }
+    public void tinhTongTien(){
+        for(DTODonBan DTO:ds)
+        {
+            int Tong=0;
+            for(DTOChiTietDonBan DTO1:BUSChiTietDonBan.ds)
+                if(DTO1.getIDDonBan()==DTO.getIDDonBan())
+                    Tong+=DTO1.getDonGia();
+            DTO.setTongTien(Tong);
         }
     }
 }

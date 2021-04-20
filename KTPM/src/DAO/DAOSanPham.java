@@ -35,6 +35,7 @@ public class DAOSanPham {
                     DTO.setSoLuong(result.getInt("SoLuong"));
                     DTO.setDong(result.getString("Dong"));
                     DTO.setChiTiet(result.getString("ChiTiet"));
+                    DTO.setHinhAnh(result.getString("HinhAnh"));
                     ds.add(DTO);
                 }
             }
@@ -52,6 +53,7 @@ public class DAOSanPham {
             qry = qry + "," + "'" + DTO.getSoLuong()+ "'";
             qry = qry + "," + "'" + DTO.getDong()+ "'";
             qry = qry + "," + "'" + DTO.getChiTiet()+ "'";
+            qry = qry + "," + "'" + DTO.getHinhAnh()+ "'";
             qry = qry + ")";
             connection.getStatement();
             connection.ExecuteUpdate(qry);
@@ -62,7 +64,7 @@ public class DAOSanPham {
         }
     }
 
-    public void xoa(String ID) { //cần ghi lại khi qua class khác
+    public void xoa(int ID) { //cần ghi lại khi qua class khác
         
         try {
             String qry = "DELETE FROM sanpham";
@@ -83,6 +85,7 @@ public class DAOSanPham {
             qry = qry + ",SoLuong=" + "'" + DTO.getSoLuong()+ "'";
             qry = qry + ",Dong=" + "'" + DTO.getDong()+ "'";
             qry = qry + ",ChiTiet=" + "'" + DTO.getChiTiet()+ "'";
+            qry = qry + ",HinhAnh=" + "'" + DTO.getHinhAnh()+ "'";
             qry = qry + " " + "where IDSanPham='" + DTO.getIDSanPham()+ "'";
             connection.getStatement();
             connection.ExecuteUpdate(qry);

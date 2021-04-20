@@ -64,7 +64,7 @@ public class DAOKhuyenMai {
         }
     }
 
-    public void xoa(String ID) { //cần ghi lại khi qua class khác
+    public void xoa(int ID) { //cần ghi lại khi qua class khác
         
         try {
             String qry = "DELETE FROM khuyenmai";

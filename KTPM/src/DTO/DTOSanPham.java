@@ -11,19 +11,31 @@ package DTO;
  */
 public class DTOSanPham {
     private int IDSanPham,SoLuong;
-    private String TenSanPham,Dong,ChiTiet;
+    private String TenSanPham,Dong,ChiTiet,HinhAnh;
 
-    public DTOSanPham(int IDSanPham, int SoLuong, String TenSanPham, String Dong, String ChiTiet) {
+    public DTOSanPham(int IDSanPham, int SoLuong, String TenSanPham, String Dong, String ChiTiet, String HinhAnh) {
         this.IDSanPham = IDSanPham;
         this.SoLuong = SoLuong;
         this.TenSanPham = TenSanPham;
         this.Dong = Dong;
         this.ChiTiet = ChiTiet;
+        this.HinhAnh = HinhAnh;
     }
+
+    
 
     public DTOSanPham() {
     }
 
+    public String getHinhAnh() {
+        return HinhAnh;
+    }
+
+    public void setHinhAnh(String HinhAnh) {
+        this.HinhAnh = HinhAnh;
+    }
+
+    
     public int getIDSanPham() {
         return IDSanPham;
     }

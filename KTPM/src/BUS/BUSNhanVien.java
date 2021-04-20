@@ -52,7 +52,7 @@ public class BUSNhanVien {
         }
     }
 
-    public void xoa(String ID, int index) //cần ghi lại khi qua class khác
+    public void xoa(int ID, int index) //cần ghi lại khi qua class khác
     {
         try{
             DAO.xoa(ID); // Xóa dữ liệu trên database

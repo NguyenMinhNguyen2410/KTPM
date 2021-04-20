@@ -22,7 +22,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
+import DTO.*;
 /**
  *
  * @author nguye
@@ -100,7 +100,100 @@ public class MyTable extends JTable {
     public void addRow(String[] data) {
         tbModel.addRow(data);
     }
-    
+    public void addRow(DTOSanPham data) {
+        addRow(new String[]{
+                    String.valueOf(data.getIDSanPham()),
+                    data.getTenSanPham(),
+                    String.valueOf(data.getSoLuong()),
+                    data.getDong(),
+                    data.getChiTiet()
+                });
+    }
+    public void addRow(DTOChiTietDonBan data) {
+        addRow(new String[]{
+                    data.getIDKhung(),
+                    String.valueOf(data.getIDSanPham()),
+                    String.valueOf(data.getDonGia()),
+                    data.getMau()
+                });
+    }
+    public void addRow(DTOChiTietDonNhap data) {
+        addRow(new String[]{
+                    data.getIDKhung(),
+                    String.valueOf(data.getIDSanPham()),
+                    String.valueOf(data.getDonGia()),
+                    data.getMau()
+                });
+    }
+    public void addRow(DTODonBan data) {
+        addRow(new String[]{
+                    String.valueOf(data.getIDDonBan()),
+                    String.valueOf(data.getIDKhachHang()),
+                    String.valueOf(data.getIDNhanVien()),
+                    String.valueOf(data.getIDKhuyenMai()),
+                    String.valueOf(data.getNgayBan()),
+                    String.valueOf(data.getTongTien())
+                });
+    }
+    public void addRow(DTODonNhap data) {
+        addRow(new String[]{
+                    String.valueOf(data.getIDDonNhap()),
+                    String.valueOf(data.getIDNhanVien()),
+                    String.valueOf(data.getNgayNhap()),
+                    String.valueOf(data.getTongTien())
+                });
+    }
+    public void addRow(DTOKhachHang data) {
+        addRow(new String[]{
+                    String.valueOf(data.getIDKhachHang()),
+                    data.getHoTen(),
+                    String.valueOf(data.getNgaySinh()),
+                    data.getSDT(),
+                    data.getCMND()
+                });
+    }
+    public void addRow(DTONhanVien data) {
+        addRow(new String[]{
+                    String.valueOf(data.getIDNhanVien()),
+                    data.getHoTen(),
+                    String.valueOf(data.getNgaySinh()),
+                    data.getSDT(),
+                    data.getCMND()
+                });
+    }
+    public void addRow(DTOKhuyenMai data) {
+        addRow(new String[]{
+                    String.valueOf(data.getIDKhuyenMai()),
+                    data.getTenChuongTrinh(),
+                    String.valueOf(data.getChietKhau()),
+                    data.getMoTaChuongTrinh(),
+                    String.valueOf(data.getNgayBatDau()),
+                    String.valueOf(data.getNgayKetThuc())
+                });
+    }
+    public void addRow(DTOKhung data) {
+        addRow(new String[]{
+                    data.getIDKhung(),
+                    String.valueOf(data.getIDSanPham()),
+                    String.valueOf(data.getDonGia()),
+                    data.getMau()
+                });
+    }
+    public void addRow(DTOPhanQuyen data) {
+        addRow(new String[]{
+                    String.valueOf(data.getIDPhanQuyen()),
+                    data.getTenQuyen(),
+                    data.getMoTaQuyen()
+                });
+    }
+    public void addRow(DTOTaiKhoan data) {
+        addRow(new String[]{
+                    data.getTaiKhoan(),
+                    data.getMatKhau(),
+                    String.valueOf(data.getIDNhanVien()),
+                    String.valueOf(data.getIDPhanQuyen())
+                });
+    }
     public JTable getTable() {
         return tb;
     }
