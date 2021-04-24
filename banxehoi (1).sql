@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th3 29, 2021 lúc 11:23 AM
+-- Thời gian đã tạo: Th4 24, 2021 lúc 02:11 PM
 -- Phiên bản máy phục vụ: 10.4.16-MariaDB
 -- Phiên bản PHP: 7.4.12
 
@@ -152,7 +152,8 @@ CREATE TABLE `sanpham` (
   `TenSanPham` varchar(30) NOT NULL,
   `SoLuong` int(11) NOT NULL,
   `Dong` varchar(20) NOT NULL,
-  `ChiTiet` varchar(200) NOT NULL
+  `ChiTiet` varchar(200) NOT NULL,
+  `HinhAnh` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
