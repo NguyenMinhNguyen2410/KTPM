@@ -4,15 +4,18 @@
  * and open the template in the editor.
  */
 package GUI;
-
+import BUS.PhanQuyenBUS;
+import BUS.TaiKhoanBUS;
 import BUS.Tool;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -24,14 +27,16 @@ import javax.swing.SwingConstants;
 
 /**
  *
- * @author nguye
+ * @author Nguyen
  */
-public class GUIMenu extends JFrame {
-//    private String arr_listmotaQuyen[]={"QLBanHang","QLNhapHang","QLMonAn","QLNguyenLieu","QLCongThuc","QLHoaDon","QLHDNhap",
-//        "QLKhuyenMai","QLKhachHang","QLNhanVien","QLNhaCungCap","QLTaiKhoan","QLPhanQuyen","QLThongKe"};
+//class mở đầu khi form đăng nhập được gọi , nơi sườn của cả bài
+public class GUImenu extends JFrame{
+    
+    private String arr_listmotaQuyen[]={"QLBanHang","QLNhapHang","QLMonAn","QLNguyenLieu","QLCongThuc","QLHoaDon","QLHDNhap",
+        "QLKhuyenMai","QLKhachHang","QLNhanVien","QLNhaCungCap","QLTaiKhoan","QLPhanQuyen","QLThongKe"};
     //Tạo mảng menuleft cho form
-    private String arr_listmenu[]={"Bán hàng","Nhập hàng","Sản phẩm","Số khung","Đơn bán","Đơn nhập","Khách hàng","Nhân viên","Khuyến mãi","Tài khoản",
-        "Phân quyền"};
+    private String arr_listmenu[]={"Bán hàng","Nhập hàng","Món ăn","Nguyên liệu","Công thức","Hóa đơn","Hóa đơn nhập",
+        "Khuyến mãi","Khách Hàng","Nhân viên","Nhà cung cấp","Tài khoản","Phân quyền","Thống kê"};
     //Tạo mảng icon cho menuleft
     private String arr_icon[]={"src/Images/Icon/sell1-30.png","src/Images/Icon/nhaphang-30.png","src/Images/Icon/monan-30.png",
         "src/Images/Icon/nguyenlieu-30.png","src/Images/Icon/congthuc-30.png","src/Images/Icon/hoadon-30.png",
@@ -80,7 +85,7 @@ public class GUIMenu extends JFrame {
     private JLabel title;
     //Tạo Panel chứa menu
     private JPanel menu;
-    public GUIMenu() throws Exception{
+    public GUImenu() throws Exception{
         initcomponent();
     }
     //Tạo kích thước và hình dáng của form
@@ -127,8 +132,8 @@ public class GUIMenu extends JFrame {
         logo.addMouseListener(new MouseAdapter(){
             @Override
             public void mousePressed(MouseEvent evt){
-                title.setText("QUẢN LÝ BÁN XE HƠI");
-            }   
+                title.setText("QUẢN LÝ BÁN THỨC ĂN NHANH");
+            }
         });
         menu.add(logo);
         menu.setBackground(Color.decode("#64B5F6"));       
@@ -200,15 +205,15 @@ public class GUIMenu extends JFrame {
             //thêm mới
             //lấy mã quyền của user đang hiện hành
 //            String maQuyen =TaiKhoanBUS.timKiemMaQuyenTheoTenTaiKhoan(Tool.maNVHienHanh);
-//            String maQuyen =TaiKhoanBUS.timKiemMaQuyenTheoTenTaiKhoan(LoginGUI.taiKhoan);
+            String maQuyen =TaiKhoanBUS.timKiemMaQuyenTheoTenTaiKhoan(LoginGUI.taiKhoan);
             //lấy mô tả quyền của user đang hiện hành
-//            String moTaQuyen = PhanQuyenBUS.timMoTaQuyenTheoIDPhanQuyen(maQuyen);
+            String moTaQuyen = PhanQuyenBUS.timMoTaQuyenTheoIDPhanQuyen(maQuyen);
             //tìm kiếm trong mô tả quyền có cái quyền QL nào thì add nó vào
-//            if(timKiemMotQuyenTrongMoTaQuyen(moTaQuyen, arr_listmotaQuyen[i]))
-//            {
+            if(timKiemMotQuyenTrongMoTaQuyen(moTaQuyen, arr_listmotaQuyen[i]))
+            {
                 menu.add(pn_listmenu[i]);
                 y+=50;
-//            }
+            }
             //kết thúc thêm mới
             
               
@@ -227,41 +232,46 @@ public class GUIMenu extends JFrame {
             switch(i){
                 case 0: 
                     GUIBanHang BanHang=new GUIBanHang();
-                    pn_content[i]=BanHang; break;        
+                    pn_content[i]=BanHang;    break;                  
                 case 1: 
                     GUINhapHang NhapHang=new GUINhapHang();
-                    pn_content[i]=NhapHang; break;        
+                    pn_content[i]=NhapHang; break;
                 case 2: 
-                    GUISanPham SanPham=new GUISanPham();
-                    pn_content[i]=SanPham; break;        
-                case 3: 
-                    GUIKhung Khung=new GUIKhung();
-                    pn_content[i]=Khung; break;        
-                case 4: 
-                    GUIDonBan DonBan=new GUIDonBan();
-                    pn_content[i]=DonBan; break;        
-                case 5: 
-                    GUIDonNhap DonNhap=new GUIDonNhap();
-                    pn_content[i]=DonNhap; break;        
-                case 6: 
-                    GUIKhachHang KhachHang=new GUIKhachHang();
-                    pn_content[i]=KhachHang; break;        
-                case 7: 
-                    GUINhanVien NhanVien=new GUINhanVien();
-                    pn_content[i]=NhanVien; break;        
-                case 8: 
+                    GUIMonAn MonAn=new GUIMonAn();
+                    pn_content[i]=MonAn;    break;                  
+                case 3:
+                    GUINguyenLieu NguyenLieu=new GUINguyenLieu();
+                    pn_content[i]=NguyenLieu; break;
+                case 4:
+                    GUICongThuc CongThuc=new GUICongThuc();
+                    pn_content[i]=CongThuc; break;
+                case 5:
+                    GUIHoaDon HoaDon=new GUIHoaDon();
+                    pn_content[i]=HoaDon; break;
+                case 6:
+                    GUIHoaDonNhap HoaDonNhap=new GUIHoaDonNhap();
+                    pn_content[i]=HoaDonNhap; break;
+                case 7:
                     GUIKhuyenMai KhuyenMai=new GUIKhuyenMai();
-                    pn_content[i]=KhuyenMai; break; 
-                case 9: 
+                    pn_content[i]=KhuyenMai; break;
+                case 8:
+                    GUIKhachHang KhachHang=new GUIKhachHang();
+                    pn_content[i]=KhachHang; break;                        
+                case 9:
+                    GUINhanVien NhanVien=new GUINhanVien();
+                    pn_content[i]=NhanVien; break;                
+                case 10:
+                    GUINhaCungCap NhaCungCap=new GUINhaCungCap();
+                    pn_content[i]=NhaCungCap; break;              
+                case 11:
                     GUITaiKhoan TaiKhoan=new GUITaiKhoan();
-                    pn_content[i]=TaiKhoan; break;        
-                case 10: 
+                    pn_content[i]=TaiKhoan; break;
+                case 12:
                     GUIPhanQuyen PhanQuyen=new GUIPhanQuyen();
-                    pn_content[i]=PhanQuyen; break;        
-//                case 11: 
-//                    GUIThongKe ThongKe=new GUIThongKe();
-//                    pn_content[i]=ThongKe; break;        
-                
+                    pn_content[i]=PhanQuyen; break;
+                case 13:
+                    GUIThongKe ThongKe=new GUIThongKe();
+                    pn_content[i]=ThongKe; break;
                 
             }
             
@@ -276,7 +286,7 @@ public class GUIMenu extends JFrame {
         JPanel header=new JPanel(null);
         header.setBackground(Color.black);
         
-        title=new JLabel("QUẢN LÝ BÁN XE HƠI");
+        title=new JLabel("QUẢN LÝ BÁN THỨC ĂN NHANH");
         title.setBounds(width*50/100, 0, 300, 30);
         title.setFont(new Font("Segoe UI", 0, 18));
         title.setForeground(Color.white);
@@ -288,7 +298,7 @@ public class GUIMenu extends JFrame {
         logout.addMouseListener(new MouseAdapter(){
             @Override
             public void mousePressed(MouseEvent evt){
-//                logout();
+                logout();
             }
         });
         header.add(logout);
@@ -317,5 +327,45 @@ public class GUIMenu extends JFrame {
         
         return header;
     } 
-    
+    //Hàm dùng để lọc lại thanh menuleft nếu quyền chưa đủ
+    public boolean timKiemMotQuyenTrongMoTaQuyen(String moTaQuyen, String motQuyen)
+    {
+        if(moTaQuyen.indexOf(motQuyen) != -1)
+        {
+            return true;
+        }
+        return false;
+    }
+    //Hàm sự kiện đăng xuất
+    private void logout() {
+     
+        if (LoginGUI.taiKhoan!=null){
+        int reply = JOptionPane.showConfirmDialog(getRootPane(),
+                "Bạn có chắc muốn đăng xuất khỏi "+ LoginGUI.taiKhoan +"?", "Chú ý",
+                JOptionPane.YES_NO_OPTION);
+
+        if (reply == JOptionPane.YES_OPTION) {
+            new LoginGUI().setVisible(true);
+            this.dispose();
+        }
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
