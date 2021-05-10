@@ -62,6 +62,8 @@ public class GUIHoaDon extends GUIFormContent {
     private HoaDonBUS BUS=new HoaDonBUS();
     //Tạo cờ hiệu cho việc các Dialog có được tắt đúng cách hay không
     private int cohieu=0;
+    JButton ChiTiet;
+    GUIFormChon a;
     public GUIHoaDon(){
         super();
     }
@@ -336,7 +338,7 @@ public class GUIHoaDon extends GUIFormContent {
         });
         TimKiem.add(LamMoi);                
         //Nút xem chi tiết hóa đơn
-        JButton ChiTiet=new JButton("Chi tiết");
+        ChiTiet=new JButton("Chi tiết");
         ChiTiet.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/xemchitiet-30.png")));
         ChiTiet.setFont(new Font("Segoe UI", 0, 14));
         ChiTiet.setBorder(BorderFactory.createLineBorder(Color.decode("#BDBDBD"), 1));        
@@ -345,10 +347,10 @@ public class GUIHoaDon extends GUIFormContent {
         ChiTiet.addMouseListener(new MouseAdapter(){
             @Override
             public void mousePressed(MouseEvent evt){
-                GUIFormChon a = null;
+                a = null;
                 int i=table_HoaDon.tb.getSelectedRow();
                 if (i == -1) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 hóa đơn");
+                    JOptionPane.showMessageDialog(ChiTiet, "Vui lòng chọn 1 hóa đơn");
                     return;
                 } 
                 String MaHoaDon=String.valueOf(table_HoaDon.tbModel.getValueAt(i,0));
@@ -365,6 +367,11 @@ public class GUIHoaDon extends GUIFormContent {
         
         return TimKiem;
     }
+
+    public JButton getChiTiet() {
+        return ChiTiet;
+    }
+    
     private void addDocumentListener(JTextField tx) { 
         // https://stackoverflow.com/questions/3953208/value-change-listener-to-jtextfield
         tx.getDocument().addDocumentListener(new DocumentListener() {
