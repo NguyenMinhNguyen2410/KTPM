@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package EXT;
 
+import GUI.GUIMenu;
 import java.awt.Color;
 import javax.swing.JPanel;
 
@@ -13,10 +14,10 @@ import javax.swing.JPanel;
  * @author Nguyen
  */
 //Class này tạo bố cục sẵn cho form bán hàng và nhập hàng
-public class GUIFormBanNhap extends JPanel{
+public class FormBanNhap extends JPanel{
     //Tạo các panel
     private JPanel pDanhSach,pThongTin,pThanhToan,pCongCu;
-    public GUIFormBanNhap(){
+    public FormBanNhap(){
         initcomponent();
     }
     public void initcomponent(){
@@ -24,23 +25,23 @@ public class GUIFormBanNhap extends JPanel{
         
         //Dùng để chứa Panel có danh sách món ăn , nguyên liệu
         pDanhSach=panelDanhSach();
-        pDanhSach.setBounds(0, 0, GUImenu.width_content*50/100,GUImenu.height );
+        pDanhSach.setBounds(0, 0, GUIMenu.width_content*50/100,GUIMenu.height );
         add(pDanhSach);
         //Dùng để chứa Panel có thông tin hóa đơn , hóa đơn nhập 
         pThongTin=panelThongTin();
-        pThongTin.setBounds(GUImenu.width_content*51/100, 0,GUImenu.width_content*49/100 ,250 );
+        pThongTin.setBounds(GUIMenu.width_content*51/100, 0,GUIMenu.width_content*49/100 ,250 );
         add(pThongTin);
         //Dùng để chứa các món ăn đã order hoặc các nguyên liệu được yêu cầu
         pThanhToan=panelThanhToan();
-        pThanhToan.setBounds(GUImenu.width_content*51/100, 270, GUImenu.width_content*49/100,430 );
+        pThanhToan.setBounds(GUIMenu.width_content*51/100, 270, GUIMenu.width_content*49/100,430 );
         add(pThanhToan);
         //Chứa nút thanh toán và xóa các order và yêu cầu
         pCongCu=panelCongCu();
-        pCongCu.setBounds(GUImenu.width_content*51/100, 700, GUImenu.width_content*49/100,50 );
+        pCongCu.setBounds(GUIMenu.width_content*51/100, 700, GUIMenu.width_content*49/100,50 );
         add(pCongCu);
         
         setVisible(true);
-        setSize(GUImenu.width_content, GUImenu.height);
+        setSize(GUIMenu.width_content, GUIMenu.height);
     }
     protected JPanel panelDanhSach(){
         JPanel panel=new JPanel();

@@ -8,6 +8,8 @@ package GUI;
 import BUS.NguyenLieuBUS;
 import BUS.Tool;
 import DTO.NguyenLieuDTO;
+import EXT.FormContent;
+import EXT.MyTable;
 import Excel.DocExcel;
 import Excel.XuatExcel;
 import java.awt.Color;
@@ -46,24 +48,17 @@ import javax.swing.plaf.FontUIResource;
  *
  * @author Nguyen
  */
-public class GUINguyenLieu extends GUIFormContent {
-
+public class GUINguyenLieu extends FormContent {
     //Nút lấy tên ảnh
     private JButton btnFileAnh;
     //Tạo mảng tiêu đề 
-    private static String array_NguyenLieu[] = {"Mã", "Tên", "Đơn giá", "Hình ảnh", "Loại", "Đơn vị tính", "Số lượng"};
-    //Tạo bảng nguyên liệu
-    public GUIMyTable table_NguyenLieu;
-    //Tạo Dialog để thêm nguyên liệu
-    private static JDialog Them;
-    //Tạo Dialog để sửa nguyên liệu
-    private static JDialog Sua;
+    private static String[] header = {"Mã", "Tên", "Đơn giá", "Hình ảnh", "Loại", "Đơn vị tính", "Số lượng"};
     //Tạo nhãn trong có Dialog thêm sửa
-    private final JLabel label_NguyenLieu[] = new JLabel[array_NguyenLieu.length];
+    private final JLabel label_NguyenLieu[] = new JLabel[header.length];
     //Phần textfield của thêm
-    private JTextField txt_NguyenLieu_Them[] = new JTextField[array_NguyenLieu.length];
+    private JTextField txt_NguyenLieu_Them[] = new JTextField[header.length];
     //Phần textfield của sửa
-    private JTextField txt_NguyenLieu_Sua[] = new JTextField[array_NguyenLieu.length];
+    private JTextField txt_NguyenLieu_Sua[] = new JTextField[header.length];
     //field thông tin khi click row
     private JTextField txMaMA, txTenMA, txDonGia, txSoLuong;
     //Tạo nhãn chứa hình ảnh
@@ -73,8 +68,7 @@ public class GUINguyenLieu extends GUIFormContent {
     //Các textfield trong thanh tìm kiếm
     public JTextField Ten, Tu_DonGia, Den_DonGia, Tu_SoLuong, Den_SoLuong;
     //Tạo đối tượng cho BUS
-    NguyenLieuBUS BUS = new NguyenLieuBUS();
-    private int cohieu = 0;
+    private final NguyenLieuBUS BUS = new NguyenLieuBUS();
     private JComboBox cbDonViTinh_Them,cbDonViTinh_Sua;
     private String array_DonViTinh[]={"Kg","Quả","Bịch"};
     public GUINguyenLieu() {
@@ -82,55 +76,26 @@ public class GUINguyenLieu extends GUIFormContent {
     }
 
     @Override
-    protected JPanel Table() {
-        JPanel panel = new JPanel(null);
-        //Tạo đối tượng cho table_MonAn
-        table_NguyenLieu = new GUIMyTable();
-        //Tạo tiêu đề bảng
-        table_NguyenLieu.setHeaders(array_NguyenLieu);
-        //Hàm đọc database
-        docDB();
-        //Set kích thước và vị trí
-        table_NguyenLieu.pane.setPreferredSize(new Dimension(GUImenu.width_content * 90 / 100, 300));
-        table_NguyenLieu.setBounds(0, 0, GUImenu.width_content, 300);
-        panel.add(table_NguyenLieu);
-        //Tạo phần show thông tin
-        Show = Show();
-        Show.setBounds(0, 300, GUImenu.width_content, 300);
-        panel.add(Show);
-
-        return panel;
-    }
-
-    private void Them_Frame() {
-        JFrame f = new JFrame();
-        cohieu = 0;
-        Them = new JDialog(f);
-        Them.setLayout(null);
-        Them.setSize(500, 500);
-        //Set vị trí của Dialog
-        //https://stackoverflow.com/questions/2442599/how-to-set-jframe-to-appear-centered-regardless-of-monitor-resolution
-        Them.setLocationRelativeTo(null);
-        //Tắt thanh công cụ mặc định
-        Them.setUndecorated(true);
+    protected void Them_click(MouseEvent evt) {
+        super.Them_click(evt);
         //Tạo tiêu đề và set hình thức
         JLabel Title = new JLabel("Thêm nguyên liệu");
         Title.setFont(new Font("Time New Roman", Font.BOLD, 21));
         Title.setForeground(Color.decode("#FF4081"));
         Title.setBounds(150, 0, 200, 40);
-        Them.add(Title);
+        Them_Frame.add(Title);
         int y = 50;
         //Tạo tự động các label và textfield
-        for (int i = 0; i < array_NguyenLieu.length; i++) {
-            label_NguyenLieu[i] = new JLabel(array_NguyenLieu[i]);
+        for (int i = 0; i < header.length; i++) {
+            label_NguyenLieu[i] = new JLabel(header[i]);
             label_NguyenLieu[i].setBounds(100, y, 100, 30);
-            Them.add(label_NguyenLieu[i]);
+            Them_Frame.add(label_NguyenLieu[i]);
             //Tạo combobox
             if(i==5)
             {
                 cbDonViTinh_Them=new JComboBox(array_DonViTinh);
                 cbDonViTinh_Them.setBounds(200, y, 150, 30);
-                Them.add(cbDonViTinh_Them);
+                Them_Frame.add(cbDonViTinh_Them);
                 y+=40;
                 continue;
             }
@@ -144,22 +109,24 @@ public class GUINguyenLieu extends GUIFormContent {
                     btnFileAnh_Click("Thêm");
                 });
                 btnFileAnh.setBounds(360, y, 40, 40);
-                Them.add(btnFileAnh);
+                Them_Frame.add(btnFileAnh);
             }
             y += 40;
-            Them.add(txt_NguyenLieu_Them[i]);
+            Them_Frame.add(txt_NguyenLieu_Them[i]);
         }
         
         txt_NguyenLieu_Them[3].setEditable(false);
-        JButton Luu = new JButton("Lưu");
-        Luu.setBackground(Color.decode("#90CAF9"));
-        Luu.setBounds(100, y, 100, 50);
-        //Sự kiện khi click
-        Luu.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent evt) {
-                cohieu = 1;
-                int a = JOptionPane.showConfirmDialog(Them, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
+        
+        String maNguyenLieu = Tool.tangMa(NguyenLieuBUS.getMaMonAnCuoi());
+        txt_NguyenLieu_Them[0].setText(maNguyenLieu);
+        txt_NguyenLieu_Them[0].setEditable(false);
+        Them_Frame.setVisible(true);
+
+    }
+    @Override
+    protected void luuThem_Frame(){
+        cohieu = 1;
+                int a = JOptionPane.showConfirmDialog(Them_Frame, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
                 if (a == JOptionPane.YES_OPTION) {
                     //gọi hàm ở bus để thêm dữ liệu 
                     if (checkTextThem(txt_NguyenLieu_Them[0].getText(),
@@ -180,114 +147,88 @@ public class GUINguyenLieu extends GUIFormContent {
                                 "Hiện");
 
                         BUS.them(DTO); //thêm nguyên liệu bên BUS đã có thêm vào database
-                        table_NguyenLieu.addRow(DTO);
-                        //clear textfield trong Them
-                        for (int i = 0; i < array_NguyenLieu.length; i++) {
-                            if(i!=5)
-                            txt_NguyenLieu_Them[i].setText("");
-                        }
-                        Them.dispose();
+                        table.addRow(DTO);
+                        clearThem_Frame();
+                        Them_Frame.dispose();
                     }
                 }
                 else
                     cohieu = 0;
-            }
-        });
-        Them.add(Luu);
-
-        JButton Thoat = new JButton("Thoát");
-        Thoat.setBackground(Color.decode("#90CAF9"));
-        Thoat.setBounds(250, y, 100, 50);
-        //Sự kiên khi click
-        Thoat.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent evt) {
-                //Clear textfield
-                for (int i = 0; i < array_NguyenLieu.length; i++) {
-                    if(i!=5)
-                    txt_NguyenLieu_Them[i].setText("");
-                }
-                cohieu = 1;
-                //Lệnh này để đóng dialog
-                Them.dispose();
-            }
-        });
-
-        Them.add(Thoat);
-        //Chặn việc thao tác ngoài khi chưa tắt dialog gây lỗi phát sinh
-        Them.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowDeactivated(WindowEvent e) {
-                if (cohieu == 0) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng tắt Dialog khi muốn làm thao tác khác");
-                }
-            }
-
-        });
-        String maNguyenLieu = Tool.tangMa(NguyenLieuBUS.getMaMonAnCuoi());
-        txt_NguyenLieu_Them[0].setText(maNguyenLieu);
-        txt_NguyenLieu_Them[0].setEditable(false);
-        Them.setVisible(true);
-
     }
+    //Tạo hàm này dùng để clear các textfield trong Them_Frame
+    @Override
+    protected void clearThem_Frame(){
+        //clear textfield trong Them_Frame
+                        for (int i = 0; i < header.length; i++) {
+                            if(i!=5)
+                            txt_NguyenLieu_Them[i].setText("");
+                        }
+    }
+   @Override
+    protected void Sua_click(MouseEvent evt) {
+        super.Sua_click(evt);
+        int row = table.tb.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 hàng để sửa");
+        } else {
+            //Tạo tiêu đề
+            JLabel Title = new JLabel("Sửa nguyên liệu");
+            Title.setFont(new Font("Time New Roman", Font.BOLD, 21));
+            Title.setForeground(Color.decode("#FF4081"));
+            Title.setBounds(150, 0, 200, 40);
+            Sua_Frame.add(Title);
+            int y = 50;
+            //Tạo tự động các lable và textfield
+            for (int i = 0; i < header.length; i++) {
+                label_NguyenLieu[i] = new JLabel(header[i]);
+                label_NguyenLieu[i].setBounds(100, y, 100, 30);
+                Sua_Frame.add(label_NguyenLieu[i]);
+                //Tạo combobox
+                if(i==5)
+                {
+                    cbDonViTinh_Sua=new JComboBox(array_DonViTinh);
+                    cbDonViTinh_Sua.setBounds(200, y, 150, 30);
+                    Sua_Frame.add(cbDonViTinh_Sua);
+                    y+=40;
+                    continue;
+                }
+                txt_NguyenLieu_Sua[i] = new JTextField();
+                txt_NguyenLieu_Sua[i].setBounds(200, y, 150, 30);
 
-    private void Sua_Frame() {
-        JFrame f = new JFrame();
-        cohieu = 0 ;
-        Sua = new JDialog(f);
-        Sua.setLayout(null);
-        Sua.setSize(500, 500);
-        //Set vị trí của Dialog
-        //https://stackoverflow.com/questions/2442599/how-to-set-jframe-to-appear-centered-regardless-of-monitor-resolution
-        Sua.setLocationRelativeTo(null);
-        Sua.setUndecorated(true);
-        //Tạo tiêu đề
-        JLabel Title = new JLabel("Sửa nguyên liệu");
-        Title.setFont(new Font("Time New Roman", Font.BOLD, 21));
-        Title.setForeground(Color.decode("#FF4081"));
-        Title.setBounds(150, 0, 200, 40);
-        Sua.add(Title);
-        int y = 50;
-        //Tạo tự động các lable và textfield
-        for (int i = 0; i < array_NguyenLieu.length; i++) {
-            label_NguyenLieu[i] = new JLabel(array_NguyenLieu[i]);
-            label_NguyenLieu[i].setBounds(100, y, 100, 30);
-            Sua.add(label_NguyenLieu[i]);
-            //Tạo combobox
-            if(i==5)
-            {
-                cbDonViTinh_Sua=new JComboBox(array_DonViTinh);
-                cbDonViTinh_Sua.setBounds(200, y, 150, 30);
-                Sua.add(cbDonViTinh_Sua);
-                y+=40;
-                continue;
+                //Tạo nút để lấy file ảnh
+                if (i == 3) {
+                    btnFileAnh = new JButton();
+                    btnFileAnh.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/hinhanh-30.png")));
+                    btnFileAnh.addActionListener((ae) -> {
+                        btnFileAnh_Click("Sửa");
+                    });
+                    btnFileAnh.setBounds(360, y, 40, 40);
+                    Sua_Frame.add(btnFileAnh);
+                }
+                y += 40;
+                Sua_Frame.add(txt_NguyenLieu_Sua[i]);
             }
-            txt_NguyenLieu_Sua[i] = new JTextField();
-            txt_NguyenLieu_Sua[i].setBounds(200, y, 150, 30);
-
-            //Tạo nút để lấy file ảnh
-            if (i == 3) {
-                btnFileAnh = new JButton();
-                btnFileAnh.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/hinhanh-30.png")));
-                btnFileAnh.addActionListener((ae) -> {
-                    btnFileAnh_Click("Sửa");
-                });
-                btnFileAnh.setBounds(360, y, 40, 40);
-                Sua.add(btnFileAnh);
+            txt_NguyenLieu_Sua[0].setEditable(false);
+            txt_NguyenLieu_Sua[3].setEditable(false);
+            //Set tự động giá trị các field
+            for (int j = 0; j < header.length; j++) {
+               if(j!=5)
+                    txt_NguyenLieu_Sua[j].setText(table.tb.getValueAt(row, j).toString());
+                else if(j==5)
+                {
+                    int k;
+                    for(k=0;k<array_DonViTinh.length;k++)
+                        if(table.tb.getValueAt(row, j).toString().equals(array_DonViTinh[k]))
+                            cbDonViTinh_Sua.setSelectedIndex(k);
+                }
             }
-            y += 40;
-            Sua.add(txt_NguyenLieu_Sua[i]);
+            Sua_Frame.setVisible(true);
         }
-        txt_NguyenLieu_Sua[3].setEditable(false);
-        //Lưu tất cả dữ liệu trên textfield lên database
-        JButton Luu = new JButton("Lưu");
-        Luu.setBackground(Color.decode("#90CAF9"));
-        Luu.setBounds(100, y, 100, 50);
-        Luu.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent evt) {
-                cohieu = 1;
-                int a = JOptionPane.showConfirmDialog(Sua, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
+    }
+    @Override
+    protected void luuSua_Frame(){
+        cohieu = 1;
+                int a = JOptionPane.showConfirmDialog(Sua_Frame, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
                 if (a == JOptionPane.YES_OPTION) {
 
                     //Chạy hàm checkText để ràng buộc dữ liệu 
@@ -298,96 +239,66 @@ public class GUINguyenLieu extends GUIFormContent {
                             txt_NguyenLieu_Sua[4].getText(),
                             cbDonViTinh_Sua.getSelectedItem().toString(),
                             txt_NguyenLieu_Sua[6].getText())) {
-                        //Chạy hàm để lưu lại việc sửa dữ liệu    
-                        buttonLuu_Sua();
-                        for (int i = 0; i < array_NguyenLieu.length; i++) {
-                            if(i!=5)
-                            txt_NguyenLieu_Sua[i].setText("");
-                        }
-                        Sua.dispose();
+                        int row = table.tb.getSelectedRow();
+        int colum = table.tb.getSelectedColumn();
+        String maNguyenLieu = table.tbModel.getValueAt(row, colum).toString();
+        //Hỏi để xác nhận việc lưu dữ liệu đã sửa chữa
+//        int option = JOptionPane.showConfirmDialog(Sua_Frame, "Bạn chắc chắn sửa?", "", JOptionPane.YES_NO_OPTION);
+//        if (option == JOptionPane.YES_OPTION) {
+            //Sửa dữ liệu trên bảng
+            //model là ruột JTable   
+            //set tự động giá trị cho model
+            for (int j = 0; j < header.length; j++) {
+                if(j!=5)
+                    table.tbModel.setValueAt(txt_NguyenLieu_Sua[j].getText(), row, j);
+                else if(j==5)
+                    table.tbModel.setValueAt(cbDonViTinh_Sua.getSelectedItem().toString(), row, j);
+            }
+
+            table.tb.setModel(table.tbModel);
+
+            //Sửa dữ liệu trong database và arraylist trên bus
+            //Tạo đối tượng monAnDTO và truyền dữ liệu trực tiếp thông qua constructor
+            NguyenLieuDTO DTO = new NguyenLieuDTO(txt_NguyenLieu_Sua[0].getText(),
+                    txt_NguyenLieu_Sua[1].getText(),
+                    cbDonViTinh_Sua.getSelectedItem().toString(),
+                    Integer.parseInt(txt_NguyenLieu_Sua[2].getText()),
+                    txt_NguyenLieu_Sua[3].getText(),
+                    txt_NguyenLieu_Sua[4].getText(),
+                    Integer.parseInt(txt_NguyenLieu_Sua[6].getText()));
+            //Tìm vị trí của row cần sửa
+            int index = NguyenLieuBUS.timViTri(maNguyenLieu);
+            //Truyền dữ liệu và vị trí vào bus
+            BUS.sua(DTO, index);
+//        }
+                        
+                        Sua_Frame.dispose();
                     }
                 }else
                 cohieu = 0;
-
-            }
-            
-        });
-        Sua.add(Luu);
-
-        JButton Thoat = new JButton("Thoát");
-        Thoat.setBackground(Color.decode("#90CAF9"));
-        Thoat.setBounds(250, y, 100, 50);
-        Thoat.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent evt) {
-                
-                cohieu = 1;
-                Sua.dispose();
-            }
-        });
-
-        Sua.add(Thoat);
-        Sua.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowDeactivated(WindowEvent e) {
-                if (cohieu == 0) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng tắt Dialog khi muốn làm thao tác khác");
-                }
-            }
-
-        });
-        Sua.setVisible(true);
-
     }
-
+    //Tạo hàm này dùng để clear các textfield trong Them_Frame
     @Override
-    protected void Them_click(MouseEvent evt) {
-
-        Them_Frame();
-
-    }
-
-    //Hàm sự kiện khi click vào nút Sửa
-    @Override
-    protected void Sua_click(MouseEvent evt) {
-
-        int i = table_NguyenLieu.tb.getSelectedRow();
-        if (i == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 hàng để sửa");
-        } else {
-            //Hiện Dialog lên và set dữ liệu vào các field
-            Sua_Frame();
-            txt_NguyenLieu_Sua[0].setEnabled(false);
-            //Set tự động giá trị các field
-            for (int j = 0; j < array_NguyenLieu.length; j++) {
-               if(j!=5)
-                    txt_NguyenLieu_Sua[j].setText(table_NguyenLieu.tb.getValueAt(i, j).toString());
-                else if(j==5)
-                {
-                    int k;
-                    for(k=0;k<array_DonViTinh.length;k++)
-                        if(table_NguyenLieu.tb.getValueAt(i, j).toString().equals(array_DonViTinh[k]))
-                            cbDonViTinh_Sua.setSelectedIndex(k);
-                }
-            }
-
+    protected void clearSua_Frame(){
+        for (int i = 0; i < header.length; i++) {
+            if(i!=5)
+            txt_NguyenLieu_Sua[i].setText("");
         }
     }
-
     //Hàm sự kiện khi click vào nút xóa
     @Override
     protected void Xoa_click(MouseEvent evt) {
-        int row = table_NguyenLieu.tb.getSelectedRow();
+        int row = table.tb.getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn hàng muốn xóa");
         } else {
             int option = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn xóa?", "", JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION) {
-                String maNguyenLieu = table_NguyenLieu.tbModel.getValueAt(row, 0).toString();
+                String maNguyenLieu = table.tbModel.getValueAt(row, 0).toString();
                 //truyền mã món ăn vào hàm timViTri ở NguyenLieuBUS 
                 int index = NguyenLieuBUS.timViTri(maNguyenLieu);
                 //Xóa hàng ở table
-                table_NguyenLieu.tbModel.removeRow(row);
+                table.tbModel.removeRow(row);
                 //Xóa ở arraylist và đổi chế độ ẩn ở database
                 BUS.xoa(maNguyenLieu, index);
             }
@@ -395,19 +306,21 @@ public class GUINguyenLieu extends GUIFormContent {
 
     }
 
+    @Override
     public void docDB() {
-        //Nếu dsnl vẫn chưa được đọc thì chạy hàm đọc
-        if (NguyenLieuBUS.dsnl == null) {
+        table.setHeaders(header);
+        //Nếu ds vẫn chưa được đọc thì chạy hàm đọc
+        if (NguyenLieuBUS.ds == null) {
             try {
-                BUS.docDSNL();
+                BUS.docDB();
             } catch (Exception ex) {
                 Logger.getLogger(GUINguyenLieu.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         //Chỉ hiện những nguyên liệu ở trạng thái hiện , trạng thái ẩn là khi xóa
-        for (NguyenLieuDTO monAnDTO : NguyenLieuBUS.dsnl) {
+        for (NguyenLieuDTO monAnDTO : NguyenLieuBUS.ds) {
             if (monAnDTO.getTrangThai().equals("Hiện")) {
-                table_NguyenLieu.addRow(monAnDTO);
+                table.addRow(monAnDTO);
 
             }
         }
@@ -460,10 +373,10 @@ public class GUINguyenLieu extends GUIFormContent {
         ChiTiet.add(txSoLuong);
 
         // event
-        table_NguyenLieu.getTable().addMouseListener(new MouseAdapter() {
+        table.getTable().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent me) {
-                String id = String.valueOf(table_NguyenLieu.tbModel.getValueAt(table_NguyenLieu.tb.getSelectedRow(), 0));
+                String id = String.valueOf(table.tbModel.getValueAt(table.tb.getSelectedRow(), 0));
                 if (id != null) {
                     //Hàm xử lý khi ấn vào 1 row trong table
                     showInfo(id);
@@ -480,7 +393,7 @@ public class GUINguyenLieu extends GUIFormContent {
         // https://stackoverflow.com/questions/16343098/resize-a-picture-to-fit-a-jlabel
         if (id != null) {
             // show hình
-            for (NguyenLieuDTO ds : NguyenLieuBUS.dsnl) {
+            for (NguyenLieuDTO ds : NguyenLieuBUS.ds) {
                 if (ds.getIDNguyenLieu().equals(id)) {
                     //Lấy chiều dài và chiều cao của nhãn lbImage
                     int w = lbImage.getWidth();
@@ -551,26 +464,7 @@ public class GUINguyenLieu extends GUIFormContent {
 
         SoLuong.setBounds(740, 0, 215, 70);
         TimKiem.add(SoLuong);
-        //Nút làm mới
-        JButton LamMoi = new JButton("Làm mới");
-        LamMoi.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/lammoi1-30.png")));
-        LamMoi.setFont(new Font("Segoe UI", 0, 14));
-        LamMoi.setBorder(BorderFactory.createLineBorder(Color.decode("#BDBDBD"), 1));
-        LamMoi.setBackground(Color.decode("#90CAF9"));
-        LamMoi.setBounds(965, 10, 110, 30);
-        LamMoi.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent evt) {
-                Ten.setText("");
-                Tu_DonGia.setText("");
-                Den_DonGia.setText("");
-                Tu_SoLuong.setText("");
-                Den_SoLuong.setText("");
-                LamMoi();
-            }
-        });
-        TimKiem.add(LamMoi);
-
+        
         return TimKiem;
     }
 
@@ -605,7 +499,7 @@ public class GUINguyenLieu extends GUIFormContent {
             Den_DonGia.setForeground(Color.red);
         }
 
-        setDataToTable(Tool.searchNL(Ten.getText(), donGia1, donGia2, soLuong1, soLuong2), table_NguyenLieu); //chưa sửa xong hỏi Nguyên cái Textfield
+        setDataToTable(Tool.searchNL(Ten.getText(), donGia1, donGia2, soLuong1, soLuong2), table); //chưa sửa xong hỏi Nguyên cái Textfield
     }
 
     private void addDocumentListener(JTextField tx) { // để cho hàm tìm kiếm
@@ -628,10 +522,10 @@ public class GUINguyenLieu extends GUIFormContent {
         });
     }
 
-    private void setDataToTable(ArrayList<NguyenLieuDTO> monAnDTO, GUIMyTable myTable) { //Sai gì nè
+    private void setDataToTable(ArrayList<NguyenLieuDTO> monAnDTO, MyTable myTable) { //Sai gì nè
         myTable.clear();
         for (NguyenLieuDTO DTO : monAnDTO) {
-            table_NguyenLieu.addRow(DTO);
+            table.addRow(DTO);
         }
     }
 
@@ -653,7 +547,7 @@ public class GUINguyenLieu extends GUIFormContent {
         cohieu = 1;
         if (type.equals("Thêm")) {
             //Tạo cửa sổ chọn file
-            FileDialog fd = new FileDialog(Them);
+            FileDialog fd = new FileDialog(Them_Frame);
             fd.setVisible(true);
             String filename = fd.getFile();
             if (filename != null) {
@@ -663,7 +557,7 @@ public class GUINguyenLieu extends GUIFormContent {
         }
         if (type.equals("Sửa")) {
             //Tạo cửa sổ chọn file
-            FileDialog fd = new FileDialog(Sua);
+            FileDialog fd = new FileDialog(Sua_Frame);
             fd.setVisible(true);
             String filename = fd.getFile();
             if (filename != null) {
@@ -791,51 +685,21 @@ public class GUINguyenLieu extends GUIFormContent {
         }
         return false;
     }
-     //Hàm lưu dữ liệu khi sửa
-    
-    public void buttonLuu_Sua() {
-
-        int row = table_NguyenLieu.tb.getSelectedRow();
-        int colum = table_NguyenLieu.tb.getSelectedColumn();
-        String maNguyenLieu = table_NguyenLieu.tbModel.getValueAt(row, colum).toString();
-        //Hỏi để xác nhận việc lưu dữ liệu đã sửa chữa
-//        int option = JOptionPane.showConfirmDialog(Sua, "Bạn chắc chắn sửa?", "", JOptionPane.YES_NO_OPTION);
-//        if (option == JOptionPane.YES_OPTION) {
-            //Sửa dữ liệu trên bảng
-            //model là ruột JTable   
-            //set tự động giá trị cho model
-            for (int j = 0; j < array_NguyenLieu.length; j++) {
-                if(j!=5)
-                    table_NguyenLieu.tbModel.setValueAt(txt_NguyenLieu_Sua[j].getText(), row, j);
-                else if(j==5)
-                    table_NguyenLieu.tbModel.setValueAt(cbDonViTinh_Sua.getSelectedItem().toString(), row, j);
-            }
-
-            table_NguyenLieu.tb.setModel(table_NguyenLieu.tbModel);
-
-            //Sửa dữ liệu trong database và arraylist trên bus
-            //Tạo đối tượng monAnDTO và truyền dữ liệu trực tiếp thông qua constructor
-            NguyenLieuDTO DTO = new NguyenLieuDTO(txt_NguyenLieu_Sua[0].getText(),
-                    txt_NguyenLieu_Sua[1].getText(),
-                    cbDonViTinh_Sua.getSelectedItem().toString(),
-                    Integer.parseInt(txt_NguyenLieu_Sua[2].getText()),
-                    txt_NguyenLieu_Sua[3].getText(),
-                    txt_NguyenLieu_Sua[4].getText(),
-                    Integer.parseInt(txt_NguyenLieu_Sua[6].getText()));
-            //Tìm vị trí của row cần sửa
-            int index = NguyenLieuBUS.timViTri(maNguyenLieu);
-            //Truyền dữ liệu và vị trí vào bus
-            BUS.sua(DTO, index);
-//        }
+    @Override
+    protected void LamMoi_click(MouseEvent evt){
+        super.LamMoi_click(evt);
+        Ten.setText("");
+        Tu_DonGia.setText("");
+        Den_DonGia.setText("");
+        Tu_SoLuong.setText("");
+        Den_SoLuong.setText("");
     }
-
-    //Hàm khi ấn nút làm mới
-    private void LamMoi() {
-        table_NguyenLieu.clear();
-        for (NguyenLieuDTO DTO : NguyenLieuBUS.dsnl) {
-            if (DTO.getTrangThai().equals("Hiện")) {
-                table_NguyenLieu.addRow(DTO);
-            }
-        }
+    @Override
+    protected void InPDF(){
+        
+    }
+   @Override
+    protected void ChiTiet(){
+        
     }
 }

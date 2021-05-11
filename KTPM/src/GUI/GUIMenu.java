@@ -7,6 +7,8 @@ package GUI;
 import BUS.PhanQuyenBUS;
 import BUS.TaiKhoanBUS;
 import BUS.Tool;
+import EXT.FormContent;
+import EXT.MyTable;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -30,7 +32,7 @@ import javax.swing.SwingConstants;
  * @author Nguyen
  */
 //class mở đầu khi form đăng nhập được gọi , nơi sườn của cả bài
-public class GUImenu extends JFrame{
+public class GUIMenu extends JFrame{
     
     private String arr_listmotaQuyen[]={"QLBanHang","QLNhapHang","QLMonAn","QLNguyenLieu","QLCongThuc","QLHoaDon","QLHDNhap",
         "QLKhuyenMai","QLKhachHang","QLNhanVien","QLNhaCungCap","QLTaiKhoan","QLPhanQuyen","QLThongKe"};
@@ -85,7 +87,7 @@ public class GUImenu extends JFrame{
     private JLabel title;
     //Tạo Panel chứa menu
     private JPanel menu;
-    public GUImenu() throws Exception{
+    public GUIMenu() throws Exception{
         initcomponent();
     }
     //Tạo kích thước và hình dáng của form

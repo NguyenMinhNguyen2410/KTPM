@@ -16,20 +16,18 @@ import java.util.ArrayList;
  * @author HP
  */
 public class HoaDonBUS {
-
-    public static ArrayList<HoaDonDTO> HD;
-
+    public static ArrayList<HoaDonDTO> ds;
+    public static HoaDonDAO hd = new HoaDonDAO();
     public HoaDonBUS() {
 
     }
 
-    public void docHD() throws Exception //cần ghi lại khi qua class khác
+    public static void docDB() throws Exception //cần ghi lại khi qua class khác
     {
-        HoaDonDAO hd = new HoaDonDAO();
-        if (HD == null) {
-            HD = new ArrayList<>();
+        if (ds == null) {
+            ds = new ArrayList<>();
         }
-        HD = hd.docHD(); // đọc dữ liệu từ database
+        ds = hd.docHD(); // đọc dữ liệu từ database
 
     }
 
@@ -37,8 +35,8 @@ public class HoaDonBUS {
     {
         HoaDonDAO hd = new HoaDonDAO();
         hd.them(HDDTO);//ghi vào database
-        if (HD != null)
-        HD.add(HDDTO);//cập nhật arraylist
+        if (ds != null)
+        ds.add(HDDTO);//cập nhật arraylist
         KhachHangBUS.TongChiTieu(HDDTO.getIDKhachHang(), HDDTO.getTongTien());
     }
 
@@ -46,33 +44,33 @@ public class HoaDonBUS {
     {
         HoaDonDAO hd = new HoaDonDAO();
         hd.sua(HDDTO);
-        if (HD != null)
-        HD.set(i, HDDTO);
+        if (ds != null)
+        ds.set(i, HDDTO);
     }
 
     public void xoa(HoaDonDTO HDDTO, int index) //cần ghi lại khi qua class khác
     {
         HoaDonDAO hd = new HoaDonDAO();
         hd.xoa(HDDTO); // update trạng thái lên database
-        if (HD != null)
-        HD.set(index, HDDTO); // sửa lại thông tin trong list
+        if (ds != null)
+        ds.set(index, HDDTO); // sửa lại thông tin trong list
     }
     //Xóa với ID
     public void xoa(String ID, int index) 
     {
         HoaDonDAO data = new HoaDonDAO();
         data.xoa(ID); // update trạng thái lên database
-        HoaDonDTO DTO=HD.get(index); // sửa lại thông tin trong list
+        HoaDonDTO DTO=ds.get(index); // sửa lại thông tin trong list
         DTO.setTrangThai("Ẩn");
-        if (HD != null)
-        HD.set(index, DTO);
+        if (ds != null)
+        ds.set(index, DTO);
     }
     
     //tìm vị trí của thằng có chứa mã mà mình cần
     public static int timViTri( String ID) 
     {
-        for (int i = 0; i < HD.size(); i++) {
-            if (HD.get(i).getIDHoaDon().equals(ID)) {
+        for (int i = 0; i < ds.size(); i++) {
+            if (ds.get(i).getIDHoaDon().equals(ID)) {
                 return i;
             }
         }
@@ -82,24 +80,24 @@ public class HoaDonBUS {
     //mới thêm lấy mã hóa đơn cuối cùng của arraylist để tăng mã
     public static String getMaHoaDonCuoi()
     {
-        if(HD == null)
+        if(ds == null)
         {
-            HD = new ArrayList<>();
+            ds = new ArrayList<>();
         }
-        if(HD.size() > 0)
+        if(ds.size() > 0)
         {
             String ma;
-         ma = HD.get(HD.size()-1).getIDHoaDon();
+         ma = ds.get(ds.size()-1).getIDHoaDon();
          return ma;
         }
          return null;
     }
     //Get làm Excel PDF
     public ArrayList<HoaDonDTO> getHoaDonDTO() {
-        return HD;
+        return ds;
     }
     public HoaDonDTO getHoaDonDTO(String idhoadon) {
-        for (HoaDonDTO hdDTO : HD) {
+        for (HoaDonDTO hdDTO : ds) {
             if (hdDTO.getIDHoaDon().equals(idhoadon)) {
                 return hdDTO;
             }
@@ -109,7 +107,7 @@ public class HoaDonBUS {
     
     public ArrayList<HoaDonDTO> search(String type, String value, LocalDate _ngay1, LocalDate _ngay2, int _tong1, int _tong2) {
         ArrayList<HoaDonDTO> result = new ArrayList<>();
-        HD.forEach((HoaDonDTO) -> {
+        ds.forEach((HoaDonDTO) -> {
             switch (type) {
                 case "Tất cả":
                     if (HoaDonDTO.getIDHoaDon().toLowerCase().contains(value.toLowerCase())

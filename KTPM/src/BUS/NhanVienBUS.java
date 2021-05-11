@@ -16,25 +16,25 @@ import java.util.logging.Logger;
  * @author HP
  */
 public class NhanVienBUS {
-   public static ArrayList<NhanVienDTO> dsnv;
+   public static ArrayList<NhanVienDTO> ds;
+   public static NhanVienDAO DAO=new NhanVienDAO();
    public NhanVienBUS()
     {
         
     }
     public  void  docDSNV() throws Exception 
     {
-        NhanVienDAO nvdata=new NhanVienDAO();
-        if(dsnv==null) dsnv=new ArrayList<NhanVienDTO>();
-        dsnv =nvdata.docDSNV();
+        
+        if(ds==null) ds=new ArrayList<NhanVienDTO>();
+        ds =DAO.docDSNV();
     }
     public void  them(NhanVienDTO nv)
     {
         try
         {
-            NhanVienDAO nvdata=new NhanVienDAO();
-            nvdata.them(nv);
-            if(dsnv!=null)
-            dsnv.add(nv);
+            DAO.them(nv);
+            if(ds!=null)
+            ds.add(nv);
         }
         catch (Exception ex) {
            Logger.getLogger(NhanVienBUS.class.getName()).log(Level.SEVERE, null, ex);
@@ -45,11 +45,9 @@ public class NhanVienBUS {
     {
         try
         {
-
-           NhanVienDAO nvdata=new NhanVienDAO();
-           nvdata.sua(nv);
-           if(dsnv!=null)
-           dsnv.set(i, nv);
+           DAO.sua(nv);
+           if(ds!=null)
+           ds.set(i, nv);
         }
         catch (Exception ex) {
            Logger.getLogger(NhanVienBUS.class.getName()).log(Level.SEVERE, null, ex);
@@ -58,35 +56,33 @@ public class NhanVienBUS {
     }
     public void xoa(NhanVienDTO nv,int index)
     {
-        NhanVienDAO nvDao =new NhanVienDAO();
-        String xoanv = dsnv.get(index).getIDNhanVien();
-        nvDao.xoa(xoanv);
-        if(dsnv!=null)
-        dsnv.set(index,nv);
+        String xoanv = ds.get(index).getIDNhanVien();
+        DAO.xoa(xoanv);
+        if(ds!=null)
+        ds.set(index,nv);
     }
     //Xóa với ID
     public void xoa(String ID, int index) 
     {
-        NhanVienDAO data = new NhanVienDAO();
-        data.xoa(ID); // update trạng thái lên database
-        NhanVienDTO DTO=dsnv.get(index); // sửa lại thông tin trong list
+        DAO.xoa(ID); // update trạng thái lên database
+        NhanVienDTO DTO=ds.get(index); // sửa lại thông tin trong list
         DTO.setTrangThai("Ẩn");
-        if(dsnv!=null)
-        dsnv.set(index, DTO);
+        if(ds!=null)
+            ds.set(index, DTO);
     }
     
     //tìm vị trí của thằng có chứa mã mà mình cần
     public static int timViTri( String ID) 
     {
-        for (int i = 0; i < dsnv.size(); i++) {
-            if (dsnv.get(i).getIDNhanVien().equals(ID)) {
+        for (int i = 0; i < ds.size(); i++) {
+            if (ds.get(i).getIDNhanVien().equals(ID)) {
                 return i;
             }
         }
         return 0;
     }
      public NhanVienDTO getNhanVienDTO(String idnv) {
-        for (NhanVienDTO nvDTO : dsnv) {
+        for (NhanVienDTO nvDTO : ds) {
             if (nvDTO.getIDNhanVien().equals(idnv)) {
                 return nvDTO;
             }
@@ -95,19 +91,19 @@ public class NhanVienBUS {
     }
 
     public ArrayList<NhanVienDTO> getNhanVienDTO() {
-    return dsnv;
+    return ds;
     }
     
     public static String getMaNhanVienCuoi() //lấy mã cuối dể tăng
     {
-        if(dsnv == null)
+        if(ds == null)
         {
-            dsnv = new ArrayList<>();
+            ds = new ArrayList<>();
         }
-        if(dsnv.size() > 0)
+        if(ds.size() > 0)
         {
             String ma;
-         ma = dsnv.get(dsnv.size()-1).getIDNhanVien();
+         ma = ds.get(ds.size()-1).getIDNhanVien();
          return ma;
         }
          return null;
@@ -115,7 +111,7 @@ public class NhanVienBUS {
     
     public static String getChucVuTuMaNhanVien(String maNhanVien)// trả về chức vụ từ mã nhân viên
     {
-        for(NhanVienDTO nhanVienDTO : NhanVienBUS.dsnv)
+        for(NhanVienDTO nhanVienDTO : NhanVienBUS.ds)
         {
             if(nhanVienDTO.getIDNhanVien().equals(maNhanVien))
             {

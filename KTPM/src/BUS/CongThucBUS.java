@@ -14,18 +14,18 @@ import java.util.ArrayList;
  * @author HP
  */
 public class CongThucBUS {
-    public static ArrayList<CongThucDTO> CT;
-
+    public static ArrayList<CongThucDTO> ds;
+    public static CongThucDAO ct = new CongThucDAO();
     public CongThucBUS() {
 
     }
 
-    public void docCT() throws Exception //cần ghi lại khi qua class khác
+    public static void docDB() throws Exception //cần ghi lại khi qua class khác
     {
-        CongThucDAO ct = new CongThucDAO();
-        if (CT == null) {
-            CT = new ArrayList<>();
-            CT = ct.docCT(); // đọc dữ liệu từ database
+        
+        if (ds == null) {
+            ds = new ArrayList<>();
+            ds = ct.docCT(); // đọc dữ liệu từ database
         }
         
 
@@ -35,40 +35,40 @@ public class CongThucBUS {
     {
         CongThucDAO ct = new CongThucDAO();
         ct.them(CTDTO);//ghi vào database
-        if (CT != null)
-        CT.add(CTDTO);//cập nhật arraylist
+        if (ds != null)
+        ds.add(CTDTO);//cập nhật arraylist
     }
 
     public void sua(CongThucDTO CTDTO, int i) 
     {
         CongThucDAO ct = new CongThucDAO();
         ct.sua(CTDTO);
-        if (CT != null)
-        CT.set(i, CTDTO);
+        if (ds != null)
+        ds.set(i, CTDTO);
     }
     public void xoa(CongThucDTO CTDTO, int index) //cần ghi lại khi qua class khác
     {
         CongThucDAO ct = new CongThucDAO();
         ct.xoa(CTDTO); // update trạng thái lên database
-        if (CT != null)
-        CT.set(index, CTDTO); // sửa lại thông tin trong list
+        if (ds != null)
+        ds.set(index, CTDTO); // sửa lại thông tin trong list
     }
     //Xóa với ID
     public void xoa(String ID, int index) 
     {
         CongThucDAO data = new CongThucDAO();
         data.xoa(ID); // update trạng thái lên database
-        CongThucDTO DTO=CT.get(index); // sửa lại thông tin trong list
+        CongThucDTO DTO=ds.get(index); // sửa lại thông tin trong list
         DTO.setTrangThai("Ẩn");
-        if (CT != null)
-        CT.set(index, DTO);
+        if (ds != null)
+        ds.set(index, DTO);
     }
     
     //tìm vị trí của thằng có chứa mã mà mình cần
     public static int timViTri( String ID) 
     {
-        for (int i = 0; i < CT.size(); i++) {
-            if (CT.get(i).getIDCongThuc().equals(ID)) {
+        for (int i = 0; i < ds.size(); i++) {
+            if (ds.get(i).getIDCongThuc().equals(ID)) {
                 return i;
             }
         }
@@ -77,23 +77,23 @@ public class CongThucBUS {
     
     public static String getMaMonAnCuoi()
     {
-        if(CT == null)
+        if(ds == null)
         {
-            CT = new ArrayList<>();
+            ds = new ArrayList<>();
         }
-        if(CT.size() > 0)
+        if(ds.size() > 0)
         {
             String ma;
-         ma = CT.get(CT.size()-1).getIDMonAn();
+         ma = ds.get(ds.size()-1).getIDMonAn();
          return ma;
         }
          return null;
     }
     public ArrayList<CongThucDTO> getCongThucDTO() {
-        return CT;
+        return ds;
     }
     public CongThucDTO getCongThucDTO(String idcongthuc) {
-        for (CongThucDTO ctDTO : CT) {
+        for (CongThucDTO ctDTO : ds) {
             if (ctDTO.getIDCongThuc().equals(idcongthuc)) {
                 return ctDTO;
             }

@@ -7,7 +7,7 @@ package GUI;
 
 import BUS.*;
 import DTO.*;
-import GUI.GUIMyTable;
+import EXT.MyTable;
 import Report.PriceFormatter;
 import button.MoreButton;
 import com.github.lgooddatepicker.components.DatePicker;
@@ -56,7 +56,7 @@ class ThongKeMonAn extends JPanel {
 
     JComboBox cbTieuChi;
     JButton btnRefresh = new JButton("Làm mới");
-    GUIMyTable tb;
+    MyTable tb;
 
     public ThongKeMonAn() {
         this.setLayout(new BorderLayout());
@@ -113,7 +113,7 @@ class ThongKeMonAn extends JPanel {
         this.add(plTieuchi, BorderLayout.NORTH);
 
         //Table thống kê từng cái
-        tb = new GUIMyTable();
+        tb = new MyTable();
         cbSearchOnChange();
         this.add(tb, BorderLayout.CENTER);
     }
@@ -245,7 +245,7 @@ class ThongKeNhanVien extends JPanel {
 
     JComboBox cbTieuChi;
     JButton btnRefresh = new JButton("Làm mới");
-    GUIMyTable tb;
+    MyTable tb;
 
     public ThongKeNhanVien() {
         this.setLayout(new BorderLayout());
@@ -288,10 +288,10 @@ class ThongKeNhanVien extends JPanel {
         btnRefresh.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/lammoi1-30.png")));
         btnRefresh.addActionListener((ae) -> {
             try {
-                qlmaBUS.docDSMonAn();
+                qlmaBUS.docDB();
                 qlnvBUS.docDSNV();
-                qlhdBUS.docHD();
-                qlcthdBUS.docCTHD();
+                qlhdBUS.docDB();
+                qlcthdBUS.docDB();
             } catch (Exception ex) {
                 Logger.getLogger(ThongKeNhanVien.class.getName()).log(Level.SEVERE, null, ex);
             }            
@@ -309,7 +309,7 @@ class ThongKeNhanVien extends JPanel {
         this.add(plTieuchi, BorderLayout.NORTH);
 
         //Table thong ke
-        tb = new GUIMyTable();
+        tb = new MyTable();
         cbSearchOnChange();
         this.add(tb, BorderLayout.CENTER);
     }
@@ -425,7 +425,7 @@ class ThongKeKhachHang extends JPanel {
 
     JComboBox cbTieuChi;
     JButton btnRefresh = new JButton("Làm mới");
-    GUIMyTable tb;
+    MyTable tb;
 
     public ThongKeKhachHang() {
         this.setLayout(new BorderLayout());
@@ -468,10 +468,10 @@ class ThongKeKhachHang extends JPanel {
         btnRefresh.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/lammoi1-30.png")));
         btnRefresh.addActionListener((ae) -> {
             try {
-                qlmaBUS.docDSMonAn();
-                qlcthdBUS.docCTHD();
-                qlhdBUS.docHD();
-                qlkhBUS.docDSKH();
+                qlmaBUS.docDB();
+                qlcthdBUS.docDB();
+                qlhdBUS.docDB();
+                qlkhBUS.docDB();
             } catch (Exception ex) {
                 Logger.getLogger(ThongKeKhachHang.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -490,7 +490,7 @@ class ThongKeKhachHang extends JPanel {
         this.add(plTieuchi, BorderLayout.NORTH);
 
         //Table thong ke
-        tb = new GUIMyTable();
+        tb = new MyTable();
         cbSearchOnChange();
         this.add(tb, BorderLayout.CENTER);
     }
@@ -608,7 +608,7 @@ class ThongKeNhaCungCap extends JPanel {
     DatePicker dPicker2;
 
     JComboBox cbTieuChi;
-    GUIMyTable tb;
+    MyTable tb;
     JButton btnRefresh = new JButton("Làm mới");
 
     public ThongKeNhaCungCap() {
@@ -652,10 +652,10 @@ class ThongKeNhaCungCap extends JPanel {
         btnRefresh.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/lammoi1-30.png")));
         btnRefresh.addActionListener((ae) -> {
             try {
-                qlmaBUS.docDSMonAn();
-                qlhdnBUS.docHDN();
-                qlcthdnBUS.docCTHDN();
-                qlnccBUS.docDSNCC();
+                qlmaBUS.docDB();
+                qlhdnBUS.docDB();
+                qlcthdnBUS.docDB();
+                qlnccBUS.docDB();
             } catch (Exception ex) {
                 Logger.getLogger(ThongKeNhaCungCap.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -672,7 +672,7 @@ class ThongKeNhaCungCap extends JPanel {
         this.add(plTieuchi, BorderLayout.NORTH);
 
         //Table thong ke
-        tb = new GUIMyTable();
+        tb = new MyTable();
         cbSearchOnChange();
         this.add(tb, BorderLayout.CENTER);
     }

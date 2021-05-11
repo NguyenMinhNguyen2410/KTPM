@@ -3,6 +3,8 @@ package GUI;
 
 import BUS.*;
 import DTO.*;
+import EXT.FormChon;
+import EXT.MyTable;
 import GUI.*;
 import Report.PriceFormatter;
 
@@ -119,11 +121,11 @@ class ThongKe_Hoang extends JPanel {
     JPanel plThongKePhieuNhap = new JPanel();
     JPanel plThongKeSoLuong = new JPanel();
 
-    GUIMyTable tbThongKeHoaDon = new GUIMyTable();
-    GUIMyTable tbThongKePhieuNhap = new GUIMyTable();
+    MyTable tbThongKeHoaDon = new MyTable();
+    MyTable tbThongKePhieuNhap = new MyTable();
 
-    GUIMyTable tbKetQuaHoaDon = new GUIMyTable();
-    GUIMyTable tbKetQuaPhieuNhap = new GUIMyTable();
+    MyTable tbKetQuaHoaDon = new MyTable();
+    MyTable tbKetQuaPhieuNhap = new MyTable();
 
     JPanel plMonAn, plNhanVien, plKhachHang, plNhaCC,plNguyenlieu;
     RefreshButton btnRefresh = new RefreshButton();
@@ -161,9 +163,9 @@ class ThongKe_Hoang extends JPanel {
         // event
         // nút chọn
         btnChonMonAn.addActionListener((ae) -> {
-            GUIFormChon a = null;
+            FormChon a = null;
             try {
-                a = new GUIFormChon(txMonAn,"Món ăn");
+                a = new FormChon(txMonAn,"Món ăn");
                 
             } catch (Exception ex) {
                 Logger.getLogger(GUIThongKe.class.getName()).log(Level.SEVERE, null, ex);
@@ -172,36 +174,36 @@ class ThongKe_Hoang extends JPanel {
             
         });
         btnChonNhanVien.addActionListener((ae) -> {
-           GUIFormChon a = null;
+           FormChon a = null;
             try {
-                a = new GUIFormChon(txNhanVien,"Nhân viên");
+                a = new FormChon(txNhanVien,"Nhân viên");
             } catch (Exception ex) {
                 Logger.getLogger(GUIThongKe.class.getName()).log(Level.SEVERE, null, ex);
             }
             a.setVisible(true);
         });
         btnChonKhachHang.addActionListener((ae) -> {
-            GUIFormChon a = null;
+            FormChon a = null;
             try {
-                a = new GUIFormChon(txKhachHang,"Khách hàng");
+                a = new FormChon(txKhachHang,"Khách hàng");
             } catch (Exception ex) {
                 Logger.getLogger(GUIThongKe.class.getName()).log(Level.SEVERE, null, ex);
             }
             a.setVisible(true);        
         });
         btnChonNhaCC.addActionListener((ae) -> {
-           GUIFormChon a = null;
+           FormChon a = null;
             try {
-                a = new GUIFormChon(txNhaCC,"Nhà cung cấp");
+                a = new FormChon(txNhaCC,"Nhà cung cấp");
             } catch (Exception ex) {
                 Logger.getLogger(GUIThongKe.class.getName()).log(Level.SEVERE, null, ex);
             }
             a.setVisible(true);    
         });
         btnChonNguyenlieu.addActionListener((ae) -> {
-           GUIFormChon a = null;
+           FormChon a = null;
             try {
-                a = new GUIFormChon(txNguyenlieu,"Nguyên liệu");
+                a = new FormChon(txNguyenlieu,"Nguyên liệu");
             } catch (Exception ex) {
                 Logger.getLogger(GUIThongKe.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -317,11 +319,11 @@ class ThongKe_Hoang extends JPanel {
     }
 
     public void refresh() throws Exception  {
-        qlmaBUS.docDSMonAn();
+        qlmaBUS.docDB();
         qlnvBUS.docDSNV();
-        qlkhBUS.docDSKH();
-        qlnccBUS.docDSNCC();
-        qlnlBUS.docDSNL();
+        qlkhBUS.docDB();
+        qlnccBUS.docDB();
+        qlnlBUS.docDB();
         
         dPicker1.setDate(null);
         dPicker2.setDate(null);

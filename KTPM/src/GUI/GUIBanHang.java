@@ -15,6 +15,9 @@ import DTO.ChiTietHoaDonDTO;
 import DTO.HoaDonDTO;
 import DTO.KhuyenMaiDTO;
 import DTO.MonAnDTO;
+import EXT.FormBanNhap;
+import EXT.FormChon;
+import EXT.MyTable;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -47,12 +50,12 @@ import javax.swing.plaf.FontUIResource;
  *
  * @author Nguyen
  */
-//Class này được kế thừa từ GUIFormBanNhap , các bố cục đã được sắp xếp sẵn ở bên đó
-public class GUIBanHang extends GUIFormBanNhap{
+//Class này được kế thừa từ FormBanNhap , các bố cục đã được sắp xếp sẵn ở bên đó
+public class GUIBanHang extends FormBanNhap{
     //Tạo mảng tiêu đề của bảng món ăn
     private static String array_MonAn[]={"Mã món ăn","Tên món","Đơn vị tính","Giá","Hình ảnh","Loại","Số lượng"};   
     //Tạo bảng món ăn để nhân viên chọn danh sách món và add lên bảng thanh toán
-    private GUIMyTable table_MonAn,ThanhToan;
+    private MyTable table_MonAn,ThanhToan;
     //Tạo Panel để show thông tin món ăn và để chứa thanh tìm kiếm
     private JPanel Show,TimKiem;
     //Tạo nhãn dùng để chứa hình của thông tin món ăn
@@ -76,38 +79,38 @@ public class GUIBanHang extends GUIFormBanNhap{
         JPanel panel=new JPanel(null);
         //Thanh tìm kiếm món ăn
         TimKiem=TimKiem();
-        TimKiem.setBounds(0,0,GUImenu.width_content*50/100, 80);
+        TimKiem.setBounds(0,0,GUIMenu.width_content*50/100, 80);
         panel.add(TimKiem);
         //Bảng món ăn
         JPanel MonAn=Table();
-        MonAn.setBounds(0,85,GUImenu.width_content*50/100, 300);
+        MonAn.setBounds(0,85,GUIMenu.width_content*50/100, 300);
         panel.add(MonAn);
         //Show thông tin món ăn khi click vào
         Show=Show();
-        Show.setBounds(0,390,GUImenu.width_content*50/100, 370);
+        Show.setBounds(0,390,GUIMenu.width_content*50/100, 370);
         panel.add(Show);
         
         return panel;    
     }
     //Tạo bảng món ăn
     private JPanel Table(){        
-        table_MonAn=new GUIMyTable();        
+        table_MonAn=new MyTable();        
         table_MonAn.setHeaders(array_MonAn);           
         docDB();                  
-        table_MonAn.pane.setPreferredSize(new Dimension(GUImenu.width_content*50/100, 300));
+        table_MonAn.pane.setPreferredSize(new Dimension(GUIMenu.width_content*50/100, 300));
         return table_MonAn;
     }
     //Đọc dữ liệu bảng món ăn
     public void docDB() {
         MonAnBUS monAnBus = new MonAnBUS();
-        if(MonAnBUS.dsMonAn == null) {
+        if(MonAnBUS.ds == null) {
             try {
-                monAnBus.docDSMonAn();
+                monAnBus.docDB();
             } catch (Exception ex) {
                 Logger.getLogger(GUIMonAn.class.getName()).log(Level.SEVERE, null, ex);
             }
         }       
-        for (MonAnDTO monAnDTO : MonAnBUS.dsMonAn) {
+        for (MonAnDTO monAnDTO : MonAnBUS.ds) {
             if (monAnDTO.getTrangThai().equals("Hiện")) {
                 table_MonAn.addRow(monAnDTO);
                     
@@ -224,7 +227,7 @@ public class GUIBanHang extends GUIFormBanNhap{
         Them.setFont(new Font("Segoe UI", 0, 14));        
         Them.setBackground(Color.decode("#90CAF9"));
         
-        Them.setBounds(0, 310, GUImenu.width_content*50/100, 40);
+        Them.setBounds(0, 310, GUIMenu.width_content*50/100, 40);
         //Sự kiện khi bấm nút thêm
         Them.addMouseListener(new MouseAdapter(){
             @Override
@@ -242,7 +245,7 @@ public class GUIBanHang extends GUIFormBanNhap{
         // https://stackoverflow.com/questions/16343098/resize-a-picture-to-fit-a-jlabel
         if (id != null) {
             // show hình
-            for (MonAnDTO ds : MonAnBUS.dsMonAn) {
+            for (MonAnDTO ds : MonAnBUS.ds) {
                 if (ds.getIDMonAn().equals(id)) {
                     int w = lbImage.getWidth();
                     int h = lbImage.getHeight();
@@ -341,9 +344,9 @@ public class GUIBanHang extends GUIFormBanNhap{
         //Tạo sự kiện khi ấn vào nút thì hiện cửa sổ chọn khách hàng nếu người dùng không nhớ mã khách hàng
         ChonKhachHang.addActionListener((ae) -> {
             
-            GUIFormChon a = null;
+            FormChon a = null;
             try {
-                a = new GUIFormChon(KhachHang,"Khách hàng");
+                a = new FormChon(KhachHang,"Khách hàng");
             } catch (Exception ex) {
                 Logger.getLogger(GUIBanHang.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -352,9 +355,9 @@ public class GUIBanHang extends GUIFormBanNhap{
         //Tạo sự kiện khi ấn vào nút thì hiện cửa sổ chọn khuyến mãi nếu người dùng không nhớ mã khuyến mãi
         ChonKhuyenMai.addActionListener((ae) -> {
             
-            GUIFormChon a = null;
+            FormChon a = null;
             try {
-                a = new GUIFormChon(KhuyenMai,"Khuyến mãi");
+                a = new FormChon(KhuyenMai,"Khuyến mãi");
             } catch (Exception ex) {
                 Logger.getLogger(GUIBanHang.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -375,10 +378,10 @@ public class GUIBanHang extends GUIFormBanNhap{
     protected JPanel panelThanhToan(){
         JPanel panel=new JPanel();
         
-        ThanhToan=new GUIMyTable();
+        ThanhToan=new MyTable();
         ThanhToan.setHeaders(new String[]{"Mã món","Tên món","Giá","Loại","Số lượng"});//chỗ này bỏ hình ảnh và đơn vị tính vì không cần
         
-        ThanhToan.pane.setPreferredSize(new Dimension(GUImenu.width_content*49/100, 300));        
+        ThanhToan.pane.setPreferredSize(new Dimension(GUIMenu.width_content*49/100, 300));        
         
         panel.add(ThanhToan);      
         return panel;
@@ -441,7 +444,7 @@ public class GUIBanHang extends GUIFormBanNhap{
         Xoa.setFont(new Font("Segoe UI", 0, 14));        
         Xoa.setBackground(Color.decode("#90CAF9"));
         
-        Xoa.setBounds(0, 0, GUImenu.width_content*25/100, 40);
+        Xoa.setBounds(0, 0, GUIMenu.width_content*25/100, 40);
         Xoa.addMouseListener(new MouseAdapter(){
             @Override
             public void mousePressed(MouseEvent evt){
@@ -454,7 +457,7 @@ public class GUIBanHang extends GUIFormBanNhap{
         btnThanhToan.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/thanhtoan-30.png")));
         btnThanhToan.setFont(new Font("Segoe UI", 0, 14));        
         btnThanhToan.setBackground(Color.decode("#90CAF9"));
-        btnThanhToan.setBounds(GUImenu.width_content*25/100, 0, GUImenu.width_content*25/100, 40);
+        btnThanhToan.setBounds(GUIMenu.width_content*25/100, 0, GUIMenu.width_content*25/100, 40);
         btnThanhToan.addMouseListener(new MouseAdapter(){
             @Override
             public void mousePressed(MouseEvent evt){
@@ -497,7 +500,7 @@ public class GUIBanHang extends GUIFormBanNhap{
             ChiTietHoaDonBUS cthdbus=new ChiTietHoaDonBUS();
             //Tạo biến và xác định số tiền giảm trong mỗi hóa đơn
             float TienKhuyenMai = 0;
-            for(KhuyenMaiDTO DTO: KhuyenMaiBUS.dskm)
+            for(KhuyenMaiDTO DTO: KhuyenMaiBUS.ds)
                 if(DTO.getIDKhuyenMai().equals(KhuyenMai.getText())){
                     TienKhuyenMai=DTO.getTienGiam();
                 }
@@ -564,7 +567,7 @@ public class GUIBanHang extends GUIFormBanNhap{
                 thanhtien+=dongia*soluong;
                 
             }
-            for(KhuyenMaiDTO DTO:KhuyenMaiBUS.dskm)
+            for(KhuyenMaiDTO DTO:KhuyenMaiBUS.ds)
             {
                 if(KhuyenMai.getText().equals(DTO.getIDKhuyenMai()))
                     thanhtien-=DTO.getTienGiam();
@@ -582,7 +585,7 @@ public class GUIBanHang extends GUIFormBanNhap{
     //Hàm khi ấn nút làm mới
     private void LamMoi() {
         table_MonAn.clear();
-        for (MonAnDTO DTO : MonAnBUS.dsMonAn) {
+        for (MonAnDTO DTO : MonAnBUS.ds) {
             if (DTO.getTrangThai().equals("Hiện")) {
                 table_MonAn.addRow(DTO);
             }

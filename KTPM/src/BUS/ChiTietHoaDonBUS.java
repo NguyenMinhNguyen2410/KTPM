@@ -12,19 +12,18 @@ import java.util.ArrayList;
 
 public class ChiTietHoaDonBUS {
 
-    public static ArrayList<ChiTietHoaDonDTO> cthd;
-
-    public ChiTietHoaDonBUS() {
-
+    public static ArrayList<ChiTietHoaDonDTO> ds;
+    public static ChiTietHoaDonDAO CTHD = new ChiTietHoaDonDAO();
+    public ChiTietHoaDonBUS(){
+       
     }
-
-    public void docCTHD() throws Exception //cần ghi lại khi qua class khác
+    public static  void docDB() throws Exception //cần ghi lại khi qua class khác
     {
-        ChiTietHoaDonDAO CTHD = new ChiTietHoaDonDAO();
-        if (cthd == null) {
-            cthd = new ArrayList<>();
+        
+        if (ds == null) {
+            ds = new ArrayList<>();
         }
-        cthd = CTHD.docCTHD(); // đọc dữ liệu từ database
+        ds = CTHD.docCTHD(); // đọc dữ liệu từ database
 
     }
 
@@ -32,8 +31,8 @@ public class ChiTietHoaDonBUS {
     {
         ChiTietHoaDonDAO CTHD = new ChiTietHoaDonDAO();
         CTHD.them(ctHD);//ghi vào database
-        if(cthd!=null){
-            cthd.add(ctHD);//cập nhật arraylist
+        if(ds!=null){
+            ds.add(ctHD);//cập nhật arraylist
         }
         
     }
@@ -42,24 +41,24 @@ public class ChiTietHoaDonBUS {
 //    {
 //        ChiTietHoaDonDAO CTHD = new ChiTietHoaDonDAO();
 //        CTHD.sua(ctHD);
-//        cthd.set(i, ctHD);
+//        ds.set(i, ctHD);
 //    }
 
 //    public void xoa(ChiTietHoaDonDTO ctHD, int index) //cần ghi lại khi qua class khác
 //    {
 //        ChiTietHoaDonDAO CTHD = new ChiTietHoaDonDAO();
 //        CTHD.xoa(ctHD); // update trạng thái lên database
-//        cthd.set(index, ctHD); // sửa lại thông tin trong list
+//        ds.set(index, ctHD); // sửa lại thông tin trong list
 //    }
      public void trusoluong(ChiTietHoaDonDTO ctHD){
          MonAnBUS bus=new MonAnBUS();
-         for(MonAnDTO DTO:MonAnBUS.dsMonAn)
+         for(MonAnDTO DTO:MonAnBUS.ds)
          {
              if(ctHD.getIDMonAn().equals(DTO.getIDMonAn()))
              {
                  int i=MonAnBUS.timViTri(DTO.getIDMonAn());
                  DTO.setSoLuong(DTO.getSoLuong()-ctHD.getSoLuong());
-                 MonAnBUS.dsMonAn.set(i, DTO);
+                 MonAnBUS.ds.set(i, DTO);
                  bus.sua(DTO, i);
                  return;
              }
@@ -68,7 +67,7 @@ public class ChiTietHoaDonBUS {
     //PDF
     public ArrayList<ChiTietHoaDonDTO> getAllChiTiet(String mahd) {
         ArrayList<ChiTietHoaDonDTO> result = new ArrayList<>();
-        for (ChiTietHoaDonDTO ct : cthd) {
+        for (ChiTietHoaDonDTO ct : ds) {
             if (ct.getIDHoaDon().equals(mahd)) {
                 result.add(ct);
             }
@@ -77,11 +76,11 @@ public class ChiTietHoaDonBUS {
     }
     public ArrayList<ChiTietHoaDonDTO> getALLChiTiet(String idHoaDon) throws Exception {
         ArrayList<ChiTietHoaDonDTO> cthdDTO = new ArrayList<>();
-        if(cthd==null)
+        if(ds==null)
         {
-            docCTHD();
+            docDB();
         }
-        for (ChiTietHoaDonDTO ctHD : cthd) {
+        for (ChiTietHoaDonDTO ctHD : ds) {
             if (ctHD.getIDHoaDon().equals(idHoaDon)) {
                 cthdDTO.add(ctHD);
             }           
@@ -89,7 +88,7 @@ public class ChiTietHoaDonBUS {
         return cthdDTO;
     }
     public ChiTietHoaDonDTO getChiTiet(String idHoaDon, String IDma) {
-        for (ChiTietHoaDonDTO cthdDTO : cthd) {
+        for (ChiTietHoaDonDTO cthdDTO : ds) {
             if (cthdDTO.getIDHoaDon().equals(idHoaDon) && cthdDTO.getIDMonAn().equals(IDma) ) {
                 return cthdDTO;
             }
@@ -99,7 +98,7 @@ public class ChiTietHoaDonBUS {
 
     public ArrayList<ChiTietHoaDonDTO> search(String type, String keyword, int soLuong1, int soLuong2, float thanhTien1, float thanhTien2) {       
         ArrayList<ChiTietHoaDonDTO> result  = new ArrayList<>();
-        cthd.forEach((ctHD) -> {
+        ds.forEach((ctHD) -> {
             switch (type) {
                 case "Tất cả":
                     if (ctHD.getIDHoaDon().toLowerCase().contains(keyword.toLowerCase())
@@ -152,13 +151,3 @@ public class ChiTietHoaDonBUS {
         return result;
     }
 }
-
-    
-
-
-
-
-
-
-
-

@@ -9,6 +9,7 @@ package Excel;
  *
  * @author Piger Streaming
  */
+import EXT.MyTable;
 import BUS.CongThucBUS;
 import BUS.HoaDonBUS;
 import BUS.HoaDonNhapBUS;

@@ -15,58 +15,58 @@ import java.util.ArrayList;
  * @author HP
  */
 public class HoaDonNhapBUS {
-   public static ArrayList<HoaDonNhapDTO> dshdn;
+   public static ArrayList<HoaDonNhapDTO> ds;
+   public static HoaDonNhapDAO hdn = new HoaDonNhapDAO();
    public HoaDonNhapBUS()
     {
         
     }
-    public  void  docHDN() throws Exception 
+    public  void  docDB() throws Exception 
     {
-        HoaDonNhapDAO hdn = new HoaDonNhapDAO();
-        if (dshdn == null) {
-            dshdn = new ArrayList<>();
+        if (ds == null) {
+            ds = new ArrayList<>();
         }
-        dshdn = hdn.docPQ(); // đọc dữ liệu từ database
+        ds = hdn.docPQ(); // đọc dữ liệu từ database
     }
     public void  them(HoaDonNhapDTO HDNDTO)
     {
         HoaDonNhapDAO hdn = new HoaDonNhapDAO();
         hdn.them(HDNDTO);//ghi vào database
-        if (dshdn != null)
-        dshdn.add(HDNDTO);//cập nhật arraylist
+        if (ds != null)
+        ds.add(HDNDTO);//cập nhật arraylist
         
     }
     public void sua(HoaDonNhapDTO HDNDTO,int i)
     {
         HoaDonNhapDAO hdn = new HoaDonNhapDAO();
         hdn.xoa(HDNDTO);//ghi vào database
-        if (dshdn != null)
-        dshdn.set(i,HDNDTO);//cập nhật arraylist
+        if (ds != null)
+        ds.set(i,HDNDTO);//cập nhật arraylist
         
     }
      public void xoa(HoaDonNhapDTO HDNDTO,int index)
     {
         HoaDonNhapDAO hdn = new HoaDonNhapDAO();
         hdn.xoa(HDNDTO); // update trạng thái lên database
-        if (dshdn != null)
-        dshdn.set(index, HDNDTO); // sửa lại thông tin trong list
+        if (ds != null)
+        ds.set(index, HDNDTO); // sửa lại thông tin trong list
     }
      //Xóa với ID
     public void xoa(String ID, int index) 
     {
         HoaDonNhapDAO data = new HoaDonNhapDAO();
         data.xoa(ID); // update trạng thái lên database
-        HoaDonNhapDTO DTO=dshdn.get(index); // sửa lại thông tin trong list
+        HoaDonNhapDTO DTO=ds.get(index); // sửa lại thông tin trong list
         DTO.setTrangThai("Ẩn");
-        if (dshdn != null)
-        dshdn.set(index, DTO);
+        if (ds != null)
+        ds.set(index, DTO);
     }
     
     //tìm vị trí của thằng có chứa mã mà mình cần
     public static int timViTri( String ID) 
     {
-        for (int i = 0; i < dshdn.size(); i++) {
-            if (dshdn.get(i).getIDHoaDonNhap().equals(ID)) {
+        for (int i = 0; i < ds.size(); i++) {
+            if (ds.get(i).getIDHoaDonNhap().equals(ID)) {
                 return i;
             }
         }
@@ -75,23 +75,23 @@ public class HoaDonNhapBUS {
     
     public static String getMaHoaDonNhapCuoi()
     {
-        if(dshdn == null)
+        if(ds == null)
         {
-            dshdn = new ArrayList<>();
+            ds = new ArrayList<>();
         }
-        if(dshdn.size() > 0)
+        if(ds.size() > 0)
         {
             String ma;
-         ma = dshdn.get(dshdn.size()-1).getIDHoaDonNhap();
+         ma = ds.get(ds.size()-1).getIDHoaDonNhap();
          return ma;
         }
          return null;
     }
     public ArrayList<HoaDonNhapDTO> getHoaDonNhapDTO(){
-        return dshdn;
+        return ds;
     }
     public HoaDonNhapDTO getHoaDonNhapDTO(String idhoadonnhap){
-        for (HoaDonNhapDTO hdnDTO : dshdn){
+        for (HoaDonNhapDTO hdnDTO : ds){
             if (hdnDTO.getIDHoaDonNhap().equals(idhoadonnhap))
                 return hdnDTO;
         }          
@@ -100,7 +100,7 @@ public class HoaDonNhapBUS {
     
     public ArrayList<HoaDonNhapDTO> search(String type, String keyword, LocalDate _ngay1, LocalDate _ngay2, int _tong1, int _tong2) {
         ArrayList<HoaDonNhapDTO> result = new ArrayList<>();
-        dshdn.forEach((hdn) -> {
+        ds.forEach((hdn) -> {
             switch (type) {
                 case "Tất cả":
                     if (hdn.getIDHoaDonNhap().toLowerCase().contains(keyword.toLowerCase())

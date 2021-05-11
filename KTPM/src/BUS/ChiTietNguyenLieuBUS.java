@@ -14,23 +14,18 @@ import java.util.ArrayList;
  * @author HP
  */
 public class ChiTietNguyenLieuBUS {
-   public static ArrayList<ChiTietNguyenLieuDTO> dsctnl;
+   public static ArrayList<ChiTietNguyenLieuDTO> ds;
+   public static ChiTietNguyenLieuDAO ctnl = new ChiTietNguyenLieuDAO();
    public ChiTietNguyenLieuBUS()
     {
         
     }
-    public  void  docCTNL() throws Exception 
+    public static void  docDB() throws Exception 
     {
-        ChiTietNguyenLieuDAO ctnl = new ChiTietNguyenLieuDAO();
-        if (dsctnl == null) {
-            dsctnl = new ArrayList<>();
+        
+        if (ds == null) {
+            ds = new ArrayList<>();
         }
-        dsctnl = ctnl.docCTNL(); // đọc dữ liệu từ database
+        ds = ctnl.docCTNL(); // đọc dữ liệu từ database
     }
-    
-
 }
-
-
-
-

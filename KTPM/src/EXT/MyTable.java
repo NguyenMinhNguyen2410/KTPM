@@ -1,4 +1,4 @@
-package GUI;
+package EXT;
 
 import DTO.*;
 import java.awt.BorderLayout;
@@ -21,13 +21,13 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-public class GUIMyTable extends JPanel {
+public class MyTable extends JPanel {
 
     public JTable tb;
     public DefaultTableModel tbModel;
     public JScrollPane pane;
 
-    public GUIMyTable() {
+    public MyTable() {
         setLayout(new BorderLayout());
 
         tb = new JTable();

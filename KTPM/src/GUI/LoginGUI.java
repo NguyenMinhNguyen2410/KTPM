@@ -264,7 +264,7 @@ public class LoginGUI extends javax.swing.JFrame {
         if(checkLogin(taiKhoan, matKhau))
         {
             this.setVisible(false);
-            GUImenu GiaoDien=new GUImenu();
+            GUIMenu GiaoDien=new GUIMenu();
 
         }
 }                                           
@@ -284,13 +284,13 @@ public class LoginGUI extends javax.swing.JFrame {
        if(!checkEmpty())
        {
            //duyệt arraylist tài khoản ở TaiKhoanBUS 
-           for(int i=0; i< TaiKhoanBUS.dstk.size();i++)
+           for(int i=0; i< TaiKhoanBUS.ds.size();i++)
            {
                 //check tên đăng nhập nếu có trong danh sách tài khoản thì xét tiếp , không thì khi duyệt hết sẽ thông báo lại
-                if(TaiKhoanBUS.dstk.get(i).getTaiKhoan().equals(tenDangNhap))
+                if(TaiKhoanBUS.ds.get(i).getTaiKhoan().equals(tenDangNhap))
                 {
                     //check mật khẩu nếu đúng thì ẩn form login và chạy form giao diện
-                    if(TaiKhoanBUS.dstk.get(i).getMatKhau().equals(matKhau))
+                    if(TaiKhoanBUS.ds.get(i).getMatKhau().equals(matKhau))
                     {
                         Tool.IDNhanVienHienHanh = TaiKhoanBUS.timKiemMaNhanVienTheoTenTaiKhoan(taiKhoan);
                         return true;
@@ -301,7 +301,7 @@ public class LoginGUI extends javax.swing.JFrame {
                         break;
                     }
                 }
-                if(i == TaiKhoanBUS.dstk.size() -1)
+                if(i == TaiKhoanBUS.ds.size() -1)
                 {
                     JOptionPane.showMessageDialog(null, "Tài khoản không tồn tại");
                 }

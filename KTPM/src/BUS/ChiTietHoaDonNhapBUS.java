@@ -15,37 +15,38 @@ import java.util.ArrayList;
  * @author HP
  */
 public class ChiTietHoaDonNhapBUS {
-   public static ArrayList<ChiTietHoaDonNhapDTO> dscthdn;
+   public static ArrayList<ChiTietHoaDonNhapDTO> ds;
+   public static ChiTietHoaDonNhapDAO cthdn = new ChiTietHoaDonNhapDAO();
    public ChiTietHoaDonNhapBUS()
     {
         
     }
-    public  void  docCTHDN() throws Exception 
+    public static  void  docDB() throws Exception 
     {
-        ChiTietHoaDonNhapDAO cthdn = new ChiTietHoaDonNhapDAO();
-        if (dscthdn == null) {
-            dscthdn = new ArrayList<>();
+        
+        if (ds == null) {
+            ds = new ArrayList<>();
         }
-        dscthdn = cthdn.docCTHDN(); // đọc dữ liệu từ database
+        ds = cthdn.docCTHDN(); // đọc dữ liệu từ database
     }
     public void  them(ChiTietHoaDonNhapDTO CTHDNDTO)
     {
         ChiTietHoaDonNhapDAO cthdn = new ChiTietHoaDonNhapDAO();
         cthdn.them(CTHDNDTO);//ghi vào database
-        if(dscthdn !=null){
-            dscthdn.add(CTHDNDTO);//cập nhật arraylist
+        if(ds !=null){
+            ds.add(CTHDNDTO);//cập nhật arraylist
         }
     }
 
      public void trusoluong(ChiTietHoaDonNhapDTO ctHDN){
          NguyenLieuBUS bus=new NguyenLieuBUS();
-         for(NguyenLieuDTO DTO:NguyenLieuBUS.dsnl)
+         for(NguyenLieuDTO DTO:NguyenLieuBUS.ds)
          {
              if(ctHDN.getIDNguyenLieu().equals(DTO.getIDNguyenLieu()))
              {
                  int i=NguyenLieuBUS.timViTri(DTO.getIDNguyenLieu());
                  DTO.setSoLuong(DTO.getSoLuong()+ctHDN.getSoLuong());
-                 NguyenLieuBUS.dsnl.set(i, DTO);
+                 NguyenLieuBUS.ds.set(i, DTO);
                  bus.sua(DTO, i);
                  return;
              }
@@ -53,7 +54,7 @@ public class ChiTietHoaDonNhapBUS {
      }
 //    public ArrayList<ChiTietHoaDonNhapDTO> getAllChiTiet(String mahdn) {
 //        ArrayList<ChiTietHoaDonNhapDTO> result = new ArrayList<>();
-//        for (ChiTietHoaDonNhapDTO cthdn : dscthdn) {
+//        for (ChiTietHoaDonNhapDTO cthdn : ds) {
 //            if (cthdn.getIDHoaDonNhap().equals(mahdn)) {
 //                result.add(cthdn);
 //            }
@@ -62,11 +63,11 @@ public class ChiTietHoaDonNhapBUS {
 //    }
     
     public  ArrayList<ChiTietHoaDonNhapDTO> getChiTietHoaDonNhapDTO() {
-    return dscthdn;
+    return ds;
     }
     
     public ChiTietHoaDonNhapDTO getChiTiet(String mahd, String manl) {
-        for (ChiTietHoaDonNhapDTO cthdnDTO : dscthdn) {
+        for (ChiTietHoaDonNhapDTO cthdnDTO : ds) {
             if (cthdnDTO.getIDHoaDonNhap().equals(mahd) && cthdnDTO.getIDNguyenLieu().equals(manl)) {
                 return cthdnDTO;
             }
@@ -75,11 +76,11 @@ public class ChiTietHoaDonNhapBUS {
     }
     public ArrayList<ChiTietHoaDonNhapDTO> getAllChiTiet(String mahdn) throws Exception  {
         ArrayList<ChiTietHoaDonNhapDTO> result = new ArrayList<>();
-        if(dscthdn==null)
+        if(ds==null)
         {
-            docCTHDN();
+            docDB();
         }
-        for (ChiTietHoaDonNhapDTO ctHDN : dscthdn) {
+        for (ChiTietHoaDonNhapDTO ctHDN : ds) {
             if (ctHDN.getIDHoaDonNhap().equals(mahdn)) {
                 result.add(ctHDN);
             }
@@ -88,7 +89,7 @@ public class ChiTietHoaDonNhapBUS {
     }
     public ArrayList<ChiTietHoaDonNhapDTO> search(String type, String value) {
         ArrayList<ChiTietHoaDonNhapDTO> result = new ArrayList<>();
-        dscthdn.forEach((cthdn) -> {
+        ds.forEach((cthdn) -> {
             if (type.equals("Tất cả")) {
                 if (cthdn.getIDHoaDonNhap().toLowerCase().contains(value.toLowerCase())
                         || cthdn.getIDNguyenLieu().toLowerCase().contains(value.toLowerCase())

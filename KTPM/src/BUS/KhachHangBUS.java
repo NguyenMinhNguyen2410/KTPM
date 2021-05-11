@@ -17,17 +17,18 @@ import java.util.logging.Logger;
  * @author HP
  */
 public class KhachHangBUS {
-   public static ArrayList<KhachHangDTO> dskh;
+   public static ArrayList<KhachHangDTO> ds;
+   public static KhachHangDAO khdata=new KhachHangDAO();
    public KhachHangBUS()
     {
         
     }
-    public  void  docDSKH() throws Exception 
+    public  void  docDB() throws Exception 
     {
-        KhachHangDAO khdata=new KhachHangDAO();
-        if(dskh==null) 
-            dskh=new ArrayList<KhachHangDTO>();
-        dskh =khdata.docDSKH();
+        
+        if(ds==null) 
+            ds=new ArrayList<KhachHangDTO>();
+        ds =khdata.docDSKH();
     }
     public void  them(KhachHangDTO kh)
     {
@@ -35,8 +36,8 @@ public class KhachHangBUS {
         {
             KhachHangDAO khdata=new KhachHangDAO();
             khdata.them(kh);
-            if(dskh!=null)
-            dskh.add(kh);
+            if(ds!=null)
+            ds.add(kh);
         }
         catch (Exception ex) {
            Logger.getLogger(KhachHangBUS.class.getName()).log(Level.SEVERE, null, ex);
@@ -50,8 +51,8 @@ public class KhachHangBUS {
 
            KhachHangDAO khdata=new KhachHangDAO();
            khdata.sua(kh);
-           if(dskh!=null)
-           dskh.set(i, kh);
+           if(ds!=null)
+           ds.set(i, kh);
         }
         catch (Exception ex) {
            Logger.getLogger(KhachHangBUS.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,34 +62,34 @@ public class KhachHangBUS {
      public void xoa(KhachHangDTO kh,int index) throws SQLException
     {
         KhachHangDAO khDao =new KhachHangDAO();
-        String xoakh = dskh.get(index).getIDKhachHang();
+        String xoakh = ds.get(index).getIDKhachHang();
         khDao.xoa(xoakh);
-        if(dskh!=null)
-        dskh.set(index,kh);
+        if(ds!=null)
+        ds.set(index,kh);
     }
      //Xóa với ID
     public void xoa(String ID, int index) 
     {
         KhachHangDAO data = new KhachHangDAO();
         data.xoa(ID); // update trạng thái lên database
-        KhachHangDTO DTO=dskh.get(index); // sửa lại thông tin trong list
+        KhachHangDTO DTO=ds.get(index); // sửa lại thông tin trong list
         DTO.setTrangThai("Ẩn");
-        if(dskh!=null)
-        dskh.set(index, DTO);
+        if(ds!=null)
+        ds.set(index, DTO);
     }
     
     //tìm vị trí của thằng có chứa mã mà mình cần
     public static int timViTri( String ID) 
     {
-        for (int i = 0; i < dskh.size(); i++) {
-            if (dskh.get(i).getIDKhachHang().equals(ID)) {
+        for (int i = 0; i < ds.size(); i++) {
+            if (ds.get(i).getIDKhachHang().equals(ID)) {
                 return i;
             }
         }
         return 0;
     }
      public KhachHangDTO getKhachHangDTO(String idkh) {
-        for (KhachHangDTO khDTO : dskh) {
+        for (KhachHangDTO khDTO : ds) {
             if (khDTO.getIDKhachHang().equals(idkh)) {
                 return khDTO;
             }
@@ -97,19 +98,19 @@ public class KhachHangBUS {
     }
 
     public ArrayList<KhachHangDTO> getKhachHangDTO() {
-    return dskh;
+    return ds;
     }
     
     public static String getMaKhachHangCuoi()
     {
-        if(dskh == null)
+        if(ds == null)
         {
-            dskh = new ArrayList<>();
+            ds = new ArrayList<>();
         }
-        if(dskh.size() > 0)
+        if(ds.size() > 0)
         {
             String ma;
-         ma = dskh.get(dskh.size()-1).getIDKhachHang();
+         ma = ds.get(ds.size()-1).getIDKhachHang();
          return ma;
         }
          return null;
@@ -121,10 +122,10 @@ public class KhachHangBUS {
            KhachHangDAO khdata=new KhachHangDAO();
            KhachHangDTO DTO = null;
            int i=timViTri(makh);
-           if(dskh!=null){
-               DTO=dskh.get(i);
+           if(ds!=null){
+               DTO=ds.get(i);
                DTO.setTongChiTieu(DTO.getTongChiTieu()+tongtien);
-               dskh.set(i, DTO);
+               ds.set(i, DTO);
                khdata.sua(DTO);
            }
 

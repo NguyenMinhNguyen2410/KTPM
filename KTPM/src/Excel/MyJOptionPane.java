@@ -9,7 +9,7 @@ package Excel;
  *
  * @author Piger Streaming
  */
-import Excel.MyTable;
+import EXT.MyTable;
 import java.awt.BorderLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;

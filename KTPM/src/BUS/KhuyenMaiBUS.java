@@ -16,17 +16,18 @@ import java.util.logging.Logger;
  * @author HP
  */
 public class KhuyenMaiBUS {
-   public static ArrayList<KhuyenMaiDTO> dskm;
+   public static ArrayList<KhuyenMaiDTO> ds;
+   public static KhuyenMaiDAO kmdata=new KhuyenMaiDAO();
    public KhuyenMaiBUS()
     {
         
     }
-    public  void  docDSKM() throws Exception 
+    public  void  docDB() throws Exception 
     {
-        KhuyenMaiDAO kmdata=new KhuyenMaiDAO();
-        if(dskm==null) 
-            dskm=new ArrayList<>();
-        dskm =kmdata.docDSKM();
+        
+        if(ds==null) 
+            ds=new ArrayList<>();
+        ds =kmdata.docDSKM();
     }
     public void  them(KhuyenMaiDTO km)
     {
@@ -34,8 +35,8 @@ public class KhuyenMaiBUS {
         {
             KhuyenMaiDAO kmdata=new KhuyenMaiDAO();
             kmdata.them(km);
-            if(dskm!=null)
-            dskm.add(km);
+            if(ds!=null)
+            ds.add(km);
         }
         catch (Exception ex) {
            Logger.getLogger(KhuyenMaiBUS.class.getName()).log(Level.SEVERE, null, ex);
@@ -49,8 +50,8 @@ public class KhuyenMaiBUS {
 
            KhuyenMaiDAO kmdata=new KhuyenMaiDAO();
            kmdata.sua(km);
-           if(dskm!=null)
-            dskm.set(i, km);
+           if(ds!=null)
+            ds.set(i, km);
         }
         catch (Exception ex) {
            Logger.getLogger(KhuyenMaiBUS.class.getName()).log(Level.SEVERE, null, ex);
@@ -60,27 +61,27 @@ public class KhuyenMaiBUS {
      public void xoa(KhuyenMaiDTO km,int index)
     {
         KhuyenMaiDAO kmdata =new KhuyenMaiDAO();
-        String xoakm = dskm.get(index).getIDKhuyenMai();
+        String xoakm = ds.get(index).getIDKhuyenMai();
         kmdata.xoa(xoakm);
-        if(dskm!=null)
-        dskm.set(index,km);
+        if(ds!=null)
+        ds.set(index,km);
     }
      //Xóa với ID
     public void xoa(String ID, int index) 
     {
         KhuyenMaiDAO data = new KhuyenMaiDAO();
         data.xoa(ID); // update trạng thái lên database
-        KhuyenMaiDTO DTO=dskm.get(index); // sửa lại thông tin trong list
+        KhuyenMaiDTO DTO=ds.get(index); // sửa lại thông tin trong list
         DTO.setTrangThai("Ẩn");
-        if(dskm!=null)
-        dskm.set(index, DTO);
+        if(ds!=null)
+        ds.set(index, DTO);
     }
     
     //tìm vị trí của thằng có chứa mã mà mình cần
     public static int timViTri( String ID) 
     {
-        for (int i = 0; i < dskm.size(); i++) {
-            if (dskm.get(i).getIDKhuyenMai().equals(ID)) {
+        for (int i = 0; i < ds.size(); i++) {
+            if (ds.get(i).getIDKhuyenMai().equals(ID)) {
                 return i;
             }
         }
@@ -89,24 +90,24 @@ public class KhuyenMaiBUS {
     
     public static String getMaKhuyenMaiCuoi()
     {
-        if(dskm == null)
+        if(ds == null)
         {
-            dskm = new ArrayList<>();
+            ds = new ArrayList<>();
         }
-        if(dskm.size() > 0)
+        if(ds.size() > 0)
         {
             String ma;
-         ma = dskm.get(dskm.size()-1).getIDKhuyenMai();
+         ma = ds.get(ds.size()-1).getIDKhuyenMai();
          return ma;
         }
          return null;
     }
     //
     public ArrayList<KhuyenMaiDTO> getKhuyenMaiDTO(){
-        return dskm; 
+        return ds; 
     }
     public KhuyenMaiDTO getKhuyenMaiDTO(String idkhuyenmai){
-         for (KhuyenMaiDTO kmDTO: dskm){
+         for (KhuyenMaiDTO kmDTO: ds){
              if(kmDTO.getIDKhuyenMai().equals(idkhuyenmai))
                  return kmDTO;
          }

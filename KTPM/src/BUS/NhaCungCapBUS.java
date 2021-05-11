@@ -17,25 +17,25 @@ import java.util.logging.Logger;
  * @author HP
  */
 public class NhaCungCapBUS {
-   public static ArrayList<NhaCungCapDTO> dsncc;
+   public static ArrayList<NhaCungCapDTO> ds;
+   public static NhaCungCapDAO DAO=new NhaCungCapDAO();
    public NhaCungCapBUS()
     {
         
     }
-    public  void  docDSNCC() throws Exception 
+    public  void  docDB() throws Exception 
     {
-        NhaCungCapDAO nccdata=new NhaCungCapDAO();
-        if(dsncc==null) dsncc=new ArrayList<NhaCungCapDTO>();
-        dsncc =nccdata.docDSNCC();
+        
+        if(ds==null) ds=new ArrayList<NhaCungCapDTO>();
+        ds =DAO.docDSNCC();
     }
     public void them(NhaCungCapDTO ncc)
     {
         try
         {
-            NhaCungCapDAO nccdata=new NhaCungCapDAO();
-            nccdata.them(ncc);
-            if(dsncc!=null)
-            dsncc.add(ncc);
+            DAO.them(ncc);
+            if(ds!=null)
+            ds.add(ncc);
         }
         catch (Exception ex) {
            Logger.getLogger(NhaCungCapBUS.class.getName()).log(Level.SEVERE, null, ex);
@@ -46,11 +46,9 @@ public class NhaCungCapBUS {
     {
         try
         {
-
-           NhaCungCapDAO nccdata=new NhaCungCapDAO();
-           nccdata.sua(ncc);
-           if(dsncc!=null)
-           dsncc.set(i, ncc);
+           DAO.sua(ncc);
+           if(ds!=null)
+           ds.set(i, ncc);
         }
         catch (Exception ex) {
            Logger.getLogger(NhaCungCapBUS.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,35 +57,33 @@ public class NhaCungCapBUS {
     }
      public void xoa(NhaCungCapDTO ncc,int index)
     {
-        NhaCungCapDAO nccDao =new NhaCungCapDAO();
-        String xoancc = dsncc.get(index).getIDNhaCungCap();
-        nccDao.xoa(xoancc);
-        if(dsncc!=null)
-        dsncc.set(index,ncc);
+        String xoancc = ds.get(index).getIDNhaCungCap();
+        DAO.xoa(xoancc);
+        if(ds!=null)
+        ds.set(index,ncc);
     }
      //Xóa với ID
     public void xoa(String ID, int index) 
     {
-        NhaCungCapDAO data = new NhaCungCapDAO();
-        data.xoa(ID); // update trạng thái lên database
-        NhaCungCapDTO DTO=dsncc.get(index); // sửa lại thông tin trong list
+        DAO.xoa(ID); // update trạng thái lên database
+        NhaCungCapDTO DTO=ds.get(index); // sửa lại thông tin trong list
         DTO.setTrangThai("Ẩn");
-        if(dsncc!=null)
-        dsncc.set(index, DTO);
+        if(ds!=null)
+        ds.set(index, DTO);
     }
     
     //tìm vị trí của thằng có chứa mã mà mình cần
     public static int timViTri( String ID) 
     {
-        for (int i = 0; i < dsncc.size(); i++) {
-            if (dsncc.get(i).getIDNhaCungCap().equals(ID)) {
+        for (int i = 0; i < ds.size(); i++) {
+            if (ds.get(i).getIDNhaCungCap().equals(ID)) {
                 return i;
             }
         }
         return 0;
     }
      public NhaCungCapDTO getNhaCungCapDTO(String idncc) {
-        for (NhaCungCapDTO nccDTO : dsncc) {
+        for (NhaCungCapDTO nccDTO : ds) {
             if (nccDTO.getIDNhaCungCap().equals(idncc)) {
                 return nccDTO;
             }
@@ -96,19 +92,19 @@ public class NhaCungCapBUS {
     }
 
     public ArrayList<NhaCungCapDTO> getNhaCungCapDTO() {
-    return dsncc;
+    return ds;
     }
     
     public static String getMaNhaCungCapCuoi() //lấy mã cuối để tăng
     {
-        if(dsncc == null)
+        if(ds == null)
         {
-            dsncc = new ArrayList<>();
+            ds = new ArrayList<>();
         }
-        if(dsncc.size() > 0)
+        if(ds.size() > 0)
         {
             String ma;
-         ma = dsncc.get(dsncc.size()-1).getIDNhaCungCap();
+         ma = ds.get(ds.size()-1).getIDNhaCungCap();
          return ma;
         }
          return null;

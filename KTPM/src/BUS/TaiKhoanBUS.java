@@ -17,25 +17,25 @@ import java.util.logging.Logger;
  * @author HP
  */
 public class TaiKhoanBUS {
-   public static ArrayList<TaiKhoanDTO> dstk;
+   public static ArrayList<TaiKhoanDTO> ds;
+   public static TaiKhoanDAO DAO=new TaiKhoanDAO();
    public TaiKhoanBUS()
     {
         
     }
-    public  void  docDSTK() throws Exception 
+    public  void  docDB() throws Exception 
     {
-        TaiKhoanDAO tkdata=new TaiKhoanDAO();
-        if(dstk==null) dstk=new ArrayList<TaiKhoanDTO>();
-        dstk =tkdata.docDSTK();
+        
+        if(ds==null) ds=new ArrayList<TaiKhoanDTO>();
+        ds =DAO.docDSTK();
     }
     public void them(TaiKhoanDTO tk)
     {
         try
         {
-            TaiKhoanDAO tkdata=new TaiKhoanDAO();
-            tkdata.them(tk);
-            if(dstk!=null)
-            dstk.add(tk);
+            DAO.them(tk);
+            if(ds!=null)
+            ds.add(tk);
         }
         catch (Exception ex) {
            Logger.getLogger(TaiKhoanBUS.class.getName()).log(Level.SEVERE, null, ex);
@@ -46,11 +46,9 @@ public class TaiKhoanBUS {
     {
         try
         {
-
-           TaiKhoanDAO tkdata=new TaiKhoanDAO();
-           tkdata.sua(tk);
-           if(dstk!=null)
-           dstk.set(i, tk);
+           DAO.sua(tk);
+           if(ds!=null)
+           ds.set(i, tk);
         }
         catch (Exception ex) {
            Logger.getLogger(TaiKhoanBUS.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,35 +57,33 @@ public class TaiKhoanBUS {
     }
      public void xoa(TaiKhoanDTO tk,int index)
     {
-        TaiKhoanDAO nvDao =new TaiKhoanDAO();
-        String xoatk = dstk.get(index).getIDNhanVien();
-        nvDao.xoa(xoatk);
-        if(dstk!=null)
-        dstk.set(index,tk);
+        String xoatk = ds.get(index).getIDNhanVien();
+        DAO.xoa(xoatk);
+        if(ds!=null)
+        ds.set(index,tk);
     }
      //Xóa với ID
     public void xoa(String ID, int index) 
     {
-        TaiKhoanDAO data = new TaiKhoanDAO();
-        data.xoa(ID); // update trạng thái lên database
-        TaiKhoanDTO DTO=dstk.get(index); // sửa lại thông tin trong list
+        DAO.xoa(ID); // update trạng thái lên database
+        TaiKhoanDTO DTO=ds.get(index); // sửa lại thông tin trong list
         DTO.setTrangThai("Ẩn");
-        if(dstk!=null)
-        dstk.set(index, DTO);
+        if(ds!=null)
+        ds.set(index, DTO);
     }
     
     //tìm vị trí của thằng có chứa mã mà mình cần
     public static int timViTri( String ID) 
     {
-        for (int i = 0; i < dstk.size(); i++) {
-            if (dstk.get(i).getTaiKhoan().equals(ID)) {
+        for (int i = 0; i < ds.size(); i++) {
+            if (ds.get(i).getTaiKhoan().equals(ID)) {
                 return i;
             }
         }
         return 0;
     }
     public TaiKhoanDTO getTaiKhoanDTO(String idtk) {
-        for (TaiKhoanDTO tkDTO : dstk) {
+        for (TaiKhoanDTO tkDTO : ds) {
             if (tkDTO.getTaiKhoan().equals(idtk)) {
                 return tkDTO;
             }
@@ -96,12 +92,12 @@ public class TaiKhoanBUS {
     }
 
     public ArrayList<TaiKhoanDTO> getTaiKhoanDTO() {
-    return dstk;
+    return ds;
     }
     //Tìm kiếm IDPhanQuyen theo TaiKhoan
      public static String timKiemMaQuyenTheoTenTaiKhoan(String tenTaiKhoan)
     {
-        for(TaiKhoanDTO tkDTO : dstk)
+        for(TaiKhoanDTO tkDTO : ds)
         {
             if(tkDTO.getTaiKhoan().equals(tenTaiKhoan))
             {
@@ -113,7 +109,7 @@ public class TaiKhoanBUS {
      
      public static String timKiemMaNhanVienTheoTenTaiKhoan(String tenTaiKhoan)
     {
-        for(TaiKhoanDTO tkDTO : dstk)
+        for(TaiKhoanDTO tkDTO : ds)
         {
             if(tkDTO.getTaiKhoan().equals(tenTaiKhoan))
             {
