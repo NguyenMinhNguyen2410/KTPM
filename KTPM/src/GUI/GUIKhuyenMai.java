@@ -592,4 +592,73 @@ public class GUIKhuyenMai extends FormContent {
     protected void ChiTiet(){
         
     }
+
+    public static String[] getHeader() {
+        return header;
+    }
+
+    public JLabel[] getLabel_KhuyenMai() {
+        return label_KhuyenMai;
+    }
+
+    public JTextField[] getTxt_KhuyenMai_Them() {
+        return txt_KhuyenMai_Them;
+    }
+
+    public JTextField[] getTxt_KhuyenMai_Sua() {
+        return txt_KhuyenMai_Sua;
+    }
+
+    public JComboBox getCbSearch() {
+        return cbSearch;
+    }
+
+    public KhuyenMaiBUS getBUS() {
+        return BUS;
+    }
+
+    public DatePicker getThem_NgayBatDau() {
+        return Them_NgayBatDau;
+    }
+
+    public DatePicker getThem_NgayKetThuc() {
+        return Them_NgayKetThuc;
+    }
+
+    public DatePicker getSua_NgayBatDau() {
+        return Sua_NgayBatDau;
+    }
+
+    public DatePicker getSua_NgayKetThuc() {
+        return Sua_NgayKetThuc;
+    }
+
+    public JTextField getTen() {
+        return Ten;
+    }
+
+    public JTextField getTu_TienGiam() {
+        return Tu_TienGiam;
+    }
+
+    public JTextField getDen_TienGiam() {
+        return Den_TienGiam;
+    }
+
+    public JTextField getTu_NgayBatDau() {
+        return Tu_NgayBatDau;
+    }
+
+    public JTextField getDen_NgayKetThuc() {
+        return Den_NgayKetThuc;
+    }
+
+    public static DatePicker getDp_Tu_NgayBatDau() {
+        return dp_Tu_NgayBatDau;
+    }
+
+    public static DatePicker getDp_Den_NgayKetThuc() {
+        return dp_Den_NgayKetThuc;
+    }
+    
 }
