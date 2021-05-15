@@ -18,26 +18,18 @@ import java.awt.Dimension;
 import java.awt.FileDialog;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
@@ -727,4 +719,33 @@ public class GUINguyenLieu extends FormContent {
     protected void ChiTiet(){
         
     }
+
+    public JTextField[] getTxt_NguyenLieu_Them() {
+        return txt_NguyenLieu_Them;
+    }
+
+    public JTextField[] getTxt_NguyenLieu_Sua() {
+        return txt_NguyenLieu_Sua;
+    }
+
+    public JTextField getTen() {
+        return Ten;
+    }
+
+    public JTextField getTu_DonGia() {
+        return Tu_DonGia;
+    }
+
+    public JTextField getDen_DonGia() {
+        return Den_DonGia;
+    }
+
+    public JTextField getTu_SoLuong() {
+        return Tu_SoLuong;
+    }
+
+    public JTextField getDen_SoLuong() {
+        return Den_SoLuong;
+    }
+    
 }

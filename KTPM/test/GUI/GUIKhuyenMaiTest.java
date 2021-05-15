@@ -172,7 +172,10 @@ public class GUIKhuyenMaiTest {
                 assertTrue("Không hiện cửa sổ chọn file",de.getFd().isShowing());
                 String expected="Nhập dữ liệu khuyến mãi từ Excel";
                 assertEquals("Tên cửa sổ sai",expected,de.getFd().getTitle() );
-            }
+            
+                }
+            });
+    }
     @Test
     public void testcaseID_25(){
         SwingUtilities.invokeLater(new Runnable(){
@@ -187,3 +190,4 @@ public class GUIKhuyenMaiTest {
         });
     }
 }
+                
