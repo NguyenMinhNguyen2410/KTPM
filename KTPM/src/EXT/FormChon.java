@@ -48,6 +48,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import static GUI.GUIMonAn.header;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 /**
@@ -62,6 +64,7 @@ public class FormChon extends JDialog{
     //Tạo cờ hiệu cho việc các Dialog có được tắt đúng cách hay không
     private int cohieu = 0;
     //Hàm khởi tạo với việc lấy mã thực thể trong danh sách
+    private JButton Chon,Thoat;
     public FormChon(JTextField txt,String a) throws Exception{
         setLayout(new BorderLayout());
         setSize(800, 500);
@@ -90,7 +93,7 @@ public class FormChon extends JDialog{
             }
 
         });
-        setVisible(true);
+//        setVisible(true);
     }
     //Hàm khởi tạo với việc hiện danh sách các chi tiết 
     public FormChon(String a,String i) throws Exception{
@@ -121,7 +124,7 @@ public class FormChon extends JDialog{
             }
 
         });
-        setVisible(true);
+//        setVisible(true);
     }
     //Hàm tạo tiêu đề
     public JPanel pnTitle(String a){
@@ -207,12 +210,12 @@ public class FormChon extends JDialog{
     public JPanel pnButton(){
         JPanel panel=new JPanel(null);
 
-        JButton Thoat = new JButton("Thoát");
+        Thoat = new JButton("Thoát");
         Thoat.setBackground(Color.decode("#90CAF9"));
         Thoat.setBounds(350, 0, 100, 50);
-        Thoat.addMouseListener(new MouseAdapter() {
+        Thoat.addActionListener(new ActionListener() {
             @Override
-            public void mousePressed(MouseEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 //Tắt cờ hiệu đi 
                 cohieu = 1;
                 dispose();
@@ -224,12 +227,12 @@ public class FormChon extends JDialog{
     //Hàm tạo nút khi có thể chọn trong danh sách
     public JPanel pnButton(JTextField txt){
         JPanel panel=new JPanel(null);
-        JButton Chon = new JButton("Chọn");
+        Chon = new JButton("Chọn");
         Chon.setBackground(Color.decode("#90CAF9"));
         Chon.setBounds(300, 0, 100, 50);
-        Chon.addMouseListener(new MouseAdapter() {
+        Chon.addActionListener(new ActionListener() {
             @Override
-            public void mousePressed(MouseEvent evt) { 
+            public void actionPerformed(ActionEvent evt) { 
                 int i = Table.tb.getSelectedRow();
                 if (i == -1) {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 hàng");
@@ -246,9 +249,9 @@ public class FormChon extends JDialog{
         JButton Thoat = new JButton("Thoát");
         Thoat.setBackground(Color.decode("#90CAF9"));
         Thoat.setBounds(450, 0, 100, 50);
-        Thoat.addMouseListener(new MouseAdapter() {
+        Thoat.addActionListener(new ActionListener() {
             @Override
-            public void mousePressed(MouseEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 //Tắt cờ hiệu đi 
                 cohieu = 1;
                 dispose();
@@ -370,7 +373,7 @@ public class FormChon extends JDialog{
         Table.setHeaders(GUINhanVien.header);
         NhanVienBUS Bus = new NhanVienBUS();
         if(NhanVienBUS.ds == null) {            
-                Bus.docDSNV();
+                Bus.docDB();
         }       
         for (NhanVienDTO DTO : NhanVienBUS.ds) {
             if (DTO.getTrangThai().equals("Hiện")) {
@@ -393,6 +396,19 @@ public class FormChon extends JDialog{
         }
         Table.pane.setPreferredSize(new Dimension(GUIMenu.width_content*90/100, 300));
     }
+
+    public MyTable getTable() {
+        return Table;
+    }
+
+    public JButton getChon() {
+        return Chon;
+    }
+
+    public JButton getThoat() {
+        return Thoat;
+    }
+    
 }
 
 

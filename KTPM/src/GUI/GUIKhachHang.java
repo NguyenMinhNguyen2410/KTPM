@@ -13,6 +13,7 @@ import EXT.MyTable;
 import Excel.DocExcel;
 import Excel.XuatExcel;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -66,8 +67,8 @@ public class GUIKhachHang extends FormContent {
     }
     
     @Override
-    protected void Them_click(MouseEvent evt) {
-        super.Them_click(evt);
+    protected void Them_click() {
+        super.Them_click();
         //Tạo tiêu đề và set hình thức
         JLabel Title = new JLabel("Thêm khách hàng");
         Title.setFont(new Font("Time New Roman", Font.BOLD, 21));
@@ -108,7 +109,7 @@ public class GUIKhachHang extends FormContent {
     @Override
     protected void luuThem_Frame(){
         cohieu =1;
-                int a = JOptionPane.showConfirmDialog(Them_Frame, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
+                int a = op.showConfirmDialog(Them_Frame, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
                 if (a == JOptionPane.YES_OPTION) {
                     if(checkTextThem(txt_KhachHang_Them[1].getText(),
                             txt_KhachHang_Them[2].getText(),
@@ -151,11 +152,11 @@ public class GUIKhachHang extends FormContent {
         }
     }
     @Override
-    protected void Sua_click(MouseEvent evt) {
-        super.Sua_click(evt);
+    protected void Sua_click() {
+        super.Sua_click();
         int row = table.tb.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 hàng để sửa");
+            op.showMessageDialog(null, "Vui lòng chọn 1 hàng để sửa");
         } else {
             //Tạo tiêu đề
             JLabel Title = new JLabel("Sửa khách hàng");
@@ -204,7 +205,7 @@ public class GUIKhachHang extends FormContent {
     @Override
     protected void luuSua_Frame(){
         cohieu =1;
-                int a = JOptionPane.showConfirmDialog(Sua_Frame, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
+                int a = op.showConfirmDialog(Sua_Frame, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
                 if (a == JOptionPane.YES_OPTION) {
                     if(checkTextSua(txt_KhachHang_Sua[1].getText(),
                             txt_KhachHang_Sua[2].getText(),
@@ -217,7 +218,7 @@ public class GUIKhachHang extends FormContent {
         int colum = table.tb.getSelectedColumn();
         String maKhachHang = table.tbModel.getValueAt(row, colum).toString();
         //Hỏi để xác nhận việc lưu dữ liệu đã sửa chữa
-//        int option = JOptionPane.showConfirmDialog(Sua_Frame, "Bạn chắc chắn sửa?", "", JOptionPane.YES_NO_OPTION);
+//        int option = op.showConfirmDialog(Sua_Frame, "Bạn chắc chắn sửa?", "", JOptionPane.YES_NO_OPTION);
 //        if (option == JOptionPane.YES_OPTION) {
             //Sửa dữ liệu trên bảng
             //model là ruột JTable   
@@ -259,16 +260,16 @@ public class GUIKhachHang extends FormContent {
             txt_KhachHang_Sua[i].setText("");
         }
     }
-
-
     //Hàm sự kiện khi click vào nút xóa
     @Override
-    protected void Xoa_click(MouseEvent evt) {
+    protected void Xoa_click() {
         int row = table.tb.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn hàng muốn xóa");
+            op.showMessageDialog(null, "Vui lòng chọn hàng muốn xóa");
+//            op=new JOptionPane("Vui lòng chọn hàng muốn xóa");
+//            op.setVisible(true);
         } else {
-            int option = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn xóa?", "", JOptionPane.YES_NO_OPTION);
+            int option = op.showConfirmDialog(null, "Bạn chắc chắn xóa?", "", JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION) {
                 String maKhachHang = table.tbModel.getValueAt(row, 0).toString();
                 //truyền mã khách hàng vào hàm timViTri ở KhachHangBUS 
@@ -400,13 +401,13 @@ public class GUIKhachHang extends FormContent {
     }
 
     @Override
-    protected void XuatExcel_click(MouseEvent evt) {
+    protected void XuatExcel_click() {
         new XuatExcel().xuatFileExcelKhachHang();
 
     }
 
     @Override
-    protected void NhapExcel_click(MouseEvent evt) {
+    protected void NhapExcel_click() {
         new DocExcel().docFileExcelKhachHang();
 
     }
@@ -419,46 +420,46 @@ public class GUIKhachHang extends FormContent {
                 || gioiTinh.equals("")
                 || soDienThoai.equals("")
                 || tongChiTieu.equals("")) {
-            JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
+            op.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
         } else if (!Tool.isName(Tool.removeAccent(hoKhachHang))) {
-            JOptionPane.showMessageDialog(null, "Họ khách hàng không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Họ khách hàng không được chứa ký tự đặc biệt");
             txt_KhachHang_Them[1].requestFocus();
         } else if (!Tool.isLength50(hoKhachHang)) {
-            JOptionPane.showMessageDialog(null, "Họ khách hàng không được quá 50 ký tự");
+            op.showMessageDialog(null, "Họ khách hàng không được quá 50 ký tự");
             txt_KhachHang_Them[1].requestFocus();
         } else if (!Tool.isName(Tool.removeAccent(tenKhachHang))) {
-            JOptionPane.showMessageDialog(null, "Tên khách hàng không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Tên khách hàng không được chứa ký tự đặc biệt");
             txt_KhachHang_Them[2].requestFocus();
         } else if (!Tool.isLength50(tenKhachHang)) {
-            JOptionPane.showMessageDialog(null, "Tên khách hàng không được quá 50 ký tự");
+            op.showMessageDialog(null, "Tên khách hàng không được quá 50 ký tự");
             txt_KhachHang_Them[2].requestFocus();
         }else if (Tool.haveSpace(tenKhachHang.trim())) {
-            JOptionPane.showMessageDialog(null, "Tên khách hàng không được quá 2 từ");
+            op.showMessageDialog(null, "Tên khách hàng không được quá 2 từ");
             txt_KhachHang_Them[2].requestFocus();
         }
         else if (!Tool.isGmail(gmail)) {
-            JOptionPane.showMessageDialog(null, "Gmail phải đúng định dạng và không được chứa ký tự đặc biệt ");
+            op.showMessageDialog(null, "Gmail phải đúng định dạng và không được chứa ký tự đặc biệt ");
             txt_KhachHang_Them[3].requestFocus();
         } else if (!Tool.isName(Tool.removeAccent(gioiTinh))) {
-            JOptionPane.showMessageDialog(null, "Giới tính không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Giới tính không được chứa ký tự đặc biệt");
             txt_KhachHang_Them[4].requestFocus();
         } else if (!Tool.isLength50(gioiTinh)) {
-            JOptionPane.showMessageDialog(null, "Giới tính không được quá 50 ký tự");
+            op.showMessageDialog(null, "Giới tính không được quá 50 ký tự");
             txt_KhachHang_Them[4].requestFocus();
         } else if (!Tool.isName(Tool.removeAccent(soDienThoai))) {
-            JOptionPane.showMessageDialog(null, "Số điện thoại không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Số điện thoại không được chứa ký tự đặc biệt");
             txt_KhachHang_Them[5].requestFocus();
         } else if (!Tool.isLength50(soDienThoai)) {
-            JOptionPane.showMessageDialog(null, "Số điện thoại không được quá 50 ký tự");
+            op.showMessageDialog(null, "Số điện thoại không được quá 50 ký tự");
             txt_KhachHang_Them[5].requestFocus();
         } else if (!Tool.isPhoneNumber(soDienThoai)) {
-            JOptionPane.showMessageDialog(null, "Số điện thoại không chính xác");
+            op.showMessageDialog(null, "Số điện thoại không chính xác");
             txt_KhachHang_Them[5].requestFocus();
         } else if (!Tool.isTongTien(Tool.removeAccent(tongChiTieu))) {
-            JOptionPane.showMessageDialog(null, "Tổng chi tiêu không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Tổng chi tiêu không được chứa ký tự đặc biệt");
             txt_KhachHang_Them[6].requestFocus();
         } else if (!Tool.isNumber(tongChiTieu)) {
-            JOptionPane.showMessageDialog(null, "Tổng chi tiêu phải là số nguyên dương");
+            op.showMessageDialog(null, "Tổng chi tiêu phải là số nguyên dương");
             txt_KhachHang_Them[6].requestFocus();
         } else {
             return true;
@@ -475,46 +476,46 @@ public class GUIKhachHang extends FormContent {
                 || gioiTinh.equals("")
                 || soDienThoai.equals("")
                 || tongChiTieu.equals("")) {
-            JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
+            op.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
         } else if (!Tool.isName(Tool.removeAccent(hoKhachHang))) {
-            JOptionPane.showMessageDialog(null, "Họ khách hàng không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Họ khách hàng không được chứa ký tự đặc biệt");
             txt_KhachHang_Sua[1].requestFocus();
         } else if (!Tool.isLength50(hoKhachHang)) {
-            JOptionPane.showMessageDialog(null, "Họ khách hàng không được quá 50 ký tự");
+            op.showMessageDialog(null, "Họ khách hàng không được quá 50 ký tự");
             txt_KhachHang_Sua[1].requestFocus();
         } else if (!Tool.isName(Tool.removeAccent(tenKhachHang))) {
-            JOptionPane.showMessageDialog(null, "Tên khách hàng không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Tên khách hàng không được chứa ký tự đặc biệt");
             txt_KhachHang_Sua[2].requestFocus();
         } else if (!Tool.isLength50(tenKhachHang)) {
-            JOptionPane.showMessageDialog(null, "Tên khách hàng không được quá 50 ký tự");
+            op.showMessageDialog(null, "Tên khách hàng không được quá 50 ký tự");
             txt_KhachHang_Sua[2].requestFocus();
         }else if (Tool.haveSpace(tenKhachHang.trim())) {
-            JOptionPane.showMessageDialog(null, "Tên khách hàng không được quá 2 từ");
+            op.showMessageDialog(null, "Tên khách hàng không được quá 2 từ");
             txt_KhachHang_Sua[2].requestFocus();
         } 
         else if (!Tool.isGmail(gmail)) {
-            JOptionPane.showMessageDialog(null, "Gmail phải đúng định dạng và không được chứa ký tự đặc biệt ");
+            op.showMessageDialog(null, "Gmail phải đúng định dạng và không được chứa ký tự đặc biệt ");
             txt_KhachHang_Sua[3].requestFocus();
         } else if (!Tool.isName(Tool.removeAccent(gioiTinh))) {
-            JOptionPane.showMessageDialog(null, "Giới tính không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Giới tính không được chứa ký tự đặc biệt");
             txt_KhachHang_Sua[4].requestFocus();
         } else if (!Tool.isLength50(gioiTinh)) {
-            JOptionPane.showMessageDialog(null, "Giới tính không được quá 50 ký tự");
+            op.showMessageDialog(null, "Giới tính không được quá 50 ký tự");
             txt_KhachHang_Sua[4].requestFocus();
         } else if (!Tool.isName(Tool.removeAccent(soDienThoai))) {
-            JOptionPane.showMessageDialog(null, "Số điện thoại không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Số điện thoại không được chứa ký tự đặc biệt");
             txt_KhachHang_Sua[5].requestFocus();
         } else if (!Tool.isLength50(soDienThoai)) {
-            JOptionPane.showMessageDialog(null, "Số điện thoại không được quá 50 ký tự");
+            op.showMessageDialog(null, "Số điện thoại không được quá 50 ký tự");
             txt_KhachHang_Sua[5].requestFocus();
         } else if (!Tool.isPhoneNumber(soDienThoai)) {
-            JOptionPane.showMessageDialog(null, "Số điện thoại không chính xác");
+            op.showMessageDialog(null, "Số điện thoại không chính xác");
             txt_KhachHang_Sua[5].requestFocus();
         } else if (!Tool.isTongTien(Tool.removeAccent(tongChiTieu))) {
-            JOptionPane.showMessageDialog(null, "Tổng chi tiêu không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Tổng chi tiêu không được chứa ký tự đặc biệt");
             txt_KhachHang_Sua[6].requestFocus();
         } else if (!Tool.isNumber(tongChiTieu)) {
-            JOptionPane.showMessageDialog(null, "Tổng chi tiêu phải là số nguyên dương");
+            op.showMessageDialog(null, "Tổng chi tiêu phải là số nguyên dương");
             txt_KhachHang_Sua[6].requestFocus();
         } else {
             return true;
@@ -523,8 +524,8 @@ public class GUIKhachHang extends FormContent {
         return false;
     }
     @Override
-    protected void LamMoi_click(MouseEvent evt){
-        super.LamMoi_click(evt);
+    protected void LamMoi_click(){
+        super.LamMoi_click();
         Ten.setText("");
     }
     @Override
@@ -535,4 +536,13 @@ public class GUIKhachHang extends FormContent {
     protected void ChiTiet(){
         
     }
+
+    public JComboBox getCbSearch() {
+        return cbSearch;
+    }
+
+    public JTextField getTen() {
+        return Ten;
+    }
+    
 }

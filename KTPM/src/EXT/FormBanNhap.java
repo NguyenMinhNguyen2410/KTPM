@@ -7,6 +7,7 @@ package EXT;
 
 import GUI.GUIMenu;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -17,6 +18,8 @@ import javax.swing.JPanel;
 public class FormBanNhap extends JPanel{
     //Tạo các panel
     private JPanel pDanhSach,pThongTin,pThanhToan,pCongCu;
+    protected JOptionPane op;
+    protected FormChon formchon;
     public FormBanNhap(){
         initcomponent();
     }
@@ -63,6 +66,19 @@ public class FormBanNhap extends JPanel{
         
         return panel;
     }
+
+    public JOptionPane getOp() {
+        return op;
+    }
+
+    public void setOp(JOptionPane op) {
+        this.op = op;
+    }
+
+    public FormChon getFormchon() {
+        return formchon;
+    }
+    
 }
 
 

@@ -735,34 +735,21 @@ public static boolean isGmail(String gmail)
     {
         try
         {
-            ChiTietHoaDonBUS cthdBUS = new ChiTietHoaDonBUS();
-            ChiTietHoaDonNhapBUS cthdnBUS = new ChiTietHoaDonNhapBUS();
-            ChiTietNguyenLieuBUS ctnlBUS = new ChiTietNguyenLieuBUS();
-            CongThucBUS ctBUS = new CongThucBUS();
-            HoaDonBUS hdBUS = new HoaDonBUS();
-            HoaDonNhapBUS hdnBUS = new HoaDonNhapBUS();
-            KhachHangBUS khBUS = new KhachHangBUS();
-            KhuyenMaiBUS kmBUS = new KhuyenMaiBUS();
-            MonAnBUS maBUS = new MonAnBUS();
-            NguyenLieuBUS nlBUS = new NguyenLieuBUS();
-            NhaCungCapBUS nccBUS = new NhaCungCapBUS();
-            NhanVienBUS nvBUS = new NhanVienBUS();
-            PhanQuyenBUS pqBUS = new PhanQuyenBUS();
-            TaiKhoanBUS tkBUS = new TaiKhoanBUS();
-            cthdBUS.docDB();
-            cthdnBUS.docDB();
-            ctnlBUS.docDB();
-            ctBUS.docDB();
-            hdBUS.docDB();
-            hdnBUS.docDB();
-            khBUS.docDB();
-            kmBUS.docDB();
-            maBUS.docDB();
-            nlBUS.docDB();
-            nccBUS.docDB();
-            nvBUS.docDSNV();
-            pqBUS.docDB();
-            tkBUS.docDB(); 
+            ChiTietHoaDonBUS.docDB();
+            ChiTietHoaDonNhapBUS.docDB();
+            ChiTietNguyenLieuBUS.docDB();
+            CongThucBUS.docDB();
+            HoaDonBUS.docDB(); 
+            HoaDonNhapBUS.docDB();
+            KhachHangBUS.docDB();
+            KhuyenMaiBUS.docDB();
+            MonAnBUS.docDB();
+            NguyenLieuBUS.docDB();
+            NhaCungCapBUS.docDB();
+            NhanVienBUS.docDB();
+            PhanQuyenBUS.docDB();
+            TaiKhoanBUS.docDB();
+            
         }catch(NullPointerException e){
         e.printStackTrace();
         return false;
@@ -943,12 +930,23 @@ public static boolean isGmail(String gmail)
                 }
              
             }
-        
-        
-        
         return result;
     }
-    
+    public static int getNumberInString(String s){
+        int a=0;
+        String b="";
+        for(int i=0;i<s.length();i++)
+            if((((int)s.charAt(i))<48||((int)s.charAt(i))>57)&&((int)s.charAt(i))!=46)
+            {
+                b=s.substring(0, i);
+                
+                break;
+            }
+        b=b.replaceAll("\\W","");
+        System.out.println(b);
+        a=Integer.parseInt(b);
+        return a;
+    }
 }
 
 

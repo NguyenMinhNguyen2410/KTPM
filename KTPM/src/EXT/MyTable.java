@@ -75,6 +75,7 @@ public class MyTable extends JPanel {
         tbModel.setColumnIdentifiers(headers.toArray());
         tb.setModel(tbModel);
     }
+    
     // hàm thiết lập cho dữ liệu căn giữa
     // https://stackoverflow.com/questions/7433602/how-to-center-in-jtable-cell-a-value
     public void setAlignment(int column, int align) {
@@ -182,8 +183,7 @@ public class MyTable extends JPanel {
     public void addRow(PhanQuyenDTO data) {
         addRow(new String[]{
                     data.getIDPhanQuyen(),
-                    data.getTenQuyen(),
-                    data.getMoTaQuyen()
+                    data.getTenQuyen()
                 });
     }
     public void addRow(KhuyenMaiDTO data) {

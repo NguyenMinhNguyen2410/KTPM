@@ -46,12 +46,12 @@ import static javax.swing.UIManager.getIcon;
 public class GUIThongKe extends JPanel {
 
     public static final int width = 1300, height = 740;
-    
+    JTabbedPane tabs;
     public GUIThongKe() throws Exception {
 
         ThongKe_Hoang tkH = new ThongKe_Hoang();//tạo panel thống kê tổng quát trong thống kê
 
-        JTabbedPane tabs = new JTabbedPane(JTabbedPane.TOP);//tạo panel thống kê
+        tabs = new JTabbedPane(JTabbedPane.TOP);//tạo panel thống kê
         tabs.setPreferredSize(new Dimension(width, height));
 
         //add tab thong ke san pham
@@ -89,6 +89,8 @@ public class GUIThongKe extends JPanel {
 }
 
 class ThongKe_Hoang extends JPanel {
+    FormChon formchon;
+    
     MonAnBUS qlmaBUS = new MonAnBUS();
     NhanVienBUS qlnvBUS = new NhanVienBUS();
     KhachHangBUS qlkhBUS = new KhachHangBUS();
@@ -163,51 +165,46 @@ class ThongKe_Hoang extends JPanel {
         // event
         // nút chọn
         btnChonMonAn.addActionListener((ae) -> {
-            FormChon a = null;
             try {
-                a = new FormChon(txMonAn,"Món ăn");
+                formchon = new FormChon(txMonAn,"Món ăn");
                 
             } catch (Exception ex) {
                 Logger.getLogger(GUIThongKe.class.getName()).log(Level.SEVERE, null, ex);
             }
-            a.setVisible(true);
+            formchon.setVisible(true);
             
         });
         btnChonNhanVien.addActionListener((ae) -> {
-           FormChon a = null;
             try {
-                a = new FormChon(txNhanVien,"Nhân viên");
+                formchon = new FormChon(txNhanVien,"Nhân viên");
             } catch (Exception ex) {
                 Logger.getLogger(GUIThongKe.class.getName()).log(Level.SEVERE, null, ex);
             }
-            a.setVisible(true);
+            formchon.setVisible(true);
         });
         btnChonKhachHang.addActionListener((ae) -> {
-            FormChon a = null;
             try {
-                a = new FormChon(txKhachHang,"Khách hàng");
+                formchon = new FormChon(txKhachHang,"Khách hàng");
             } catch (Exception ex) {
                 Logger.getLogger(GUIThongKe.class.getName()).log(Level.SEVERE, null, ex);
             }
-            a.setVisible(true);        
+            formchon.setVisible(true);        
         });
         btnChonNhaCC.addActionListener((ae) -> {
-           FormChon a = null;
             try {
-                a = new FormChon(txNhaCC,"Nhà cung cấp");
+                formchon = new FormChon(txNhaCC,"Nhà cung cấp");
             } catch (Exception ex) {
                 Logger.getLogger(GUIThongKe.class.getName()).log(Level.SEVERE, null, ex);
             }
-            a.setVisible(true);    
+            formchon.setVisible(true);    
         });
         btnChonNguyenlieu.addActionListener((ae) -> {
-           FormChon a = null;
             try {
-                a = new FormChon(txNguyenlieu,"Nguyên liệu");
+                formchon = new FormChon(txNguyenlieu,"Nguyên liệu");
             } catch (Exception ex) {
                 Logger.getLogger(GUIThongKe.class.getName()).log(Level.SEVERE, null, ex);
             }
-            a.setVisible(true);    
+            formchon.setVisible(true);    
         });
         btnRefresh.addActionListener((ae) -> {         
             try {           
@@ -290,7 +287,7 @@ class ThongKe_Hoang extends JPanel {
 //        plChonNgay.setVisible(false);
         btnRefresh.setVisible(false);
         
-        // event biến đổi panel tiềm kiếm theo tab bán hoặc nhập trong thống kê tổng quát
+        // event biến đổi panel tìm kiếm theo tab bán hoặc nhập trong thống kê tổng quát
         tabDoiTuongThongKe.addChangeListener((ce) -> {
             Boolean HoaDon_isSelected = (tabDoiTuongThongKe.getSelectedComponent() == plThongKeHoaDon);
             Boolean HoaDonNhap_isSelected = (tabDoiTuongThongKe.getSelectedComponent() == plThongKePhieuNhap);
@@ -320,7 +317,7 @@ class ThongKe_Hoang extends JPanel {
 
     public void refresh() throws Exception  {
         qlmaBUS.docDB();
-        qlnvBUS.docDSNV();
+        qlnvBUS.docDB();
         qlkhBUS.docDB();
         qlnccBUS.docDB();
         qlnlBUS.docDB();
@@ -624,6 +621,15 @@ class ThongKe_Hoang extends JPanel {
         
         return result;
     }
+
+    public FormChon getFormchon() {
+        return formchon;
+    }
+
+    public JTabbedPane getTabDoiTuongThongKe() {
+        return tabDoiTuongThongKe;
+    }
+    
 }
 // panel tìm kiếm theo ngày
 class MyCheckDate {
@@ -663,4 +669,5 @@ class MyCheckDate {
     public String getKhoangTG() {
         return khoangTG;
     }
+    
 }

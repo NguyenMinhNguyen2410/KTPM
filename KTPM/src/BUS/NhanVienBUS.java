@@ -22,7 +22,7 @@ public class NhanVienBUS {
     {
         
     }
-    public  void  docDSNV() throws Exception 
+    public static void  docDB() throws Exception 
     {
         
         if(ds==null) ds=new ArrayList<NhanVienDTO>();

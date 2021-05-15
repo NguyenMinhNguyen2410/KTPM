@@ -12,6 +12,7 @@ import EXT.FormContent;
 import EXT.MyTable;
 import Excel.DocExcel;
 import Excel.XuatExcel;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FileDialog;
@@ -74,10 +75,34 @@ public class GUINguyenLieu extends FormContent {
     public GUINguyenLieu() {
         super();
     }
-
     @Override
-    protected void Them_click(MouseEvent evt) {
-        super.Them_click(evt);
+    protected void initcomponent(){
+        setLayout(new BorderLayout());
+        //Tạo thanh công cục ở phía trên
+        CongCu=CongCu();
+        CongCu.setPreferredSize(new Dimension(0,70));
+        add(CongCu,BorderLayout.NORTH);
+        //Tạo thanh tìm kiếm
+        TimKiem=TimKiem();
+        add(TimKiem,BorderLayout.CENTER);
+        //Tạo bảng dữ liệu
+        JPanel panel=new JPanel(new BorderLayout());
+        Table=Table();
+        Table.setPreferredSize(new Dimension(0,300));
+        panel.add(Table,BorderLayout.NORTH);
+        
+        Show=Show();
+        Show.setPreferredSize(new Dimension(0,300));
+        panel.add(Show,BorderLayout.SOUTH);
+        
+        panel.setPreferredSize(new Dimension(0,600));
+        add(panel,BorderLayout.SOUTH);
+        setVisible(true);
+        setSize(GUIMenu.width_content, 870);
+    }
+    @Override
+    protected void Them_click() {
+        super.Them_click();
         //Tạo tiêu đề và set hình thức
         JLabel Title = new JLabel("Thêm nguyên liệu");
         Title.setFont(new Font("Time New Roman", Font.BOLD, 21));
@@ -126,7 +151,7 @@ public class GUINguyenLieu extends FormContent {
     @Override
     protected void luuThem_Frame(){
         cohieu = 1;
-                int a = JOptionPane.showConfirmDialog(Them_Frame, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
+                int a = op.showConfirmDialog(Them_Frame, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
                 if (a == JOptionPane.YES_OPTION) {
                     //gọi hàm ở bus để thêm dữ liệu 
                     if (checkTextThem(txt_NguyenLieu_Them[0].getText(),
@@ -165,11 +190,11 @@ public class GUINguyenLieu extends FormContent {
                         }
     }
    @Override
-    protected void Sua_click(MouseEvent evt) {
-        super.Sua_click(evt);
+    protected void Sua_click() {
+        super.Sua_click();
         int row = table.tb.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 hàng để sửa");
+            op.showMessageDialog(null, "Vui lòng chọn 1 hàng để sửa");
         } else {
             //Tạo tiêu đề
             JLabel Title = new JLabel("Sửa nguyên liệu");
@@ -228,7 +253,7 @@ public class GUINguyenLieu extends FormContent {
     @Override
     protected void luuSua_Frame(){
         cohieu = 1;
-                int a = JOptionPane.showConfirmDialog(Sua_Frame, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
+                int a = op.showConfirmDialog(Sua_Frame, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
                 if (a == JOptionPane.YES_OPTION) {
 
                     //Chạy hàm checkText để ràng buộc dữ liệu 
@@ -243,7 +268,7 @@ public class GUINguyenLieu extends FormContent {
         int colum = table.tb.getSelectedColumn();
         String maNguyenLieu = table.tbModel.getValueAt(row, colum).toString();
         //Hỏi để xác nhận việc lưu dữ liệu đã sửa chữa
-//        int option = JOptionPane.showConfirmDialog(Sua_Frame, "Bạn chắc chắn sửa?", "", JOptionPane.YES_NO_OPTION);
+//        int option = op.showConfirmDialog(Sua_Frame, "Bạn chắc chắn sửa?", "", JOptionPane.YES_NO_OPTION);
 //        if (option == JOptionPane.YES_OPTION) {
             //Sửa dữ liệu trên bảng
             //model là ruột JTable   
@@ -287,12 +312,12 @@ public class GUINguyenLieu extends FormContent {
     }
     //Hàm sự kiện khi click vào nút xóa
     @Override
-    protected void Xoa_click(MouseEvent evt) {
+    protected void Xoa_click() {
         int row = table.tb.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn hàng muốn xóa");
+            op.showMessageDialog(null, "Vui lòng chọn hàng muốn xóa");
         } else {
-            int option = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn xóa?", "", JOptionPane.YES_NO_OPTION);
+            int option = op.showConfirmDialog(null, "Bạn chắc chắn xóa?", "", JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION) {
                 String maNguyenLieu = table.tbModel.getValueAt(row, 0).toString();
                 //truyền mã món ăn vào hàm timViTri ở NguyenLieuBUS 
@@ -530,13 +555,13 @@ public class GUINguyenLieu extends FormContent {
     }
 
     @Override
-    protected void XuatExcel_click(MouseEvent evt) {
+    protected void XuatExcel_click() {
         new XuatExcel().xuatFileExcelNguyenLieu();
 
     }
 
     @Override
-    protected void NhapExcel_click(MouseEvent evt) {
+    protected void NhapExcel_click() {
         new DocExcel().docFileExcelNguyenLieu();
 
     }
@@ -578,48 +603,48 @@ public class GUINguyenLieu extends FormContent {
                 || loai.equals("")
                 || donViTinh.equals("")
                 || soLuong.equals("")) {
-            JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
+            op.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
         } else if (!Tool.isName(Tool.removeAccent(tenNguyenLieu))) {
-            JOptionPane.showMessageDialog(null, "Tên nguyên liệu không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Tên nguyên liệu không được chứa ký tự đặc biệt");
             txt_NguyenLieu_Them[1].requestFocus();
         } else if (!Tool.isLength50(tenNguyenLieu)) {
-            JOptionPane.showMessageDialog(null, "Tên nguyên liệu không được quá 50 ký tự");
+            op.showMessageDialog(null, "Tên nguyên liệu không được quá 50 ký tự");
             txt_NguyenLieu_Them[1].requestFocus();
         } else if (!Tool.isNumber(donGia)) {
-            JOptionPane.showMessageDialog(null, "Đơn giá phải là số nguyên dương");
+            op.showMessageDialog(null, "Đơn giá phải là số nguyên dương");
             txt_NguyenLieu_Them[2].requestFocus();
         } else if (!Tool.isName((donGia))) {
-            JOptionPane.showMessageDialog(null, "Đơn giá không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Đơn giá không được chứa ký tự đặc biệt");
             txt_NguyenLieu_Them[2].requestFocus();
         } else if (!Tool.isTenThousandToOneMil(donGia)) {
-            JOptionPane.showMessageDialog(null, "Đơn giá phải nằm trong khoảng 10.000 đến 1.000.000");
+            op.showMessageDialog(null, "Đơn giá phải nằm trong khoảng 10.000 đến 1.000.000");
             txt_NguyenLieu_Them[2].requestFocus();
         } else if (!Tool.isHinhAnh(hinhAnh)) {
-            JOptionPane.showMessageDialog(null, "Hình ảnh phải được định dạng là : *.jpg hoặc *.png ");
+            op.showMessageDialog(null, "Hình ảnh phải được định dạng là : *.jpg hoặc *.png ");
             txt_NguyenLieu_Them[3].requestFocus();
         } else if (!Tool.isName(Tool.removeAccent(loai))) {
-            JOptionPane.showMessageDialog(null, "Loại nguyên liệu không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Loại nguyên liệu không được chứa ký tự đặc biệt");
             txt_NguyenLieu_Them[4].requestFocus();
         } else if (!Tool.isLength50(loai)) {
-            JOptionPane.showMessageDialog(null, "Loại nguyên liệu không được quá 50 ký tự");
+            op.showMessageDialog(null, "Loại nguyên liệu không được quá 50 ký tự");
             txt_NguyenLieu_Them[4].requestFocus();
         } else if (!Tool.isName(Tool.removeAccent(donViTinh))) {
-            JOptionPane.showMessageDialog(null, "Đơn vị tính không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Đơn vị tính không được chứa ký tự đặc biệt");
             txt_NguyenLieu_Them[5].requestFocus();
         } else if (!Tool.isLength50(donViTinh)) {
-            JOptionPane.showMessageDialog(null, "Đơn vị tính không được quá 50 ký tự");
+            op.showMessageDialog(null, "Đơn vị tính không được quá 50 ký tự");
             txt_NguyenLieu_Them[5].requestFocus();
         } else if (!Tool.isNumber(soLuong)) {
 
-            JOptionPane.showMessageDialog(null, "Số lượng phải là số nguyên dương");
+            op.showMessageDialog(null, "Số lượng phải là số nguyên dương");
             txt_NguyenLieu_Them[6].requestFocus();
         } else if (!Tool.isName(soLuong)) {
 
-            JOptionPane.showMessageDialog(null, "Số lượng không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Số lượng không được chứa ký tự đặc biệt");
             txt_NguyenLieu_Them[6].requestFocus();
         } else if (!Tool.isOneToOneThousand(soLuong)) {
 
-            JOptionPane.showMessageDialog(null, "Số lượng phải nằm trong khoảng 1 đến 1.000");
+            op.showMessageDialog(null, "Số lượng phải nằm trong khoảng 1 đến 1.000");
             txt_NguyenLieu_Them[6].requestFocus();
         } else {
             return true;
@@ -637,47 +662,47 @@ public class GUINguyenLieu extends FormContent {
                 || loai.equals("")
                 || donViTinh.equals("")
                 || soLuong.equals("")) {
-            JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
+            op.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
         } else if (!Tool.isName(Tool.removeAccent(tenNguyenLieu))) {
-            JOptionPane.showMessageDialog(null, "Tên nguyên liệu không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Tên nguyên liệu không được chứa ký tự đặc biệt");
             txt_NguyenLieu_Sua[1].requestFocus();
         } else if (!Tool.isLength50(tenNguyenLieu)) {
-            JOptionPane.showMessageDialog(null, "Tên nguyên liệu không được quá 50 ký tự");
+            op.showMessageDialog(null, "Tên nguyên liệu không được quá 50 ký tự");
             txt_NguyenLieu_Sua[1].requestFocus();
         } else if (!Tool.isNumber(donGia)) {
-            JOptionPane.showMessageDialog(null, "Đơn giá phải là số nguyên dương");
+            op.showMessageDialog(null, "Đơn giá phải là số nguyên dương");
             txt_NguyenLieu_Sua[2].requestFocus();
         } else if (!Tool.isName((donGia))) {
-            JOptionPane.showMessageDialog(null, "Đơn giá không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Đơn giá không được chứa ký tự đặc biệt");
             txt_NguyenLieu_Sua[2].requestFocus();
         } else if (!Tool.isTenThousandToOneMil(donGia)) {
-            JOptionPane.showMessageDialog(null, "Đơn giá phải nằm trong khoảng 10.000 đến 1.000.000");
+            op.showMessageDialog(null, "Đơn giá phải nằm trong khoảng 10.000 đến 1.000.000");
             txt_NguyenLieu_Sua[2].requestFocus();
         } else if (!Tool.isHinhAnh(hinhAnh)) {
-            JOptionPane.showMessageDialog(null, "Hình ảnh phải được định dạng là : *.jpg hoặc *.png ");
+            op.showMessageDialog(null, "Hình ảnh phải được định dạng là : *.jpg hoặc *.png ");
             txt_NguyenLieu_Sua[3].requestFocus();
         } else if (!Tool.isName(Tool.removeAccent(loai))) {
-            JOptionPane.showMessageDialog(null, "Loại nguyên liệu không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Loại nguyên liệu không được chứa ký tự đặc biệt");
             txt_NguyenLieu_Sua[4].requestFocus();
         } else if (!Tool.isLength50(loai)) {
-            JOptionPane.showMessageDialog(null, "Loại nguyên liệu không được quá 50 ký tự");
+            op.showMessageDialog(null, "Loại nguyên liệu không được quá 50 ký tự");
             txt_NguyenLieu_Sua[4].requestFocus();
         } else if (!Tool.isName(Tool.removeAccent(donViTinh))) {
-            JOptionPane.showMessageDialog(null, "Đơn vị tính không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Đơn vị tính không được chứa ký tự đặc biệt");
             txt_NguyenLieu_Sua[5].requestFocus();
         } else if (!Tool.isLength50(donViTinh)) {
-            JOptionPane.showMessageDialog(null, "Đơn vị tính không được quá 50 ký tự");
+            op.showMessageDialog(null, "Đơn vị tính không được quá 50 ký tự");
             txt_NguyenLieu_Sua[5].requestFocus();
         } else if (!Tool.isNumber(soLuong)) {
 
-            JOptionPane.showMessageDialog(null, "Số lượng phải là số nguyên dương");
+            op.showMessageDialog(null, "Số lượng phải là số nguyên dương");
             txt_NguyenLieu_Sua[6].requestFocus();
         } else if (!Tool.isName(soLuong)) {
 
-            JOptionPane.showMessageDialog(null, "Số lượng không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Số lượng không được chứa ký tự đặc biệt");
             txt_NguyenLieu_Sua[6].requestFocus();
         } else if (!Tool.isOneToOneThousand(soLuong)) {
-            JOptionPane.showMessageDialog(null, "Số lượng phải nằm trong khoảng 1 đến 1.000");
+            op.showMessageDialog(null, "Số lượng phải nằm trong khoảng 1 đến 1.000");
             txt_NguyenLieu_Sua[6].requestFocus();
         } else {
             return true;
@@ -686,8 +711,8 @@ public class GUINguyenLieu extends FormContent {
         return false;
     }
     @Override
-    protected void LamMoi_click(MouseEvent evt){
-        super.LamMoi_click(evt);
+    protected void LamMoi_click(){
+        super.LamMoi_click();
         Ten.setText("");
         Tu_DonGia.setText("");
         Den_DonGia.setText("");

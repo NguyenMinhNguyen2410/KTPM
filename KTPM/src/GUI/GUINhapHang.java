@@ -20,6 +20,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -32,7 +34,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
@@ -55,11 +56,11 @@ public class GUINhapHang extends FormBanNhap{
     //Tạo nhãn dùng để chứa hình của thông tin nguyên liệu
     private JLabel lbImage;
     //Tạo các field chứa thông tin nguyên liệu khi chọn
-    private JTextField txMaMA,txTenMA,txDonGia,txSoLuong;
+    private JTextField txMaNL,txTenNL,txDonGia,txSoLuong;
     //Tạo các field chứa thông tin hóa đơn khi thanh toán
     private JTextField MaHDN,TongTien,NhaCungCap,NgayNhap,NhanVien;
     //Tạo các nút để phục vụ cho việc thuận tiện khi chọn mã khách hàng hay khuyến mãi
-    private JButton ChonNhanVien,ChonNhaCungCap;
+    private JButton ChonNhanVien,ChonNhaCungCap,Them,Xoa,btnThanhToan;
     //Tạo field tìm kiếm nguyên liệu 
     private JTextField search;
     public GUINhapHang(){
@@ -169,36 +170,36 @@ public class GUINhapHang extends FormBanNhap{
         lbImage.setBackground(Color.yellow);
         lbImage.setBounds(0, 0, 300,300);
         
-        txMaMA=new JTextField();
-        txTenMA=new JTextField();
+        txMaNL=new JTextField();
+        txTenNL=new JTextField();
         txDonGia=new JTextField();
         txSoLuong=new JTextField();
         
         // border
-        txMaMA.setBorder(BorderFactory.createTitledBorder("Mã nguyên liệu"));       
-        txTenMA.setBorder(BorderFactory.createTitledBorder("Tên nguyên liệu"));
+        txMaNL.setBorder(BorderFactory.createTitledBorder("Mã nguyên liệu"));       
+        txTenNL.setBorder(BorderFactory.createTitledBorder("Tên nguyên liệu"));
         txDonGia.setBorder(BorderFactory.createTitledBorder("Đơn giá"));
         txSoLuong.setBorder(BorderFactory.createTitledBorder("Số lượng"));
         // disable
-        txMaMA.setEditable(false);
-        txTenMA.setEditable(false);
+        txMaNL.setEditable(false);
+        txTenNL.setEditable(false);
         txDonGia.setEditable(false);
         txSoLuong.setEditable(true);
         // font
         Font f = new Font(Font.SANS_SERIF, Font.BOLD, 15);
-        txMaMA.setFont(f);
-        txTenMA.setFont(f);
+        txMaNL.setFont(f);
+        txTenNL.setFont(f);
         txDonGia.setFont(f);
         txSoLuong.setFont(f);
         //setsize
         
-        txMaMA.setBounds(50, 0, 200,40);
-        txTenMA.setBounds(50, 50,200,40);
+        txMaNL.setBounds(50, 0, 200,40);
+        txTenNL.setBounds(50, 50,200,40);
         txDonGia.setBounds(50, 100,200,40);
         txSoLuong.setBounds(50, 150,200,40);
         // add to panel
-        ChiTiet.add(txMaMA);
-        ChiTiet.add(txTenMA);
+        ChiTiet.add(txMaNL);
+        ChiTiet.add(txTenNL);
         ChiTiet.add(txDonGia);
         ChiTiet.add(txSoLuong);
 
@@ -213,16 +214,16 @@ public class GUINhapHang extends FormBanNhap{
             }
         });
         
-        JButton Them=new JButton("Thêm");
+        Them=new JButton("Thêm");
         Them.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/them1-30.png")));
         Them.setFont(new Font("Segoe UI", 0, 14));        
         Them.setBackground(Color.decode("#90CAF9"));
         
         Them.setBounds(0, 310, GUIMenu.width_content*50/100, 40);
         //Sự kiện khi bấm nút thêm
-        Them.addMouseListener(new MouseAdapter(){
+        Them.addActionListener(new ActionListener(){
             @Override
-            public void mousePressed(MouseEvent evt){
+            public void actionPerformed(ActionEvent evt){
                 Them_click(evt);
             }
         });
@@ -232,7 +233,7 @@ public class GUINhapHang extends FormBanNhap{
         return panel;
     }
     //Hàm hiển thị ảnh và show thông tin
-    private void showInfo(String id) {
+    void showInfo(String id) {
         // https://stackoverflow.com/questions/16343098/resize-a-picture-to-fit-a-jlabel
         if (id != null) {
             // show hình
@@ -245,8 +246,8 @@ public class GUINhapHang extends FormBanNhap{
                     lbImage.setIcon(new ImageIcon(imgScaled));
 
                     // show info                   
-                    txMaMA.setText(ds.getIDNguyenLieu());
-                    txTenMA.setText(ds.getTenNguyenLieu());                
+                    txMaNL.setText(ds.getIDNguyenLieu());
+                    txTenNL.setText(ds.getTenNguyenLieu());                
                     txDonGia.setText(String.valueOf(ds.getDonGia()));
                     txSoLuong.setText("1");
                     return;
@@ -319,13 +320,12 @@ public class GUINhapHang extends FormBanNhap{
         //kết thúc thêm mới
         //Tạo sự kiện khi ấn vào nút thì hiện cửa sổ chọn nhà cung cấp nếu người dùng không nhớ mã nhà cung cấp
         ChonNhaCungCap.addActionListener((ae) -> {
-            FormChon a = null;
             try {
-                a = new FormChon(NhaCungCap,"Nhà cung cấp");
+                formchon = new FormChon(NhaCungCap,"Nhà cung cấp");
             } catch (Exception ex) {
                 Logger.getLogger(GUINhapHang.class.getName()).log(Level.SEVERE, null, ex);
             }
-            a.setVisible(true);
+            formchon.setVisible(true);
             
         });
         return panel;
@@ -341,37 +341,53 @@ public class GUINhapHang extends FormBanNhap{
         return panel;
     }
     //Hàm này xử lý việc ấn thêm nguyên liệu 
-    private void Them_click(MouseEvent e){
+    private void Them_click(ActionEvent e){
         int i = table_NguyenLieu.tb.getSelectedRow();
-        int a=Integer.parseInt(txSoLuong.getText());
+        
         if (i == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 hàng để thêm");
+            op.showMessageDialog(null, "Vui lòng chọn 1 hàng để thêm");
         } 
         else 
         {
-            for(int j=0;j<ThanhToan.tbModel.getRowCount();j++)
+            int a=0;
+            if (!Tool.isNumber(txSoLuong.getText())) {
+                op.showMessageDialog(null, "Vui lòng nhập lại số lượng");
+            } 
+            else
+            {    
+                a=Integer.parseInt(txSoLuong.getText());
+                int SlTrongTable=Integer.parseInt(String.valueOf(table_NguyenLieu.tbModel.getValueAt(i, 6)));
+                //Rào việc đặt số lượng lớn hơn số hiện có
+                if(a>SlTrongTable)
                 {
-                    if(ThanhToan.tbModel.getValueAt(j, 0)==table_NguyenLieu.tbModel.getValueAt(i, 0))
-                    {
-                        int SlTrongThanhToan=a+Integer.valueOf(String.valueOf(ThanhToan.tbModel.getValueAt(j, 4)));
-                        
-                        ThanhToan.tbModel.setValueAt(SlTrongThanhToan, j, 4);
-                        TinhTien();
-                        return;
-                        
-                        
-                    }
-                }
-                    ThanhToan.addRow(new String[]{
-                        String.valueOf(table_NguyenLieu.tbModel.getValueAt(i, 0)),
-                        String.valueOf(table_NguyenLieu.tbModel.getValueAt(i, 1)),
-                        String.valueOf(table_NguyenLieu.tbModel.getValueAt(i, 2)),
-                        String.valueOf(table_NguyenLieu.tbModel.getValueAt(i, 4)),
-                        String.valueOf(a)
-                    });
-                    TinhTien();
+                    op.showMessageDialog(null, "Số lượng không đủ");
+                } 
+                else 
+                {
+                    for(int j=0;j<ThanhToan.tbModel.getRowCount();j++)
+                        {
+                            if(ThanhToan.tbModel.getValueAt(j, 0)==table_NguyenLieu.tbModel.getValueAt(i, 0))
+                            {
+                                int SlTrongThanhToan=a+Integer.valueOf(String.valueOf(ThanhToan.tbModel.getValueAt(j, 4)));
+
+                                ThanhToan.tbModel.setValueAt(SlTrongThanhToan, j, 4);
+                                TinhTien();
+                                return;
+
+
+                            }
+                        }
+                            ThanhToan.addRow(new String[]{
+                                String.valueOf(table_NguyenLieu.tbModel.getValueAt(i, 0)),
+                                String.valueOf(table_NguyenLieu.tbModel.getValueAt(i, 1)),
+                                String.valueOf(table_NguyenLieu.tbModel.getValueAt(i, 2)),
+                                String.valueOf(table_NguyenLieu.tbModel.getValueAt(i, 4)),
+                                String.valueOf(a)
+                            });
+                            TinhTien();
                 
-            
+                }
+            }
         }
     }
     @Override
@@ -379,28 +395,28 @@ public class GUINhapHang extends FormBanNhap{
     protected JPanel panelCongCu(){
         JPanel panel=new JPanel(null);
         //Nút xóa
-        JButton Xoa=new JButton("Xóa");
+        Xoa=new JButton("Xóa");
         Xoa.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/delete1-30.png")));
         Xoa.setFont(new Font("Segoe UI", 0, 14));        
         Xoa.setBackground(Color.decode("#90CAF9"));
         
         Xoa.setBounds(0, 0, GUIMenu.width_content*25/100, 40);
-        Xoa.addMouseListener(new MouseAdapter(){
+        Xoa.addActionListener(new ActionListener(){
             @Override
-            public void mousePressed(MouseEvent evt){
+            public void actionPerformed(ActionEvent evt){
                 Xoa_click(evt);
             }
         });
         panel.add(Xoa);
         //Nút thanh toán
-        JButton btnThanhToan=new JButton("Thanh toán");
+        btnThanhToan=new JButton("Thanh toán");
         btnThanhToan.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/thanhtoan-30.png")));
         btnThanhToan.setFont(new Font("Segoe UI", 0, 14));        
         btnThanhToan.setBackground(Color.decode("#90CAF9"));
         btnThanhToan.setBounds(GUIMenu.width_content*25/100, 0, GUIMenu.width_content*25/100, 40);
-        btnThanhToan.addMouseListener(new MouseAdapter(){
+        btnThanhToan.addActionListener(new ActionListener(){
             @Override
-            public void mousePressed(MouseEvent evt){
+            public void actionPerformed(ActionEvent evt){
                 ThanhToan_click(evt);
             }
         });
@@ -409,15 +425,15 @@ public class GUINhapHang extends FormBanNhap{
         return panel;
     }
     //Hàm xử lý khi ấn vào nút xóa nằm ở thanh công cụ
-    private void Xoa_click(MouseEvent e){
+    private void Xoa_click(ActionEvent e){
         int i=ThanhToan.tb.getSelectedRow();
         if (i == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 hàng để xóa");
+            op.showMessageDialog(null, "Vui lòng chọn 1 hàng để xóa");
         } 
         else 
         {
-            int option = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn xóa?", "", JOptionPane.YES_NO_OPTION);
-            if (option == JOptionPane.YES_OPTION) {
+            int option = op.showConfirmDialog(null, "Bạn chắc chắn xóa?", "", op.YES_NO_OPTION);
+            if (option == op.YES_OPTION) {
                 
             ThanhToan.tbModel.removeRow(i);
             TinhTien();
@@ -425,7 +441,7 @@ public class GUINhapHang extends FormBanNhap{
         }
     }
     //Hàm xử lý khi ấn vào nút thanh toán nằm ở thanh công cụ
-    private void ThanhToan_click(MouseEvent e){
+    private void ThanhToan_click(ActionEvent e){
         //Ràng buộc dữ liệu
         if(checkText(MaHDN.getText(),
                 TongTien.getText(),
@@ -464,7 +480,7 @@ public class GUINhapHang extends FormBanNhap{
             MaHDN.setText(maHoaDonNhap);
             NhaCungCap.setText("");
             NgayNhap.setText(Tool.getNgayLap().toString());
-            TongTien.setText("0");
+            TongTien.setText("");
             ThanhToan.clear();
             LamMoi();
         }
@@ -478,9 +494,9 @@ public class GUINhapHang extends FormBanNhap{
                 || checkMaNCC.equals("") 
                 || checkNgay.equals("") 
                 || checkMaNV.equals("")) {
-            JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
+            op.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
         } else if(songuyenlieu==0){
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn nguyên liệu");
+            op.showMessageDialog(null, "Vui lòng chọn nguyên liệu");
         } else {
             return true;
 
@@ -502,7 +518,7 @@ public class GUINhapHang extends FormBanNhap{
         }
         else
         {
-            TongTien.setText("0");
+            TongTien.setText("");
         }
     }
     //Hàm khi ấn nút làm mới
@@ -514,77 +530,70 @@ public class GUINhapHang extends FormBanNhap{
             }
         }
     }
+
+    public MyTable getTable_NguyenLieu() {
+        return table_NguyenLieu;
+    }
+
+    public MyTable getThanhToan() {
+        return ThanhToan;
+    }
+
+    public JTextField getTxMaNL() {
+        return txMaNL;
+    }
+
+    public JTextField getTxTenNL() {
+        return txTenNL;
+    }
+
+    public JTextField getTxDonGia() {
+        return txDonGia;
+    }
+
+    public JTextField getTxSoLuong() {
+        return txSoLuong;
+    }
+
+    public JTextField getMaHDN() {
+        return MaHDN;
+    }
+
+    public JTextField getNhaCungCap() {
+        return NhaCungCap;
+    }
+
+    public JTextField getNgayNhap() {
+        return NgayNhap;
+    }
+
+    public JTextField getNhanVien() {
+        return NhanVien;
+    }
+
+    public JButton getChonNhaCungCap() {
+        return ChonNhaCungCap;
+    }
+
+    public JTextField getSearch() {
+        return search;
+    }
+
+    public JTextField getTongTien() {
+        return TongTien;
+    }
+
+    public JButton getThem() {
+        return Them;
+    }
+
+    public JButton getXoa() {
+        return Xoa;
+    }
+
+    public JButton getBtnThanhToan() {
+        return btnThanhToan;
+    }
+    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

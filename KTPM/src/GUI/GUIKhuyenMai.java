@@ -67,8 +67,8 @@ public class GUIKhuyenMai extends FormContent {
 
     //Hàm tạo Dialog thêm Khuyến mãi 
     @Override
-    protected void Them_click(MouseEvent evt) {
-        super.Them_click(evt);
+    protected void Them_click() {
+        super.Them_click();
         //Tạo tiêu đề và set hình thức
         JLabel Title = new JLabel("Thêm khuyến mãi");
         Title.setFont(new Font("Time New Roman", Font.BOLD, 21));
@@ -136,7 +136,7 @@ public class GUIKhuyenMai extends FormContent {
     protected void luuThem_Frame(){
         //Tắt cờ hiệu đi 
                 cohieu = 1;
-                int a = JOptionPane.showConfirmDialog(Them_Frame, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
+                int a = op.showConfirmDialog(Them_Frame, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
                 if (a == JOptionPane.YES_OPTION) {
                     if (checkTextThem(txt_KhuyenMai_Them[1].getText(),
                             txt_KhuyenMai_Them[2].getText(),
@@ -173,11 +173,11 @@ public class GUIKhuyenMai extends FormContent {
     }
     //Hàm tạo Dialog sửa món ăn
     @Override
-    protected void Sua_click(MouseEvent evt) {
-        super.Sua_click(evt);
+    protected void Sua_click() {
+        super.Sua_click();
         int row = table.tb.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 hàng để sửa");
+            op.showMessageDialog(null, "Vui lòng chọn 1 hàng để sửa");
         } else {
             //Tạo tiêu đề
             JLabel Title = new JLabel("Sửa khuyến mãi");
@@ -245,7 +245,7 @@ public class GUIKhuyenMai extends FormContent {
     @Override
     protected void luuSua_Frame(){
         cohieu = 1;
-                int a = JOptionPane.showConfirmDialog(Sua_Frame, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
+                int a = op.showConfirmDialog(Sua_Frame, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
                 if (a == JOptionPane.YES_OPTION) {
                     if (checkTextSua(txt_KhuyenMai_Sua[1].getText(),
                             txt_KhuyenMai_Sua[2].getText(),
@@ -256,7 +256,7 @@ public class GUIKhuyenMai extends FormContent {
         int colum = table.tb.getSelectedColumn();
         String maKhuyenMai = table.tbModel.getValueAt(row, colum).toString();
         //Hỏi để xác nhận việc lưu dữ liệu đã sửa chữa
-//        int option = JOptionPane.showConfirmDialog(Sua_Frame, "Bạn chắc chắn sửa?", "", JOptionPane.YES_NO_OPTION);
+//        int option = op.showConfirmDialog(Sua_Frame, "Bạn chắc chắn sửa?", "", JOptionPane.YES_NO_OPTION);
 //        if (option == JOptionPane.YES_OPTION) {
         //Sửa dữ liệu trên bảng
         //model là ruột JTable   
@@ -299,12 +299,12 @@ public class GUIKhuyenMai extends FormContent {
     }
     //Hàm sự kiện khi click vào nút xóa
     @Override
-    protected void Xoa_click(MouseEvent evt) {
+    protected void Xoa_click() {
         int row = table.tb.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn hàng muốn xóa");
+            op.showMessageDialog(null, "Vui lòng chọn hàng muốn xóa");
         } else {
-            int option = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn xóa?", "", JOptionPane.YES_NO_OPTION);
+            int option = op.showConfirmDialog(null, "Bạn chắc chắn xóa?", "", JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION) {
                 String maKhuyenMai = table.tbModel.getValueAt(row, 0).toString();
                 //truyền mã Khuyến mãi  vào hàm timViTri ở KhuyenMaiBUS 
@@ -493,30 +493,30 @@ public class GUIKhuyenMai extends FormContent {
                 || noiDung.equals("")
                 || ngayBatDau.equals("")
                 || ngayKetThuc.equals("")) {
-            JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
+            op.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
         } else if (!Tool.isName(Tool.removeAccent(tenChuongTrinh))) {
-            JOptionPane.showMessageDialog(null, "Tên chương trình không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Tên chương trình không được chứa ký tự đặc biệt");
             txt_KhuyenMai_Them[1].requestFocus();
         } else if (!Tool.isLength50(tenChuongTrinh)) {
-            JOptionPane.showMessageDialog(null, "Tên chương trình không được quá 50 ký tự");
+            op.showMessageDialog(null, "Tên chương trình không được quá 50 ký tự");
             txt_KhuyenMai_Them[1].requestFocus();
         } else if (!Tool.isNumber(tienGiamGia)) {
-            JOptionPane.showMessageDialog(null, "Tiền giảm giá phải là số nguyên dương");
+            op.showMessageDialog(null, "Tiền giảm giá phải là số nguyên dương");
             txt_KhuyenMai_Them[2].requestFocus();
         } else if (!Tool.isName((tienGiamGia))) {
-            JOptionPane.showMessageDialog(null, "Tiền giảm giá không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Tiền giảm giá không được chứa ký tự đặc biệt");
             txt_KhuyenMai_Them[2].requestFocus();
         } else if (!Tool.isTenThousandToOneMil(tienGiamGia)) {
-            JOptionPane.showMessageDialog(null, "Tiền giảm giá phải nằm trong khoảng 10.000 đến 1.000.000");
+            op.showMessageDialog(null, "Tiền giảm giá phải nằm trong khoảng 10.000 đến 1.000.000");
             txt_KhuyenMai_Them[2].requestFocus();
         } else if (!Tool.ngayBDTruocNgayKT(ngayBatDau, ngayKetThuc)) {
-            JOptionPane.showMessageDialog(null, "Ngày kết thúc phải sau ngày bắt đầu");
+            op.showMessageDialog(null, "Ngày kết thúc phải sau ngày bắt đầu");
             txt_KhuyenMai_Them[4].requestFocus();
         } else if (!Tool.isName(Tool.removeAccent(noiDung))) {
-            JOptionPane.showMessageDialog(null, "Nội dung khuyến mãi không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Nội dung khuyến mãi không được chứa ký tự đặc biệt");
             txt_KhuyenMai_Them[5].requestFocus();
         } else if (!Tool.isLength50(noiDung)) {
-            JOptionPane.showMessageDialog(null, "Nội dung khuyến mãi không được quá 50 ký tự");
+            op.showMessageDialog(null, "Nội dung khuyến mãi không được quá 50 ký tự");
             txt_KhuyenMai_Them[5].requestFocus();
         } else {
             return true;
@@ -532,30 +532,30 @@ public class GUIKhuyenMai extends FormContent {
                 || noiDung.equals("")
                 || ngayBatDau.equals("")
                 || ngayKetThuc.equals("")) {
-            JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
+            op.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
         } else if (!Tool.isName(Tool.removeAccent(tenChuongTrinh))) {
-            JOptionPane.showMessageDialog(null, "Tên chương trình không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Tên chương trình không được chứa ký tự đặc biệt");
             txt_KhuyenMai_Sua[1].requestFocus();
         } else if (!Tool.isLength50(tenChuongTrinh)) {
-            JOptionPane.showMessageDialog(null, "Tên chương trình không được quá 50 ký tự");
+            op.showMessageDialog(null, "Tên chương trình không được quá 50 ký tự");
             txt_KhuyenMai_Sua[1].requestFocus();
         } else if (!Tool.isNumber(tienGiamGia)) {
-            JOptionPane.showMessageDialog(null, "Tiền giảm giá phải là số nguyên dương");
+            op.showMessageDialog(null, "Tiền giảm giá phải là số nguyên dương");
             txt_KhuyenMai_Sua[2].requestFocus();
         } else if (!Tool.isName((tienGiamGia))) {
-            JOptionPane.showMessageDialog(null, "Tiền giảm giá không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Tiền giảm giá không được chứa ký tự đặc biệt");
             txt_KhuyenMai_Sua[2].requestFocus();
         } else if (!Tool.isTenThousandToOneMil(tienGiamGia)) {
-            JOptionPane.showMessageDialog(null, "Tiền giảm giá phải nằm trong khoảng 10.000 đến 1.000.000");
+            op.showMessageDialog(null, "Tiền giảm giá phải nằm trong khoảng 10.000 đến 1.000.000");
             txt_KhuyenMai_Sua[2].requestFocus();
         } else if (!Tool.isName(Tool.removeAccent(noiDung))) {
-            JOptionPane.showMessageDialog(null, "Nội dung khuyến mãi không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Nội dung khuyến mãi không được chứa ký tự đặc biệt");
             txt_KhuyenMai_Sua[3].requestFocus();
         } else if (!Tool.isLength50(noiDung)) {
-            JOptionPane.showMessageDialog(null, "Nội dung khuyến mãi không được quá 50 ký tự");
+            op.showMessageDialog(null, "Nội dung khuyến mãi không được quá 50 ký tự");
             txt_KhuyenMai_Sua[3].requestFocus();
         } else if (!Tool.ngayBDTruocNgayKT(ngayBatDau, ngayKetThuc)) {
-            JOptionPane.showMessageDialog(null, "Ngày kết thúc phải sau ngày bắt đầu");
+            op.showMessageDialog(null, "Ngày kết thúc phải sau ngày bắt đầu");
             txt_KhuyenMai_Sua[5].requestFocus();
         } else {
             return true;
@@ -565,19 +565,19 @@ public class GUIKhuyenMai extends FormContent {
     }
     
     @Override
-    protected void XuatExcel_click(MouseEvent evt) {
+    protected void XuatExcel_click() {
         new XuatExcel().xuatFileExcelKhuyenMai();
 
     }
 
     @Override
-    protected void NhapExcel_click(MouseEvent evt) {
+    protected void NhapExcel_click() {
         new DocExcel().docFileExcelKhuyenMai();
 
     }
     @Override
-    protected void LamMoi_click(MouseEvent evt){
-        super.LamMoi_click(evt);
+    protected void LamMoi_click(){
+        super.LamMoi_click();
         Ten.setText("");
         Tu_TienGiam.setText("");
         Tu_NgayBatDau.setText("");

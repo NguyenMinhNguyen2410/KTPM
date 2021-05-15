@@ -23,7 +23,7 @@ public class KhachHangBUS {
     {
         
     }
-    public  void  docDB() throws Exception 
+    public static void  docDB() throws Exception 
     {
         
         if(ds==null) 

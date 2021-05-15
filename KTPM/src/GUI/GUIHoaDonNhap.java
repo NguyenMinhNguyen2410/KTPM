@@ -224,7 +224,7 @@ public class GUIHoaDonNhap extends FormContent {
     }
     
     @Override
-    protected void XuatExcel_click(MouseEvent evt){
+    protected void XuatExcel_click(){
         try {
             new XuatExcel().xuatFileExcelHoaDonNhap();
         } catch (Exception ex) {
@@ -233,7 +233,7 @@ public class GUIHoaDonNhap extends FormContent {
     }
     
     @Override
-    protected void NhapExcel_click(MouseEvent evt){
+    protected void NhapExcel_click(){
         new DocExcel().docFileExcelHoaDonNhap();
     }
     @Override
@@ -244,8 +244,11 @@ public class GUIHoaDonNhap extends FormContent {
     protected void Sua(){
     }
     @Override
-    protected void LamMoi_click(MouseEvent evt){
-        super.LamMoi_click(evt);
+    protected void Xoa(){
+    }
+    @Override
+    protected void LamMoi_click(){
+        super.LamMoi_click();
         Ten.setText("");
         Tu_NgayNhap.setText("");
         Den_NgayNhap.setText("");
@@ -253,26 +256,25 @@ public class GUIHoaDonNhap extends FormContent {
         Den_TongTien.setText("");
     }
     @Override
-    protected void ChiTiet_click(MouseEvent evt){
-        FormChon a = null;
+    protected void ChiTiet_click(){
         int i=table.tb.getSelectedRow();
         if (i == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 hóa đơn");
+            op.showMessageDialog(null, "Vui lòng chọn 1 hóa đơn");
             return;
         } 
         String MaHoaDon=String.valueOf(table.tbModel.getValueAt(i,0));
         try {
-        a = new FormChon("Chi tiết hóa đơn nhập",MaHoaDon);
+        formchon = new FormChon("Chi tiết hóa đơn nhập",MaHoaDon);
         } catch (Exception ex) {
         Logger.getLogger(GUIBanHang.class.getName()).log(Level.SEVERE, null, ex);
         }
-        a.setVisible(true);
+        formchon.setVisible(true);
     }
     @Override
-    protected void InPDF_click(MouseEvent evt){
+    protected void InPDF_click(){
         int i =table.tb.getSelectedRow();
             if (i == -1){
-                JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 hàng để in file");
+                op.showMessageDialog(null, "Vui lòng chọn 1 hàng để in file");
             }
             else{
                 try {
@@ -282,30 +284,37 @@ public class GUIHoaDonNhap extends FormContent {
                 }
             }
     }
+
+    public static DatePicker getDp_Tu_NgayNhap() {
+        return dp_Tu_NgayNhap;
+    }
+
+    public static DatePicker getDp_Den_NgayNhap() {
+        return dp_Den_NgayNhap;
+    }
+
+    public JTextField getTu_TongTien() {
+        return Tu_TongTien;
+    }
+
+    public JTextField getDen_TongTien() {
+        return Den_TongTien;
+    }
+
+    public JTextField getTu_NgayNhap() {
+        return Tu_NgayNhap;
+    }
+
+    public JTextField getDen_NgayNhap() {
+        return Den_NgayNhap;
+    }
+
+    public JComboBox getCbSearch() {
+        return cbSearch;
+    }
+
+    public JTextField getTen() {
+        return Ten;
+    }
+    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

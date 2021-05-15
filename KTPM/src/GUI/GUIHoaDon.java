@@ -61,8 +61,7 @@ public class GUIHoaDon extends FormContent {
     private JComboBox cbSearch;
     //Tạo sẵn đối tượng BUS
     private HoaDonBUS BUS=new HoaDonBUS();
-    JButton ChiTiet;
-    FormChon a;
+    
     public GUIHoaDon(){
         super();
     }
@@ -236,12 +235,12 @@ public class GUIHoaDon extends FormContent {
     }
     
     @Override
-    protected void XuatExcel_click(MouseEvent evt){
+    protected void XuatExcel_click(){
         new XuatExcel().xuatFileExcelHoaDon();
     }
     
     @Override
-    protected void NhapExcel_click(MouseEvent evt){
+    protected void NhapExcel_click(){
         new DocExcel().docFileExcelHoaDon();
     }
     @Override
@@ -253,8 +252,12 @@ public class GUIHoaDon extends FormContent {
         
     }
     @Override
-    protected void LamMoi_click(MouseEvent evt){
-        super.LamMoi_click(evt);
+    protected void Xoa(){
+        
+    }
+    @Override
+    protected void LamMoi_click(){
+        super.LamMoi_click();
         Ten.setText("");
         Tu_NgayLap.setText("");
         Den_NgayLap.setText("");
@@ -262,29 +265,61 @@ public class GUIHoaDon extends FormContent {
         Den_TongTien.setText("");
     }
     @Override
-    protected void ChiTiet_click(MouseEvent evt){
-        a = null;
-                int i=table.tb.getSelectedRow();
-                if (i == -1) {
-                    JOptionPane.showMessageDialog(ChiTiet, "Vui lòng chọn 1 hóa đơn");
-                    return;
-                } 
-                String MaHoaDon=String.valueOf(table.tbModel.getValueAt(i,0));
-                try {
-                    a = new FormChon("Chi tiết hóa đơn",MaHoaDon);
-                } catch (Exception ex) {
-                    java.util.logging.Logger.getLogger(GUIBanHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                }
-                a.setVisible(true);
+    protected void ChiTiet_click(){
+        int i=table.tb.getSelectedRow();
+        if (i == -1) {
+            op.showMessageDialog(null, "Vui lòng chọn 1 hóa đơn");
+            return;
+        } 
+        String MaHoaDon=String.valueOf(table.tbModel.getValueAt(i,0));
+        try {
+            formchon = new FormChon("Chi tiết hóa đơn",MaHoaDon);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(GUIBanHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        formchon.setVisible(true);
     }
     @Override
-    protected void InPDF_click(MouseEvent evt){
+    protected void InPDF_click(){
         int i =table.tb.getSelectedRow();
         if (i == -1){
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 hàng để in file");
+            op.showMessageDialog(null, "Vui lòng chọn 1 hàng để in file");
         }
         else{
             new PDF().writeHoaDon(String.valueOf(table.tbModel.getValueAt(i, 0)));
         }
     }
+
+    public JTextField getTen() {
+        return Ten;
+    }
+
+    public JComboBox getCbSearch() {
+        return cbSearch;
+    }
+
+    public JTextField getTu_NgayLap() {
+        return Tu_NgayLap;
+    }
+
+    public JTextField getDen_NgayLap() {
+        return Den_NgayLap;
+    }
+
+    public static DatePicker getDp_Tu_NgayLap() {
+        return dp_Tu_NgayLap;
+    }
+
+    public static DatePicker getDp_Den_NgayLap() {
+        return dp_Den_NgayLap;
+    }
+
+    public JTextField getTu_TongTien() {
+        return Tu_TongTien;
+    }
+
+    public JTextField getDen_TongTien() {
+        return Den_TongTien;
+    }
+    
 }

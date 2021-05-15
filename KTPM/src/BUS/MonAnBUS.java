@@ -12,7 +12,7 @@ public class MonAnBUS {
 
     }
 
-    public void docDB() throws Exception //cần ghi lại khi qua class khác
+    public static void docDB() throws Exception //cần ghi lại khi qua class khác
     {
         try{
         if (ds == null) {

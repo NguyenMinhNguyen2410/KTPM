@@ -82,8 +82,8 @@ public class GUIPhanQuyen extends FormContent{
     
     //Hàm tạo Dialog thêm công thức
     @Override
-    protected void Them_click(MouseEvent evt) {
-        super.Them_click(evt);
+    protected void Them_click() {
+        super.Them_click();
         //Tạo tiêu đề và set hình thức
         JLabel Title = new JLabel("Thêm phân quyền");
         Title.setFont(new Font("Time New Roman", Font.BOLD, 21));
@@ -145,7 +145,7 @@ public class GUIPhanQuyen extends FormContent{
     @Override
     protected void luuThem_Frame(){
         cohieu = 1;
-                int a=JOptionPane.showConfirmDialog( Them_Frame,"Bạn chắc chứ ?" ,"",JOptionPane.YES_NO_OPTION);
+                int a=op.showConfirmDialog( Them_Frame,"Bạn chắc chứ ?" ,"",JOptionPane.YES_NO_OPTION);
                 if(a==JOptionPane.YES_OPTION)
                 {
                     PhanQuyenDTO DTO = new PhanQuyenDTO();
@@ -173,11 +173,11 @@ public class GUIPhanQuyen extends FormContent{
     }
     //Hàm tạo Dialog sửa món ăn
     @Override
-    protected void Sua_click(MouseEvent evt) {
-        super.Sua_click(evt);
+    protected void Sua_click() {
+        super.Sua_click();
         int row = table.tb.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 hàng để sửa");
+            op.showMessageDialog(null, "Vui lòng chọn 1 hàng để sửa");
             
         } else {
             //Tạo tiêu đề
@@ -257,7 +257,7 @@ public class GUIPhanQuyen extends FormContent{
     protected void luuSua_Frame(){
         int row = table.tb.getSelectedRow();
         //Hỏi để xác nhận việc lưu dữ liệu đã sửa chữa
-        int option = JOptionPane.showConfirmDialog(Sua_Frame, "Bạn chắc chắn sửa?", "", JOptionPane.YES_NO_OPTION);
+        int option = op.showConfirmDialog(Sua_Frame, "Bạn chắc chắn sửa?", "", JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
             //Sửa dữ liệu trong database và arraylist trên bus
             //Tạo đối tượng monAnDTO và truyền dữ liệu trực tiếp thông qua constructor
@@ -292,16 +292,16 @@ public class GUIPhanQuyen extends FormContent{
     
     //Hàm sự kiện khi click vào nút xóa
     @Override
-    protected void Xoa_click(MouseEvent evt) {       
+    protected void Xoa_click() {       
         int row = table.tb.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn hàng muốn xóa");
+            op.showMessageDialog(null, "Vui lòng chọn hàng muốn xóa");
         } else {       
-            int option = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn xóa?", "", JOptionPane.YES_NO_OPTION);
+            int option = op.showConfirmDialog(null, "Bạn chắc chắn xóa?", "", JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION) {
                 if(checkXoaPhanQuyen(table.tb.getValueAt(row, 0).toString()))
                 {
-                   JOptionPane.showMessageDialog(null, "Vui lòng xóa tài khoản chứa quyền này trước khi xóa");
+                   op.showMessageDialog(null, "Vui lòng xóa tài khoản chứa quyền này trước khi xóa");
                 }
                 else
                 {
@@ -320,7 +320,7 @@ public class GUIPhanQuyen extends FormContent{
     }
     @Override
     public void docDB() {
-        table.setHeaders(header);
+        table.setHeaders(new String[]{"Mã quyền","Tên quyền"});
         if(PhanQuyenBUS.ds == null) {
             
             try {
@@ -400,17 +400,17 @@ public class GUIPhanQuyen extends FormContent{
     public boolean checkTextThem(String tenQuyen) {
         UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Segoe UI", 0, 20)));
         if (tenQuyen.equals("")) {
-            JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
+            op.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
         }else if(!checkCoChonQuyen())
         {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn ít nhất một quyền");
+            op.showMessageDialog(null, "Vui lòng chọn ít nhất một quyền");
         }
         else if (!Tool.isName(Tool.removeAccent(tenQuyen))) {
-            JOptionPane.showMessageDialog(null, "Tên quyền không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Tên quyền không được chứa ký tự đặc biệt");
             txt_PhanQuyen_Them[1].requestFocus();
         }
         else if (!Tool.isLength50(tenQuyen)) {
-            JOptionPane.showMessageDialog(null, "Tên quyền không được quá 50 ký tự");
+            op.showMessageDialog(null, "Tên quyền không được quá 50 ký tự");
             txt_PhanQuyen_Them[1].requestFocus();
         }
          else {
@@ -423,17 +423,17 @@ public class GUIPhanQuyen extends FormContent{
     public boolean checkTextSua(String tenQuyen) {
         UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Segoe UI", 0, 20)));
         if (tenQuyen.equals("")) {
-            JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
+            op.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
         }else if(!checkCoChonQuyen())
         {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn ít nhất một quyền");
+            op.showMessageDialog(null, "Vui lòng chọn ít nhất một quyền");
         }
         else if (!Tool.isName(Tool.removeAccent(tenQuyen))) {
-            JOptionPane.showMessageDialog(null, "Tên quyền không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Tên quyền không được chứa ký tự đặc biệt");
             txt_PhanQuyen_Sua[1].requestFocus();
         }
         else if (!Tool.isLength50(tenQuyen)) {
-            JOptionPane.showMessageDialog(null, "Tên quyền không được quá 50 ký tự");
+            op.showMessageDialog(null, "Tên quyền không được quá 50 ký tự");
             txt_PhanQuyen_Sua[1].requestFocus();
         }
          else {
@@ -443,13 +443,13 @@ public class GUIPhanQuyen extends FormContent{
         return false;
     }
     @Override
-    protected void XuatExcel_click(MouseEvent evt) {
+    protected void XuatExcel_click() {
         new XuatExcel().xuatFileExcelPhanQuyen();
 
     }
 
     @Override
-    protected void NhapExcel_click(MouseEvent evt) {
+    protected void NhapExcel_click() {
         new DocExcel().docFileExcelNhanVien();
 
     }
@@ -501,33 +501,18 @@ public class GUIPhanQuyen extends FormContent{
         
     }
     @Override
-    protected void LamMoi_click(MouseEvent evt){
-        super.LamMoi_click(evt);
+    protected void LamMoi_click(){
+        super.LamMoi_click();
         search.setText("");
     }
+
+    public JTextField getSearch() {
+        return search;
+    }
+
+    public JComboBox getCbSearch() {
+        return cbSearch;
+    }
+    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

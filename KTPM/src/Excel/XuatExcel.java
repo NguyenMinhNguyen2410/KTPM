@@ -31,6 +31,10 @@ public class XuatExcel {
 
     FileDialog fd = new FileDialog(new JFrame(), "Xuất excel", FileDialog.SAVE);
 
+    public FileDialog getFd() {
+        return fd;
+    }
+    
     private String getFile() {
         fd.setFile("untitled.xls");
         fd.setVisible(true);

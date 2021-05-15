@@ -65,7 +65,11 @@ public class PDF {
             Logger.getLogger(PDF.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    //
+
+    public FileDialog getFd() {
+        return fd;
+    }
+    
     public void chooseURL(String url) {
         try {
             document.close();

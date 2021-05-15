@@ -18,8 +18,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -67,8 +65,8 @@ public class GUICongThuc extends FormContent{
     }
     //Hàm tạo Dialog thêm công thức
     @Override
-    protected void Them_click(MouseEvent evt) {
-        super.Them_click(evt);
+    protected void Them_click() {
+        super.Them_click();
         //Tạo tiêu đề và set hình thức
         JLabel Title = new JLabel("Thêm công thức");
         Title.setFont(new Font("Time New Roman", Font.BOLD, 21));
@@ -95,14 +93,13 @@ public class GUICongThuc extends FormContent{
                 ThemMonAn.addActionListener((ActionEvent ae) -> {
                     //Tắt cờ hiệu đi
                     cohieu=1;
-                    FormChon a = null;
                     try {
-                        a = new FormChon(txt_CongThuc_Them[1],"Món ăn");
+                        formchon = new FormChon(txt_CongThuc_Them[1],"Món ăn");
                     } catch (Exception ex) {
                         java.util.logging.Logger.getLogger(GUIBanHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
                     }
-                    a.setVisible(true);
-                    a.addWindowListener(new WindowAdapter(){
+                    formchon.setVisible(true);
+                    formchon.addWindowListener(new WindowAdapter(){
                         @Override
                      public void windowClosed(WindowEvent e){
                             cohieu=0;
@@ -127,7 +124,7 @@ public class GUICongThuc extends FormContent{
     protected void luuThem_Frame(){
         //Tắt cờ hiệu đi 
                 cohieu=1;
-                int a=JOptionPane.showConfirmDialog(Them_Frame,"Bạn chắc chứ ?" ,"",JOptionPane.YES_NO_OPTION);
+                int a=op.showConfirmDialog(Them_Frame,"Bạn chắc chứ ?" ,"",JOptionPane.YES_NO_OPTION);
                 if(a==JOptionPane.YES_OPTION)
                 {
                     if(checkTextThem(txt_CongThuc_Them[1].getText(), txt_CongThuc_Them[2].getText()))
@@ -158,11 +155,11 @@ public class GUICongThuc extends FormContent{
     }
     //Hàm tạo Dialog sửa món ăn
     @Override
-    protected void Sua_click(MouseEvent evt){
-        super.Sua_click(evt);
+    protected void Sua_click(){
+        super.Sua_click();
         int row = table.tb.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 hàng để sửa");
+            op.showMessageDialog(null, "Vui lòng chọn 1 hàng để sửa");
         } else {
             //Tạo tiêu đề
             JLabel Title = new JLabel("Sửa công thức");
@@ -187,14 +184,13 @@ public class GUICongThuc extends FormContent{
                     Sua_Frame.add(SuaMonAn);
                     SuaMonAn.addActionListener((ActionEvent ae) -> {
                         cohieu=1;
-                        FormChon a = null;
                         try {
-                            a = new FormChon(txt_CongThuc_Them[1],"Món ăn");
+                            formchon = new FormChon(txt_CongThuc_Them[1],"Món ăn");
                         } catch (Exception ex) {
                             java.util.logging.Logger.getLogger(GUIBanHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
                         }
-                        a.setVisible(true);
-                        a.addWindowListener(new WindowAdapter(){
+                        formchon.setVisible(true);
+                        formchon.addWindowListener(new WindowAdapter(){
                             @Override
                          public void windowClosed(WindowEvent e){
                                 cohieu=0;
@@ -219,7 +215,7 @@ public class GUICongThuc extends FormContent{
     protected void luuSua_Frame(){
         //Tắt cờ hiệu đi 
                     cohieu=1;
-                int a=JOptionPane.showConfirmDialog(Sua_Frame,"Bạn chắc chứ ?" ,"",JOptionPane.YES_NO_OPTION);
+                int a=op.showConfirmDialog(Sua_Frame,"Bạn chắc chứ ?" ,"",JOptionPane.YES_NO_OPTION);
                 if(a == JOptionPane.YES_OPTION){
                     if (checkTextSua(
                                 txt_CongThuc_Sua[1].getText(),
@@ -230,7 +226,7 @@ public class GUICongThuc extends FormContent{
         int colum = table.tb.getSelectedColumn();
         String maCongThuc = table.tbModel.getValueAt(row, colum).toString();
         //Hỏi để xác nhận việc lưu dữ liệu đã sửa chữa
-//        int option = JOptionPane.showConfirmDialog(Sua_Frame, "Bạn chắc chắn sửa?", "", JOptionPane.YES_NO_OPTION);
+//        int option = op.showConfirmDialog(Sua_Frame, "Bạn chắc chắn sửa?", "", JOptionPane.YES_NO_OPTION);
 //        if (option == JOptionPane.YES_OPTION) {
             //Sửa dữ liệu trên bảng
             //model là ruột JTable   
@@ -271,12 +267,12 @@ public class GUICongThuc extends FormContent{
     }
     //Hàm sự kiện khi click vào nút xóa
     @Override
-    protected void Xoa_click(MouseEvent evt) {       
+    protected void Xoa_click() {       
         int row = table.tb.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn hàng muốn xóa");
+            op.showMessageDialog(null, "Vui lòng chọn hàng muốn xóa");
         } else {       
-            int option = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn xóa?", "", JOptionPane.YES_NO_OPTION);
+            int option = op.showConfirmDialog(null, "Bạn chắc chắn xóa?", "", JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION) {
                 String maCongThuc = table.tbModel.getValueAt(row, 0).toString();
                 //truyền mã công thức vào hàm timViTri ở CongThucBUS 
@@ -337,16 +333,15 @@ public class GUICongThuc extends FormContent{
         return TimKiem;
     }
     @Override
-    protected void ChiTiet_click(MouseEvent evt){
-        FormChon a = null;
+    protected void ChiTiet_click(){
                 int i=table.tb.getSelectedRow();
                 if (i == -1) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 công thức");
+                    op.showMessageDialog(null, "Vui lòng chọn 1 công thức");
                     return;
                 } 
                 String MaCongThuc=String.valueOf(table.tbModel.getValueAt(i,0));
                 try {
-                    a = new FormChon("Chi tiết công thức",MaCongThuc);
+                    formchon = new FormChon("Chi tiết công thức",MaCongThuc);
                 } catch (Exception ex) {
                     java.util.logging.Logger.getLogger(GUIBanHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
                 }
@@ -385,18 +380,18 @@ public class GUICongThuc extends FormContent{
         UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Segoe UI", 0, 20)));
         if (MaMonAn.equals("")
                 || moTaCongThuc.equals("")) {
-            JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
+            op.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
         }
 //        else if(!MonAnBUS.timMaMonAn(MaMonAn)) {
-//            JOptionPane.showMessageDialog(null, "Mã món ăn không tồn tại");
+//            op.showMessageDialog(null, "Mã món ăn không tồn tại");
 //            txt_CongThuc_Them[1].requestFocus();
 //        }
         else if (!Tool.isCongThuc(Tool.removeAccent(moTaCongThuc))) {
-            JOptionPane.showMessageDialog(null, "Mô tả công thức không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Mô tả công thức không được chứa ký tự đặc biệt");
             txt_CongThuc_Them[2].requestFocus();
         }
         else if (!Tool.isLength50(moTaCongThuc)) {
-            JOptionPane.showMessageDialog(null, "Mô tả công thức không được quá 50 ký tự");
+            op.showMessageDialog(null, "Mô tả công thức không được quá 50 ký tự");
             txt_CongThuc_Them[2].requestFocus();
         }
          else {
@@ -410,18 +405,18 @@ public class GUICongThuc extends FormContent{
         UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Segoe UI", 0, 20)));
         if (MaMonAn.equals("")
                 || moTaCongThuc.equals("")) {
-            JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
+            op.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
         }
 //        else if(!MonAnBUS.timMaMonAn(MaMonAn)) {
-//            JOptionPane.showMessageDialog(null, "Mã món ăn không tồn tại");
+//            op.showMessageDialog(null, "Mã món ăn không tồn tại");
 //            txt_CongThuc_Them[1].requestFocus();
 //        }
         else if (!Tool.isCongThuc(Tool.removeAccent(moTaCongThuc))) {
-            JOptionPane.showMessageDialog(null, "Mô tả công thức không được chứa ký tự đặc biệt");
+            op.showMessageDialog(null, "Mô tả công thức không được chứa ký tự đặc biệt");
             txt_CongThuc_Sua[2].requestFocus();
         }
         else if (!Tool.isLength50(moTaCongThuc)) {
-            JOptionPane.showMessageDialog(null, "Mô tả công thức không được quá 50 ký tự");
+            op.showMessageDialog(null, "Mô tả công thức không được quá 50 ký tự");
             txt_CongThuc_Sua[2].requestFocus();
         }
          else {
@@ -432,22 +427,31 @@ public class GUICongThuc extends FormContent{
     }
     
     @Override
-    protected void XuatExcel_click(MouseEvent evt){
+    protected void XuatExcel_click(){
         new XuatExcel().xuatFileExcelCongThuc();
     }
     @Override
-    protected void NhapExcel_click(MouseEvent evt){
+    protected void NhapExcel_click(){
         new DocExcel().docFileExcelCongThuc();
     }
     @Override
-    protected void LamMoi_click(MouseEvent evt){
-        super.LamMoi_click(evt);
+    protected void LamMoi_click(){
+        super.LamMoi_click();
         search.setText("");
     }
     @Override
     protected void InPDF(){
         
     }
+
+    public JTextField getSearch() {
+        return search;
+    }
+
+    public JComboBox getCbSearch() {
+        return cbSearch;
+    }
+    
 }
 
 

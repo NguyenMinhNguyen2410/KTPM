@@ -69,8 +69,8 @@ public class GUITaiKhoan extends FormContent {
 
     //Hàm tạo Dialog thêm công thức
     @Override
-    protected void Them_click(MouseEvent evt) {
-        super.Them_click(evt);
+    protected void Them_click() {
+        super.Them_click();
         //Tạo tiêu đề và set hình thức
         JLabel Title = new JLabel("Thêm tài khoản");
         Title.setFont(new Font("Time New Roman", Font.BOLD, 21));
@@ -120,7 +120,7 @@ public class GUITaiKhoan extends FormContent {
     @Override
     protected void luuThem_Frame(){
         cohieu = 1;
-                int a = JOptionPane.showConfirmDialog(Them_Frame, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
+                int a = op.showConfirmDialog(Them_Frame, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
                 if (a == JOptionPane.YES_OPTION) {
                     if(checkTextThem(txt_TaiKhoan_Them[1].getText(),
                             txt_TaiKhoan_Them[2].getText(),
@@ -153,11 +153,11 @@ public class GUITaiKhoan extends FormContent {
     }
     //Hàm tạo Dialog sửa món ăn
     @Override
-    protected void Sua_click(MouseEvent evt) {
-        super.Sua_click(evt);
+    protected void Sua_click() {
+        super.Sua_click();
         int row = table.tb.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 hàng để sửa");
+            op.showMessageDialog(null, "Vui lòng chọn 1 hàng để sửa");
         } else {
         //Tạo tiêu đề
         JLabel Title = new JLabel("Sửa tài khoản");
@@ -202,7 +202,7 @@ public class GUITaiKhoan extends FormContent {
     @Override
     protected void luuSua_Frame(){
         cohieu = 1;
-                int a = JOptionPane.showConfirmDialog(Sua_Frame, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
+                int a = op.showConfirmDialog(Sua_Frame, "Bạn chắc chứ ?", "", JOptionPane.YES_NO_OPTION);
                 if (a == JOptionPane.YES_OPTION) {
                     if(checkTextSua(txt_TaiKhoan_Sua[1].getText(),
                             txt_TaiKhoan_Sua[2].getText(),
@@ -213,7 +213,7 @@ public class GUITaiKhoan extends FormContent {
                     int colum = table.tb.getSelectedColumn();
                     String maTaiKhoan = table.tbModel.getValueAt(row, colum).toString();
                     //Hỏi để xác nhận việc lưu dữ liệu đã sửa chữa
-            //        int option = JOptionPane.showConfirmDialog(Sua_Frame, "Bạn chắc chắn sửa?", "", JOptionPane.YES_NO_OPTION);
+            //        int option = op.showConfirmDialog(Sua_Frame, "Bạn chắc chắn sửa?", "", JOptionPane.YES_NO_OPTION);
             //        if (option == JOptionPane.YES_OPTION) {
                         //Sửa dữ liệu trên bảng
                         //model là ruột JTable   
@@ -296,22 +296,6 @@ public class GUITaiKhoan extends FormContent {
         lbsearch.setBounds(x, 0, 315, 70);
         TimKiem.add(lbsearch);
 
-        JButton LamMoi = new JButton("Làm mới");
-        LamMoi.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/lammoi1-30.png")));
-        LamMoi.setFont(new Font("Segoe UI", 0, 14));
-        LamMoi.setBorder(BorderFactory.createLineBorder(Color.decode("#BDBDBD"), 1));
-        LamMoi.setBackground(Color.decode("#90CAF9"));
-        LamMoi.setBounds(x += 320, 10, 110, 30);
-        LamMoi.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent evt) {
-                search.setText("");
-                LamMoi();
-
-            }
-        });
-        TimKiem.add(LamMoi);
-
         return TimKiem;
     }
 
@@ -348,13 +332,13 @@ public class GUITaiKhoan extends FormContent {
     }
 
     @Override
-    protected void XuatExcel_click(MouseEvent evt) {
+    protected void XuatExcel_click() {
         new XuatExcel().xuatFileExcelTaiKhoan();
 
     }
 
     @Override
-    protected void NhapExcel_click(MouseEvent evt) {
+    protected void NhapExcel_click() {
         new DocExcel().docFileExcelTaiKhoan();
 
     }
@@ -364,15 +348,15 @@ public class GUITaiKhoan extends FormContent {
         if (maNhanVien.equals("")
                 || maQuyen.equals("")
                 || matKhau.equals("")) {
-            JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
+            op.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
         } else if (Tool.isDuplicateMaNhanVien(maNhanVien)) {
-            JOptionPane.showMessageDialog(null, "Nhân viên này đã có tài khoản rồi");
+            op.showMessageDialog(null, "Nhân viên này đã có tài khoản rồi");
             txt_TaiKhoan_Them[1].requestFocus();
         } else if (!Tool.isName((matKhau))) {
-            JOptionPane.showMessageDialog(null, "Mật khẩu không được chứa ký tự đặc biệt và dấu");
+            op.showMessageDialog(null, "Mật khẩu không được chứa ký tự đặc biệt và dấu");
             txt_TaiKhoan_Them[3].requestFocus();
         } else if (!Tool.isLength50(matKhau)) {
-            JOptionPane.showMessageDialog(null, "Mật khẩu không được quá 50 ký tự");
+            op.showMessageDialog(null, "Mật khẩu không được quá 50 ký tự");
             txt_TaiKhoan_Them[3].requestFocus();
         } else {
             return true;
@@ -386,20 +370,20 @@ public class GUITaiKhoan extends FormContent {
         if (maNhanVien.equals("")
                 || maQuyen.equals("")
                 || matKhau.equals("")) {
-            JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
+            op.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
         }else if(!TaiKhoanBUS.checkChucVuVaMaQuyen(NhanVienBUS.getChucVuTuMaNhanVien(maNhanVien),maQuyen))
                 {
                     //xuất chức vụ
                     System.out.println(NhanVienBUS.getChucVuTuMaNhanVien(maNhanVien));
                     //xuất 
                     System.out.println(maQuyen);
-                    JOptionPane.showMessageDialog(null, "Chức vụ của nhân viên không được phép có quyền này");
+                    op.showMessageDialog(null, "Chức vụ của nhân viên không được phép có quyền này");
                 }
         else if (!Tool.isName((matKhau))) {
-            JOptionPane.showMessageDialog(null, "Mật khẩu không được chứa ký tự đặc biệt và dấu");
+            op.showMessageDialog(null, "Mật khẩu không được chứa ký tự đặc biệt và dấu");
             txt_TaiKhoan_Sua[3].requestFocus();
         } else if (!Tool.isLength50(matKhau)) {
-            JOptionPane.showMessageDialog(null, "Mật khẩu không được quá 50 ký tự");
+            op.showMessageDialog(null, "Mật khẩu không được quá 50 ký tự");
             txt_TaiKhoan_Sua[3].requestFocus();
         } else {
             return true;
@@ -410,9 +394,8 @@ public class GUITaiKhoan extends FormContent {
     
     private void btnChonNhanVien(JTextField textField){
         cohieu=1;
-                    FormChon a = null;
                     try {
-                        a = new FormChon(textField,"Nhân viên");
+                        formchon = new FormChon(textField,"Nhân viên");
                     } catch (Exception ex) {
                         Logger.getLogger(GUIBanHang.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -421,13 +404,12 @@ public class GUITaiKhoan extends FormContent {
     
     private void btnChonQuyen(JTextField textField){
             cohieu=1;
-                    FormChon a = null;
                     try {
-                        a = new FormChon(textField,"Phân quyền");
+                        formchon = new FormChon(textField,"Phân quyền");
                     } catch (Exception ex) {
                         Logger.getLogger(GUIBanHang.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    a.addWindowListener(new WindowAdapter(){
+                    formchon.addWindowListener(new WindowAdapter(){
                         @Override
                      public void windowClosed(WindowEvent e){
                             cohieu=0;
@@ -444,12 +426,25 @@ public class GUITaiKhoan extends FormContent {
         
     }
     @Override
+    protected void Them(){
+        
+    }
+    @Override
     protected void InPDF(){
         
     }
     @Override
-    protected void LamMoi_click(MouseEvent evt){
-        super.LamMoi_click(evt);
+    protected void LamMoi_click(){
+        super.LamMoi_click();
         search.setText("");
     }
+
+    public JTextField getSearch() {
+        return search;
+    }
+
+    public JComboBox getCbSearch() {
+        return cbSearch;
+    }
+    
 }

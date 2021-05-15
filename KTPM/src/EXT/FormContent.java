@@ -12,8 +12,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.BorderFactory;
@@ -42,15 +44,20 @@ public class FormContent extends JPanel {
     protected JDialog Them_Frame,Sua_Frame;
     //Tạo cờ hiệu cho việc các Dialog có được tắt đúng cách hay không
     protected  int cohieu = 0;
+    protected JButton Them,Sua,Xoa,InPDF,LamMoi,ChiTiet,NhapExcel,XuatExcel;
+    //Font button
     private final Font font=new Font("Segoe UI", 0, 14);
+    //Màu button
     private final Color background=Color.decode("#90CAF9");
     private final Border border=BorderFactory.createLineBorder(background, 1);
+    protected JOptionPane op;
+    protected FormChon formchon;
     public FormContent() {
         initcomponent();
     }
     
     //Tạo Panel chung cho các Panel sau
-    public void initcomponent(){
+    protected void initcomponent(){
         setLayout(new BorderLayout());
         //Tạo thanh công cục ở phía trên
         CongCu=CongCu();
@@ -65,7 +72,7 @@ public class FormContent extends JPanel {
         add(Table,BorderLayout.SOUTH);
         
         setVisible(true);
-        setSize(GUIMenu.width_content, 770);
+        setSize(GUIMenu.width_content, 870);
     }
     //Tạo thanh công cụ ở phía trên
     protected JPanel CongCu(){
@@ -102,7 +109,7 @@ public class FormContent extends JPanel {
         docDB();
         //Set kích thước và vị trí
         table.pane.setPreferredSize(new Dimension(GUIMenu.width_content*90/100, 300));        
-        table.setBounds(0,0,GUIMenu.width_content , 550);
+        table.setBounds(0,0,GUIMenu.width_content , 300);
         panel.add(table);          
         
         return panel;
@@ -113,7 +120,7 @@ public class FormContent extends JPanel {
     }
     //Tạo sự kiện khi ấn nút thêm
     //Được viết tiếp bởi lớp kế thừa, nó sẽ thêm tiêu đề, label , textfield,...
-    protected void Them_click(MouseEvent evt){
+    protected void Them_click(){
         JFrame f=new JFrame();
         //Để cờ hiệu với giá trị 0 với ý nghĩa không được bấm ra khỏi Dialog trừ nút Thoát
         cohieu = 0;
@@ -132,9 +139,9 @@ public class FormContent extends JPanel {
         Luu.setBackground(background);
         Luu.setBounds(100, 420, 100, 50);
         //Sự kiện khi click
-        Luu.addMouseListener(new MouseAdapter() {
+        Luu.addActionListener(new ActionListener() {
             @Override
-            public void mousePressed(MouseEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 luuThem_Frame();
                 clearThem_Frame();
             }
@@ -146,9 +153,9 @@ public class FormContent extends JPanel {
         Thoat.setBackground(background);
         Thoat.setBounds(250, 420, 100, 50);
         //Sự kiên khi click lưu
-        Thoat.addMouseListener(new MouseAdapter() {
+        Thoat.addActionListener(new ActionListener() {
             @Override
-            public void mousePressed(MouseEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 //Clear textfield
                 clearThem_Frame();
                 //Tắt cờ hiệu đi 
@@ -164,7 +171,7 @@ public class FormContent extends JPanel {
             @Override
             public void windowDeactivated(WindowEvent e) {
                 if (cohieu == 0) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng tắt Dialog khi muốn làm thao tác khác");
+                    op.showMessageDialog(null, "Vui lòng tắt Dialog khi muốn làm thao tác khác");
                 }
             }
         });
@@ -178,7 +185,7 @@ public class FormContent extends JPanel {
     }
     //Tạo sự kiện khi ấn nút sửa
     //Được viết tiếp bởi lớp kế thừa, nó sẽ thêm tiêu đề, label , textfield,...
-    protected void Sua_click(MouseEvent evt){
+    protected void Sua_click(){
         JFrame f=new JFrame();
         //Để cờ hiệu với giá trị 0 với ý nghĩa không được bấm ra khỏi Dialog trừ nút Thoát
         cohieu = 0;
@@ -196,9 +203,9 @@ public class FormContent extends JPanel {
         Luu.setBackground(background);
         Luu.setBounds(100, 420, 100, 50);
         //Sự kiện khi click
-        Luu.addMouseListener(new MouseAdapter() {
+        Luu.addActionListener(new ActionListener() {
             @Override
-            public void mousePressed(MouseEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 luuSua_Frame();
                 clearSua_Frame();
             }
@@ -210,9 +217,9 @@ public class FormContent extends JPanel {
         Thoat.setBackground(background);
         Thoat.setBounds(250, 420, 100, 50);
         //Sự kiên khi click lưu
-        Thoat.addMouseListener(new MouseAdapter() {
+        Thoat.addActionListener(new ActionListener() {
             @Override
-            public void mousePressed(MouseEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 //Clear textfield
                 clearSua_Frame();
                 //Tắt cờ hiệu đi 
@@ -228,7 +235,7 @@ public class FormContent extends JPanel {
             @Override
             public void windowDeactivated(WindowEvent e) {
                 if (cohieu == 0) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng tắt Dialog khi muốn làm thao tác khác");
+                    op.showMessageDialog(null, "Vui lòng tắt Dialog khi muốn làm thao tác khác");
                 }
             }
         });
@@ -242,153 +249,210 @@ public class FormContent extends JPanel {
     }
     //Tạo sự kiện khi ấn nút xóa
     //Hàm này sẽ được viết tiếp khi kế thừa, nó sẽ xóa các dòng được chỉ định
-    protected void Xoa_click(MouseEvent evt){
+    protected void Xoa_click(){
         
     }
     //Tạo sự kiện khi ấn nút nhập excel
     //Hàm này sẽ được viết tiếp khi kế thừa, nó sẽ dùng file excel để nhập dữ liệu
-    protected void NhapExcel_click(MouseEvent evt){
+    protected void NhapExcel_click(){
         
     }
     //Tạo sự kiện khi ấn nút xuất excel
     //Hàm này sẽ được viết tiếp khi kế thừa, nó sẽ xuất dữ liệu ra file excel
-    protected void XuatExcel_click(MouseEvent evt){
+    protected void XuatExcel_click(){
         
     }
     //Tạo sự kiện khi ấn nút in PDF
     //Hàm này sẽ được viết ở những lớp hóa đơn,... . Dùng để in ra file PDF
-    protected void InPDF_click(MouseEvent evt){
+    protected void InPDF_click(){
         
     }
     //Tạo sự kiện khi ấn nút xem chi tiết
     //Hàm này sẽ được viết ở những lớp hóa đơn,... . Dùng để xem chi tiết của hóa đơn có những gì
-    protected void ChiTiet_click(MouseEvent evt){
+    protected void ChiTiet_click(){
         
     }
     //Tạo sự kiện khi ấn nút làm mới
     //Hàm này dùng để làm mới lại table khi vừa thao tác
-    protected void LamMoi_click(MouseEvent evt){
+    protected void LamMoi_click(){
         table.clear();
         docDB();
     }
     //Tạo nút thêm
     protected void Them(){
-        JButton Them=new JButton("Thêm");
+        Them=new JButton("Thêm");
         Them.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/them1-30.png")));
         Them.setFont(font);
         Them.setBorder(border);        
         Them.setBackground(background);
-        Them.addMouseListener(new MouseAdapter(){
+        Them.addActionListener(new ActionListener(){
             @Override
-            public void mousePressed(MouseEvent evt){
-                Them_click(evt);
+            public void actionPerformed(ActionEvent e){
+                Them_click();
             }
         });
         CongCu.add(Them);
     }
     //Tạo nút sửa
     protected void Sua(){
-        JButton Sua=new JButton("Sửa");
+        Sua=new JButton("Sửa");
         Sua.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/sua3-30.png")));
         Sua.setFont(font);
         Sua.setBorder(border);
         Sua.setBackground(background);
-        Sua.addMouseListener(new MouseAdapter(){
+        Sua.addActionListener(new ActionListener(){
             @Override
-            public void mousePressed(MouseEvent evt){
-                Sua_click(evt);
+            public void actionPerformed(ActionEvent evt){
+                Sua_click();
             }
         });
         CongCu.add(Sua);
     }
     //Tạo nút xóa
     protected void Xoa(){
-        JButton Xoa=new JButton("Xóa");
+        Xoa=new JButton("Xóa");
         Xoa.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/delete1-30.png")));
         Xoa.setFont(font);
         Xoa.setBorder(border);
         Xoa.setBackground(background);
-        Xoa.addMouseListener(new MouseAdapter(){
+        Xoa.addActionListener(new ActionListener(){
             @Override
-            public void mousePressed(MouseEvent evt){
-                Xoa_click(evt);
+            public void actionPerformed(ActionEvent evt){
+                Xoa_click();
             }
         });
         CongCu.add(Xoa);
     }
     //Tạo nút nhập excel
     protected void NhapExcel(){
-        JButton NhapExcel=new JButton("Nhập Excel");
+        NhapExcel=new JButton("Nhập Excel");
         NhapExcel.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/xls-30.png")));
         NhapExcel.setFont(font);
         NhapExcel.setBorder(border);
         NhapExcel.setBackground(background);
-        NhapExcel.addMouseListener(new MouseAdapter(){
+        NhapExcel.addActionListener(new ActionListener(){
             @Override
-            public void mousePressed(MouseEvent evt){
-                NhapExcel_click(evt);
+            public void actionPerformed(ActionEvent evt){
+                NhapExcel_click();
             }
         });
         CongCu.add(NhapExcel);
     }
     //Tạo nút xuất excel
     protected void XuatExcel(){
-        JButton XuatExcel=new JButton("Xuất Excel");
+        XuatExcel=new JButton("Xuất Excel");
         XuatExcel.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/xls-30.png")));
         XuatExcel.setFont(font);
         XuatExcel.setBorder(border);
         XuatExcel.setBackground(background);
-        XuatExcel.addMouseListener(new MouseAdapter(){
+        XuatExcel.addActionListener(new ActionListener(){
             @Override
-            public void mousePressed(MouseEvent evt){
-                XuatExcel_click(evt);
+            public void actionPerformed(ActionEvent evt){
+                XuatExcel_click();
             }
         });
         CongCu.add(XuatExcel);
     }
     //Tạo nút in PDF
     protected void InPDF(){
-        JButton InPDF=new JButton("In PDF");
+        InPDF=new JButton("In PDF");
         InPDF.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/pdf-30.png")));
         InPDF.setFont(font);
         InPDF.setBorder(border);
         InPDF.setBackground(background);
-        InPDF.addMouseListener(new MouseAdapter(){
+        InPDF.addActionListener(new ActionListener(){
             @Override
-            public void mousePressed(MouseEvent evt){
-                InPDF_click(evt);
+            public void actionPerformed(ActionEvent evt){
+                InPDF_click();
             }
         });
         CongCu.add(InPDF);
     }
     //Tạo nút xem chi tiết
     protected void ChiTiet(){
-        JButton ChiTiet=new JButton("Chi tiết");
+        ChiTiet=new JButton("Chi tiết");
         ChiTiet.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/xemchitiet-30.png")));
         ChiTiet.setFont(font);
         ChiTiet.setBorder(border);
         ChiTiet.setBackground(background);
-        ChiTiet.addMouseListener(new MouseAdapter(){
+        ChiTiet.addActionListener(new ActionListener(){
             @Override
-            public void mousePressed(MouseEvent evt){
-                ChiTiet_click(evt);
+            public void actionPerformed(ActionEvent evt){
+                ChiTiet_click();
             }
         });
         CongCu.add(ChiTiet);
     }
     //Tạo nút làm mới
     protected void LamMoi(){
-        JButton LamMoi = new JButton("Làm mới");
+        LamMoi = new JButton("Làm mới");
         LamMoi.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/lammoi1-30.png")));
         LamMoi.setFont(font);
         LamMoi.setBorder(border);
         LamMoi.setBackground(background);
-        LamMoi.addMouseListener(new MouseAdapter() {
+        LamMoi.addActionListener(new ActionListener() {
             @Override
-            public void mousePressed(MouseEvent evt) {
-                LamMoi_click(evt);
+            public void actionPerformed(ActionEvent evt) {
+                LamMoi_click();
             }
         });
         CongCu.add(LamMoi);
     }
+
+    public JButton getThem() {
+        return Them;
+    }
+
+    public JButton getSua() {
+        return Sua;
+    }
+
+    public JButton getXoa() {
+        return Xoa;
+    }
+
+    public JButton getInPDF() {
+        return InPDF;
+    }
+
+    public JButton getLamMoi() {
+        return LamMoi;
+    }
+
+    public JButton getChiTiet() {
+        return ChiTiet;
+    }
+
+    public JButton getNhapExcel() {
+        return NhapExcel;
+    }
+
+    public JButton getXuatExcel() {
+        return XuatExcel;
+    }
+
+    public Color getColorButton() {
+        return background;
+    }
+
+    public MyTable getTable() {
+        return table;
+    }
+
+    public JDialog getThem_Frame() {
+        return Them_Frame;
+    }
+
+    public JDialog getSua_Frame() {
+        return Sua_Frame;
+    }
+    
+    public JOptionPane getOp() {
+        return op;
+    }
+
+    public FormChon getFormchon() {
+        return formchon;
+    }
+    
 }

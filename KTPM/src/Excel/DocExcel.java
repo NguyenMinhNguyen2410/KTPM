@@ -53,6 +53,11 @@ public class DocExcel {
     public DocExcel() {
 
     }
+
+    public FileDialog getFd() {
+        return fd;
+    }
+    
     private String getFile() {
         fd.setFile("*.xls");
         fd.setVisible(true);

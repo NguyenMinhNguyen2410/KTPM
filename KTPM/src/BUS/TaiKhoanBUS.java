@@ -23,7 +23,7 @@ public class TaiKhoanBUS {
     {
         
     }
-    public  void  docDB() throws Exception 
+    public static void  docDB() throws Exception 
     {
         
         if(ds==null) ds=new ArrayList<TaiKhoanDTO>();

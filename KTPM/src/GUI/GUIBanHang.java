@@ -23,6 +23,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -36,7 +38,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -65,11 +66,12 @@ public class GUIBanHang extends FormBanNhap{
     //Tạo các field chứa thông tin hóa đơn khi thanh toán
     private JTextField MaHD,TongTien,KhachHang,NgayLap,NhanVien,KhuyenMai;
     //Tạo các nút để phục vụ cho việc thuận tiện khi chọn mã khách hàng hay khuyến mãi
-    private JButton ChonNhanVien,ChonKhachHang,ChonKhuyenMai;
+    protected JButton ChonNhanVien,ChonKhachHang,ChonKhuyenMai,Them,Xoa,btnThanhToan;
     //Tạo field tìm kiếm món ăn 
     private JTextField search;
     //Tạo ComboBox để chọn tiêu chí tìm kiếm
     private JComboBox cbSearch;
+    
     public GUIBanHang(){
         super();
         
@@ -222,17 +224,17 @@ public class GUIBanHang extends FormBanNhap{
             }
         });
         
-        JButton Them=new JButton("Thêm");
+        Them=new JButton("Thêm");
         Them.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/them1-30.png")));
         Them.setFont(new Font("Segoe UI", 0, 14));        
         Them.setBackground(Color.decode("#90CAF9"));
         
         Them.setBounds(0, 310, GUIMenu.width_content*50/100, 40);
         //Sự kiện khi bấm nút thêm
-        Them.addMouseListener(new MouseAdapter(){
+        Them.addActionListener(new ActionListener(){
             @Override
-            public void mousePressed(MouseEvent evt){
-                Them_click(evt);
+            public void actionPerformed(ActionEvent evt){
+                Them_click();
             }
         });
         panel.add(Them);
@@ -241,7 +243,7 @@ public class GUIBanHang extends FormBanNhap{
         return panel;
     }
     //Hàm hiển thị ảnh và show thông tin
-    private void showInfo(String id) {
+    void showInfo(String id) {
         // https://stackoverflow.com/questions/16343098/resize-a-picture-to-fit-a-jlabel
         if (id != null) {
             // show hình
@@ -343,26 +345,22 @@ public class GUIBanHang extends FormBanNhap{
         panel.add(ChonKhuyenMai);
         //Tạo sự kiện khi ấn vào nút thì hiện cửa sổ chọn khách hàng nếu người dùng không nhớ mã khách hàng
         ChonKhachHang.addActionListener((ae) -> {
-            
-            FormChon a = null;
             try {
-                a = new FormChon(KhachHang,"Khách hàng");
+                formchon = new FormChon(KhachHang,"Khách hàng");
             } catch (Exception ex) {
                 Logger.getLogger(GUIBanHang.class.getName()).log(Level.SEVERE, null, ex);
             }
-            a.setVisible(true);
+            formchon.setVisible(true);
         });
         //Tạo sự kiện khi ấn vào nút thì hiện cửa sổ chọn khuyến mãi nếu người dùng không nhớ mã khuyến mãi
         ChonKhuyenMai.addActionListener((ae) -> {
-            
-            FormChon a = null;
             try {
-                a = new FormChon(KhuyenMai,"Khuyến mãi");
+                formchon = new FormChon(KhuyenMai,"Khuyến mãi");
             } catch (Exception ex) {
                 Logger.getLogger(GUIBanHang.class.getName()).log(Level.SEVERE, null, ex);
             }
-            a.setVisible(true);
-            a.addWindowListener(new WindowAdapter(){
+            formchon.setVisible(true);
+            formchon.addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosed(WindowEvent e){
                     TinhTien();
@@ -387,50 +385,57 @@ public class GUIBanHang extends FormBanNhap{
         return panel;
     }
     //Hàm này xử lý việc ấn thêm món khi khách order
-    private void Them_click(MouseEvent e){
+    private void Them_click(){
         int i = table_MonAn.tb.getSelectedRow();
-        int a=Integer.parseInt(txSoLuong.getText());
         if (i == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 hàng để thêm");
+            op.showMessageDialog(null, "Vui lòng chọn 1 hàng để thêm");
         } 
         else 
         {
-            int SlTrongTable=Integer.parseInt(String.valueOf(table_MonAn.tbModel.getValueAt(i, 6)));
-            //Rào việc đặt số lượng lớn hơn số hiện có
-            if(a>SlTrongTable)
-            {
-                JOptionPane.showMessageDialog(null, "Số lượng không đủ");
+            int a=0;
+            if (!Tool.isNumber(txSoLuong.getText())) {
+                op.showMessageDialog(null, "Vui lòng nhập lại số lượng");
             } 
-            else 
-            {
-                
-                for(int j=0;j<ThanhToan.tbModel.getRowCount();j++)
+            else
+            {    
+                a=Integer.parseInt(txSoLuong.getText());
+                int SlTrongTable=Integer.parseInt(String.valueOf(table_MonAn.tbModel.getValueAt(i, 6)));
+                //Rào việc đặt số lượng lớn hơn số hiện có
+                if(a>SlTrongTable)
                 {
-                    if(ThanhToan.tbModel.getValueAt(j, 0)==table_MonAn.tbModel.getValueAt(i, 0))
+                    op.showMessageDialog(null, "Số lượng không đủ");
+                } 
+                else 
+                {
+
+                    for(int j=0;j<ThanhToan.tbModel.getRowCount();j++)
                     {
-                        int SlTrongThanhToan=a+Integer.valueOf(String.valueOf(ThanhToan.tbModel.getValueAt(j, 4)));
-                        if(SlTrongThanhToan<=SlTrongTable)
+                        if(ThanhToan.tbModel.getValueAt(j, 0)==table_MonAn.tbModel.getValueAt(i, 0))
                         {
-                            ThanhToan.tbModel.setValueAt(SlTrongThanhToan, j, 4);
-                            TinhTien();
-                            return;
-                        }
-                        else
-                        {
-                            JOptionPane.showMessageDialog(null, "Số lượng không đủ");
-                            return;
+                            int SlTrongThanhToan=a+Integer.valueOf(String.valueOf(ThanhToan.tbModel.getValueAt(j, 4)));
+                            if(SlTrongThanhToan<=SlTrongTable)
+                            {
+                                ThanhToan.tbModel.setValueAt(SlTrongThanhToan, j, 4);
+                                TinhTien();
+                                return;
+                            }
+                            else
+                            {
+                                op.showMessageDialog(null, "Số lượng không đủ");
+                                return;
+                            }
                         }
                     }
-                }
-                    ThanhToan.addRow(new String[]{
-                        String.valueOf(table_MonAn.tbModel.getValueAt(i, 0)),
-                        String.valueOf(table_MonAn.tbModel.getValueAt(i, 1)),
-                        String.valueOf(table_MonAn.tbModel.getValueAt(i, 3)),
-                        String.valueOf(table_MonAn.tbModel.getValueAt(i, 5)),
-                        String.valueOf(a)
-                    });
-                    TinhTien();
+                        ThanhToan.addRow(new String[]{
+                            String.valueOf(table_MonAn.tbModel.getValueAt(i, 0)),
+                            String.valueOf(table_MonAn.tbModel.getValueAt(i, 1)),
+                            String.valueOf(table_MonAn.tbModel.getValueAt(i, 3)),
+                            String.valueOf(table_MonAn.tbModel.getValueAt(i, 5)),
+                            String.valueOf(a)
+                        });
+                        TinhTien();
                 
+                }
             }
         }
     }
@@ -439,29 +444,29 @@ public class GUIBanHang extends FormBanNhap{
     protected JPanel panelCongCu(){
         JPanel panel=new JPanel(null);
         //Nút xóa
-        JButton Xoa=new JButton("Xóa");
+        Xoa=new JButton("Xóa");
         Xoa.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/delete1-30.png")));
         Xoa.setFont(new Font("Segoe UI", 0, 14));        
         Xoa.setBackground(Color.decode("#90CAF9"));
         
         Xoa.setBounds(0, 0, GUIMenu.width_content*25/100, 40);
-        Xoa.addMouseListener(new MouseAdapter(){
+        Xoa.addActionListener(new ActionListener(){
             @Override
-            public void mousePressed(MouseEvent evt){
-                Xoa_click(evt);
+            public void actionPerformed(ActionEvent evt){
+                Xoa_click();
             }
         });
         panel.add(Xoa);
         //Nút thanh toán
-        JButton btnThanhToan=new JButton("Thanh toán");
+        btnThanhToan=new JButton("Thanh toán");
         btnThanhToan.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/thanhtoan-30.png")));
         btnThanhToan.setFont(new Font("Segoe UI", 0, 14));        
         btnThanhToan.setBackground(Color.decode("#90CAF9"));
         btnThanhToan.setBounds(GUIMenu.width_content*25/100, 0, GUIMenu.width_content*25/100, 40);
-        btnThanhToan.addMouseListener(new MouseAdapter(){
+        btnThanhToan.addActionListener(new ActionListener(){
             @Override
-            public void mousePressed(MouseEvent evt){
-                ThanhToan_click(evt);
+            public void actionPerformed(ActionEvent evt){
+                ThanhToan_click();
             }
         });
         panel.add(btnThanhToan);
@@ -469,15 +474,15 @@ public class GUIBanHang extends FormBanNhap{
         return panel;
     }
     //Hàm xử lý khi ấn vào nút xóa nằm ở thanh công cụ
-    private void Xoa_click(MouseEvent e){
+    private void Xoa_click(){
         int i=ThanhToan.tb.getSelectedRow();
         if (i == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 hàng để xóa");
+            op.showMessageDialog(null, "Vui lòng chọn 1 hàng để xóa");
         } 
         else 
         {
-            int option = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn xóa?", "", JOptionPane.YES_NO_OPTION);
-            if (option == JOptionPane.YES_OPTION) {
+            int option = op.showConfirmDialog(null, "Bạn chắc chắn xóa?", "", op.YES_NO_OPTION);
+            if (option == op.YES_OPTION) {
                 
             ThanhToan.tbModel.removeRow(i);
             TinhTien();
@@ -485,7 +490,7 @@ public class GUIBanHang extends FormBanNhap{
         }
     }
     //Hàm xử lý khi ấn vào nút thanh toán nằm ở thanh công cụ
-    private void ThanhToan_click(MouseEvent e){
+    private void ThanhToan_click(){
         //Ràng buộc dữ liệu
         if(checkText(MaHD.getText(),
                 TongTien.getText(),
@@ -548,9 +553,9 @@ public class GUIBanHang extends FormBanNhap{
                 || checkNgay.equals("") 
                 || checkMaNV.equals("") 
                 || checkMaKM.equals("")) {
-            JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
+            op.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
         } else if(somonan==0){
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn món ăn");
+            op.showMessageDialog(null, "Vui lòng chọn món ăn");
         } else {
             return true;
 
@@ -591,11 +596,85 @@ public class GUIBanHang extends FormBanNhap{
             }
         }
     }
+
+    public JTextField getSearch() {
+        return search;
+    }
+
+    public MyTable getTable_MonAn() {
+        return table_MonAn;
+    }
+
+    public MyTable getThanhToan() {
+        return ThanhToan;
+    }
+
+    public JTextField getTxMaMA() {
+        return txMaMA;
+    }
+
+    public JTextField getTxTenMA() {
+        return txTenMA;
+    }
+
+    public JTextField getTxDonGia() {
+        return txDonGia;
+    }
+
+    public JTextField getTxSoLuong() {
+        return txSoLuong;
+    }
+
+    public JTextField getTongTien() {
+        return TongTien;
+    }
+
+    public JTextField getKhachHang() {
+        return KhachHang;
+    }
+
+    public JTextField getNgayLap() {
+        return NgayLap;
+    }
+
+    public JTextField getNhanVien() {
+        return NhanVien;
+    }
+
+    public JTextField getKhuyenMai() {
+        return KhuyenMai;
+    }
+
+    public JButton getChonNhanVien() {
+        return ChonNhanVien;
+    }
+
+    public JButton getChonKhachHang() {
+        return ChonKhachHang;
+    }
+
+    public JButton getChonKhuyenMai() {
+        return ChonKhuyenMai;
+    }
+
+    public JComboBox getCbSearch() {
+        return cbSearch;
+    }
+
+    public JButton getThem() {
+        return Them;
+    }
+
+    public JButton getXoa() {
+        return Xoa;
+    }
+
+    public JButton getBtnThanhToan() {
+        return btnThanhToan;
+    }
+
+    public JTextField getMaHD() {
+        return MaHD;
+    }
+    
 }
-
-
-
-
-
-
-

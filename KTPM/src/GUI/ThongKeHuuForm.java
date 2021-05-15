@@ -289,7 +289,7 @@ class ThongKeNhanVien extends JPanel {
         btnRefresh.addActionListener((ae) -> {
             try {
                 qlmaBUS.docDB();
-                qlnvBUS.docDSNV();
+                qlnvBUS.docDB();
                 qlhdBUS.docDB();
                 qlcthdBUS.docDB();
             } catch (Exception ex) {

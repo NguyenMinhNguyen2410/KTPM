@@ -5,31 +5,31 @@
  */
 package GUI;
 
-import BUS.HoaDonBUS;
-import DTO.HoaDonDTO;
+import BUS.HoaDonNhapBUS;
+import DTO.HoaDonNhapDTO;
 import EXT.MyTable;
 import Excel.DocExcel;
 import Excel.XuatExcel;
 import Report.PDF;
 import java.awt.Color;
 import java.util.ArrayList;
-import javax.swing.JButton;
 import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
  * @author nguye
  */
-public class GUIHoaDonTest {
-    private GUIHoaDon instance;
-    public GUIHoaDonTest() throws Exception {
-        HoaDonBUS BUS=new HoaDonBUS();
+public class GUIHoaDonNhapTest {
+    private GUIHoaDonNhap instance;
+    public GUIHoaDonNhapTest() throws Exception {
+        HoaDonNhapBUS BUS=new HoaDonNhapBUS();
         BUS.docDB();
-        instance=new GUIHoaDon();
+        instance=new GUIHoaDonNhap();
     }
     @Test
     public void testcaseID_1(){
@@ -85,7 +85,7 @@ public class GUIHoaDonTest {
             @Override
             public void run(){
                 instance.getInPDF().doClick();
-                assertFalse("Không hiện cửa sổ chặn JOpitonPane",instance.getOp().isShowing());
+                assertTrue("Không hiện cửa sổ chặn JOpitonPane",instance.getOp().isShowing());
             }
         });
     }
@@ -115,14 +115,14 @@ public class GUIHoaDonTest {
     public void testcaseID_11(){
         boolean check=true;
         String text="1";
-        ArrayList<HoaDonDTO> expected=new ArrayList<>();
-        for(HoaDonDTO DTO:HoaDonBUS.ds)
-            if(DTO.getIDHoaDon().contains(text))
+        ArrayList<HoaDonNhapDTO> expected=new ArrayList<>();
+        for(HoaDonNhapDTO DTO:HoaDonNhapBUS.ds)
+            if(DTO.getIDHoaDonNhap().contains(text))
                 expected.add(DTO);
         instance.getTen().setText(text);
         MyTable table=instance.getTable();
         for(int i=0;i<table.tb.getRowCount();i++)
-            if(!String.valueOf(table.tbModel.getValueAt(i, 0)).equals(expected.get(i).getIDHoaDon()))
+            if(!String.valueOf(table.tbModel.getValueAt(i, 0)).equals(expected.get(i).getIDHoaDonNhap()))
             {
                 check=false;
                 break;
@@ -133,14 +133,14 @@ public class GUIHoaDonTest {
     public void testcaseID_12(){
         boolean check=true;
         String text="a";
-        ArrayList<HoaDonDTO> expected=new ArrayList<>();
-        for(HoaDonDTO DTO:HoaDonBUS.ds)
-            if(DTO.getIDHoaDon().contains(text))
+        ArrayList<HoaDonNhapDTO> expected=new ArrayList<>();
+        for(HoaDonNhapDTO DTO:HoaDonNhapBUS.ds)
+            if(DTO.getIDHoaDonNhap().contains(text))
                 expected.add(DTO);
         instance.getTen().setText(text);
         MyTable table=instance.getTable();
         for(int i=0;i<table.tb.getRowCount();i++)
-            if(!String.valueOf(table.tbModel.getValueAt(i, 0)).equals(expected.get(i).getIDHoaDon()))
+            if(!String.valueOf(table.tbModel.getValueAt(i, 0)).equals(expected.get(i).getIDHoaDonNhap()))
             {
                 check=false;
                 break;
@@ -156,19 +156,19 @@ public class GUIHoaDonTest {
     }
     @Test
     public void testcaseID_14(){
-        assertFalse("Có thể nhập được",instance.getTu_NgayLap().isEditable());
+        assertFalse("Có thể nhập được",instance.getTu_NgayNhap().isEditable());
     }
     @Test
     public void testcaseID_15(){
-        assertFalse("Có thể nhập được",instance.getDen_NgayLap().isEditable());
+        assertFalse("Có thể nhập được",instance.getDen_NgayNhap().isEditable());
     }
     @Test
     public void testcaseID_16(){
         SwingUtilities.invokeLater(new Runnable(){
             @Override
             public void run(){
-                instance.getDp_Tu_NgayLap().getComponentToggleCalendarButton().doClick();
-                assertTrue("Không hiện calendar của Tu_NgayLap",instance.getDp_Tu_NgayLap().isVisible());
+                instance.getDp_Tu_NgayNhap().getComponentToggleCalendarButton().doClick();
+                assertTrue("Không hiện calendar của Tu_NgayNhap",instance.getDp_Tu_NgayNhap().isVisible());
             }
         });
     }
@@ -177,8 +177,8 @@ public class GUIHoaDonTest {
         SwingUtilities.invokeLater(new Runnable(){
             @Override
             public void run(){
-                instance.getDp_Tu_NgayLap().getComponentToggleCalendarButton().doClick();
-                assertTrue("Không hiện calendar của Den_NgayLap",instance.getDp_Den_NgayLap().isVisible());
+                instance.getDp_Tu_NgayNhap().getComponentToggleCalendarButton().doClick();
+                assertTrue("Không hiện calendar của Den_NgayNhap",instance.getDp_Den_NgayNhap().isVisible());
             }
         });
     }
@@ -189,7 +189,7 @@ public class GUIHoaDonTest {
         instance.getTu_TongTien().setText(String.valueOf(number));
         MyTable table=instance.getTable();
         for(int i=0;i<table.tb.getRowCount();i++)
-            if(Float.valueOf(String.valueOf(table.tbModel.getValueAt(i, 6)))<number)
+            if(Float.valueOf(String.valueOf(table.tbModel.getValueAt(i, 4)))<number)
             {
                 check=false;
                 break;
@@ -203,7 +203,7 @@ public class GUIHoaDonTest {
         instance.getDen_TongTien().setText(String.valueOf(number));
         MyTable table=instance.getTable();
         for(int i=0;i<table.tb.getRowCount();i++)
-            if(Float.valueOf(String.valueOf(table.tbModel.getValueAt(i, 6)))>number)
+            if(Float.valueOf(String.valueOf(table.tbModel.getValueAt(i, 4)))>number)
             {
                 check=false;
                 break;
@@ -218,7 +218,7 @@ public class GUIHoaDonTest {
         instance.getDen_TongTien().setText(String.valueOf(number2));
         MyTable table=instance.getTable();
         for(int i=0;i<table.tb.getRowCount();i++)
-            if(Float.valueOf(String.valueOf(table.tbModel.getValueAt(i, 6)))<number||Float.valueOf(String.valueOf(table.tbModel.getValueAt(i, 6)))>number2)
+            if(Float.valueOf(String.valueOf(table.tbModel.getValueAt(i, 4)))<number||Float.valueOf(String.valueOf(table.tbModel.getValueAt(i, 4)))>number2)
             {
                 check=false;
                 break;
@@ -246,7 +246,7 @@ public class GUIHoaDonTest {
         instance.getLamMoi().doClick();
         assertTrue("Chưa clear textfield Ten",instance.getTen().getText().equals(""));
         assertTrue("Chưa clear textfield Tu_TongTien",instance.getTu_TongTien().getText().equals(""));
-        assertTrue("",HoaDonBUS.ds.size()==instance.getTable().tbModel.getRowCount());
+        assertTrue("",HoaDonNhapBUS.ds.size()==instance.getTable().tbModel.getRowCount());
     }
     @Test
     public void testcaseID_24(){
@@ -271,7 +271,7 @@ public class GUIHoaDonTest {
     }
     @Test
     public void testcaseID_26(){
-        int expected=7;
-        assertTrue("Bảng không đúng 7 cột",instance.getTable().tbModel.getColumnCount()==expected);
+        int expected=5;
+        assertTrue("Bảng không đúng 5 cột",instance.getTable().tbModel.getColumnCount()==expected);
     }
 }
