@@ -143,7 +143,6 @@ public class FormContent extends JPanel {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 luuThem_Frame();
-                clearThem_Frame();
             }
         });
         Them_Frame.add(Luu);
@@ -207,7 +206,6 @@ public class FormContent extends JPanel {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 luuSua_Frame();
-//                clearSua_Frame();
             }
         });
         Sua_Frame.add(Luu);

@@ -12,8 +12,10 @@ import EXT.MyTable;
 import Excel.DocExcel;
 import Excel.XuatExcel;
 import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
@@ -42,31 +44,44 @@ public class GUIKhuyenMaiTest {
     }
     @Test
     public void testcaseID_3(){
-        
+//        System.out.println(((TitledBorder)instance.getTen().getBorder()).getTitleColor());
+        assertTrue("Sai màu",Color.black==((TitledBorder)instance.getTen().getBorder()).getTitleColor());
     }
     @Test
     public void testcaseID_4(){
-        
+        assertFalse("Đúng màu",Color.BLUE==((TitledBorder)instance.getTen().getBorder()).getTitleColor());
     }
     @Test
     public void testcaseID_5(){
-        
+        System.out.println(instance.getThem().getForeground());
+        assertTrue("Sai màu",instance.getThem().getForeground()==Color.BLACK);
     }
     @Test
     public void testcaseID_6(){
-        
+        System.out.println(instance.getThem().getForeground());
+        assertFalse("Đúng màu",instance.getThem().getForeground()==Color.WHITE);
     }
     @Test
     public void testcaseID_7(){
-        
+        Font f=new Font("Segoe UI", 0, 14);
+        assertTrue("Sai font",instance.getTen().getFont().getFontName().equals(f.getFontName()));
     }
     @Test
     public void testcaseID_8(){
-        
+        Color background=Color.decode("#90CAF9");
+        assertTrue("Sai màu",instance.getSua().getBackground().equals(background));
     }
     @Test
     public void testcaseID_9(){
-        
+        String[] expected={"Mã khuyến mãi","Tên chương trình","Nội dung"};
+        boolean check=true;
+        for(int i=0;i<expected.length;i++)
+            if(!instance.getCbSearch().getItemAt(i).toString().equals(expected[i]))
+            {
+                check=false;
+                break;
+            }
+        assertTrue("Combobox không đúng",check);
     }
     @Test
     public void testcaseID_10(){
@@ -128,22 +143,68 @@ public class GUIKhuyenMaiTest {
     }
     @Test
     public void testcaseID_16(){
-        
+        instance.getTable().tb.setRowSelectionInterval(0, 0);
+        instance.getSua().doClick();
+        assertFalse("Có thể nhập",instance.getTxt_KhuyenMai_Sua()[0].isEditable());
+        instance.getThoat().doClick();
     }
     @Test
     public void testcaseID_17(){
-        
+        String text="Nhân ngày lễ 30/4, ngày Miền Nam được giải phóng";
+        instance.getTable().tb.setRowSelectionInterval(0, 0);
+        instance.getSua().doClick();
+        instance.getTxt_KhuyenMai_Sua()[1].setText(text);
+        SwingUtilities.invokeLater(new Runnable(){
+            @Override
+            public void run(){
+                instance.getLuu().doClick();
+               instance.getOp().setOptionType(JOptionPane.YES_OPTION);
+               assertTrue("Thành công",instance.getOp()==null);
+            }
+        });
     }
     @Test
     public void testcaseID_18(){
-        
+        String text="Lễ #30/4";
+        instance.getTable().tb.setRowSelectionInterval(0, 0);
+        instance.getSua().doClick();
+        instance.getTxt_KhuyenMai_Sua()[1].setText(text);
+        SwingUtilities.invokeLater(new Runnable(){
+            @Override
+            public void run(){
+                instance.getLuu().doClick();
+               instance.getOp().setOptionType(JOptionPane.YES_OPTION);
+               assertTrue("Thành công",instance.getOp()==null);
+            }
+        });
     }
     @Test
     public void testcaseID_19(){
-        
+        String text="Lễ 30/4";
+        instance.getTable().tb.setRowSelectionInterval(0, 0);
+        instance.getSua().doClick();
+        instance.getTxt_KhuyenMai_Sua()[1].setText(text);
+        SwingUtilities.invokeLater(new Runnable(){
+            @Override
+            public void run(){
+                instance.getLuu().doClick();
+               instance.getOp().setOptionType(JOptionPane.YES_OPTION);
+               assertTrue("Thành công",instance.getOp()==null);
+            }
+        });
     }
     @Test
     public void testcaseID_20(){
+        String text="1";
+        boolean check=true;
+        instance.getTen().setText(text);
+        for(int i=0;i<instance.getTable().tbModel.getRowCount();i++)
+            if(!instance.getTable().tbModel.getValueAt(i, 0).toString().contains(text))
+            {
+                check=false;
+                break;
+            }
+        assertTrue("Search sai",check);
     }
     @Test
     public void testcaseID_21(){

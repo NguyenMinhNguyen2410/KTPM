@@ -56,7 +56,6 @@ public class GUIKhachHang extends FormContent {
     private JTextField txt_KhachHang_Them[] = new JTextField[header.length];
     //Phần textfield của sửa
     private JTextField txt_KhachHang_Sua[] = new JTextField[header.length];
-    private JTextField search;
     private JComboBox cbSearch;
     private final KhachHangBUS BUS = new KhachHangBUS();
     private JTextField Ten,Tu_ChiTieu,Den_ChiTieu;
@@ -494,7 +493,7 @@ public class GUIKhachHang extends FormContent {
             txt_KhachHang_Sua[2].requestFocus();
         } 
         else if (!Tool.isGmail(gmail)) {
-            op.showMessageDialog(null, "Gmail phải đúng định dạng và không được chứa ký tự đặc biệt ");
+            op.showMessageDialog(null, "Gmail phải đúng định dạng và không được chứa ký tự đặc biệt");
             txt_KhachHang_Sua[3].requestFocus();
         } else if (!Tool.isName(Tool.removeAccent(gioiTinh))) {
             op.showMessageDialog(null, "Giới tính không được chứa ký tự đặc biệt");
@@ -527,6 +526,8 @@ public class GUIKhachHang extends FormContent {
     protected void LamMoi_click(){
         super.LamMoi_click();
         Ten.setText("");
+        Tu_ChiTieu.setText("");
+        Den_ChiTieu.setText("");
     }
     @Override
     protected void InPDF(){
@@ -543,6 +544,26 @@ public class GUIKhachHang extends FormContent {
 
     public JTextField getTen() {
         return Ten;
+    }
+
+    public JTextField[] getTxt_KhachHang_Them() {
+        return txt_KhachHang_Them;
+    }
+
+    public JTextField[] getTxt_KhachHang_Sua() {
+        return txt_KhachHang_Sua;
+    }
+
+    public static String[] getHeader() {
+        return header;
+    }
+
+    public JTextField getTu_ChiTieu() {
+        return Tu_ChiTieu;
+    }
+
+    public JTextField getDen_ChiTieu() {
+        return Den_ChiTieu;
     }
     
 }

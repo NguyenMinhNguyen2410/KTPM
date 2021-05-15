@@ -28,7 +28,6 @@ public class GUIMonAnTest {
         MonAnBUS.docDB();
         instance=new GUIMonAn();
     }
-    
     @Test
     public void testcaseID_1(){
         int expected =800;
@@ -67,7 +66,6 @@ public class GUIMonAnTest {
     public void testcaseID_8(){
         Color background=Color.decode("#90CAF9");
         assertTrue("Sai màu",instance.getThem().getBackground().equals(background));
-        
     }
     @Test
     public void testcaseID_9(){

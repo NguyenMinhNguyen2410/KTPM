@@ -249,9 +249,9 @@ public class GUIKhuyenMai extends FormContent {
                 if (a == JOptionPane.YES_OPTION) {
                     if (checkTextSua(txt_KhuyenMai_Sua[1].getText(),
                             txt_KhuyenMai_Sua[2].getText(),
+                            txt_KhuyenMai_Sua[5].getText(),
                             txt_KhuyenMai_Sua[3].getText(),
-                            txt_KhuyenMai_Sua[4].getText(),
-                            txt_KhuyenMai_Sua[5].getText())) {
+                            txt_KhuyenMai_Sua[4].getText())) {
                        int row = table.tb.getSelectedRow();
         int colum = table.tb.getSelectedColumn();
         String maKhuyenMai = table.tbModel.getValueAt(row, colum).toString();
@@ -494,9 +494,6 @@ public class GUIKhuyenMai extends FormContent {
                 || ngayBatDau.equals("")
                 || ngayKetThuc.equals("")) {
             op.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
-        } else if (!Tool.isName(Tool.removeAccent(tenChuongTrinh))) {
-            op.showMessageDialog(null, "Tên chương trình không được chứa ký tự đặc biệt");
-            txt_KhuyenMai_Them[1].requestFocus();
         } else if (!Tool.isLength50(tenChuongTrinh)) {
             op.showMessageDialog(null, "Tên chương trình không được quá 50 ký tự");
             txt_KhuyenMai_Them[1].requestFocus();
@@ -512,15 +509,11 @@ public class GUIKhuyenMai extends FormContent {
         } else if (!Tool.ngayBDTruocNgayKT(ngayBatDau, ngayKetThuc)) {
             op.showMessageDialog(null, "Ngày kết thúc phải sau ngày bắt đầu");
             txt_KhuyenMai_Them[4].requestFocus();
-        } else if (!Tool.isName(Tool.removeAccent(noiDung))) {
-            op.showMessageDialog(null, "Nội dung khuyến mãi không được chứa ký tự đặc biệt");
-            txt_KhuyenMai_Them[5].requestFocus();
         } else if (!Tool.isLength50(noiDung)) {
             op.showMessageDialog(null, "Nội dung khuyến mãi không được quá 50 ký tự");
             txt_KhuyenMai_Them[5].requestFocus();
         } else {
             return true;
-
         }
         return false;
     }
@@ -533,9 +526,6 @@ public class GUIKhuyenMai extends FormContent {
                 || ngayBatDau.equals("")
                 || ngayKetThuc.equals("")) {
             op.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin");
-        } else if (!Tool.isName(Tool.removeAccent(tenChuongTrinh))) {
-            op.showMessageDialog(null, "Tên chương trình không được chứa ký tự đặc biệt");
-            txt_KhuyenMai_Sua[1].requestFocus();
         } else if (!Tool.isLength50(tenChuongTrinh)) {
             op.showMessageDialog(null, "Tên chương trình không được quá 50 ký tự");
             txt_KhuyenMai_Sua[1].requestFocus();
@@ -548,9 +538,6 @@ public class GUIKhuyenMai extends FormContent {
         } else if (!Tool.isTenThousandToOneMil(tienGiamGia)) {
             op.showMessageDialog(null, "Tiền giảm giá phải nằm trong khoảng 10.000 đến 1.000.000");
             txt_KhuyenMai_Sua[2].requestFocus();
-        } else if (!Tool.isName(Tool.removeAccent(noiDung))) {
-            op.showMessageDialog(null, "Nội dung khuyến mãi không được chứa ký tự đặc biệt");
-            txt_KhuyenMai_Sua[3].requestFocus();
         } else if (!Tool.isLength50(noiDung)) {
             op.showMessageDialog(null, "Nội dung khuyến mãi không được quá 50 ký tự");
             txt_KhuyenMai_Sua[3].requestFocus();

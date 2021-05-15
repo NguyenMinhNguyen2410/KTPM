@@ -56,7 +56,7 @@ public class GUINhanVien extends FormContent {
     //Phần textfield của sửa
     private JTextField txt_NhanVien_Sua[] = new JTextField[header.length];
     //Phần textfield để tìm kiếm
-    private JTextField search;
+    private JTextField Ten;
     //Combobox để chọn thuộc tính muốn tìm
     private JComboBox cbSearch;
     //Tạo sẵn đối tượng BUS
@@ -345,19 +345,19 @@ public class GUINhanVien extends FormContent {
         cbSearch.setBounds(5, 20, 150, 40);
         lbsearch.add(cbSearch);
 
-        search = new JTextField();
-        search.setBorder(new TitledBorder(header[0]));
-        search.setBounds(155, 20, 150, 40);
-        lbsearch.add(search);
-        addDocumentListener(search);
+        Ten=  new JTextField();
+        Ten.setBorder(new TitledBorder(header[0]));
+        Ten.setBounds(155, 20, 150, 40);
+        lbsearch.add(Ten);
+        addDocumentListener(Ten);
 //        search.addActionListener((ActionEvent e) -> {
 //            if (!search.getText().equals("")) {
 //                txtSearchOnChange();
 //            }
 //        });
         cbSearch.addActionListener((ActionEvent e) -> {
-            search.setBorder(BorderFactory.createTitledBorder(cbSearch.getSelectedItem().toString()));
-            search.requestFocus();
+            Ten.setBorder(BorderFactory.createTitledBorder(cbSearch.getSelectedItem().toString()));
+            Ten.requestFocus();
 //            if (!txTim.getText().equals("")) {
 //                txSearchOnChange();
 //            }
@@ -389,7 +389,7 @@ public class GUINhanVien extends FormContent {
 
     public void txtSearchOnChange() {
         table.clear();
-        ArrayList<NhanVienDTO> arraylist = Tool.searchNV(search.getText(), cbSearch.getSelectedItem().toString());
+        ArrayList<NhanVienDTO> arraylist = Tool.searchNV(Ten.getText(), cbSearch.getSelectedItem().toString());
         for (NhanVienDTO DTO : arraylist) {
             if (DTO.getTrangThai().equals("Hiện")) {
                 table.addRow(DTO);
@@ -538,7 +538,7 @@ public class GUINhanVien extends FormContent {
     @Override
     protected void LamMoi_click(){
         super.LamMoi_click();
-        search.setText("");
+        Ten.setText("");
     }
     @Override
     protected void InPDF(){
@@ -548,6 +548,27 @@ public class GUINhanVien extends FormContent {
     protected void ChiTiet(){
         
     }
+
+    public static String[] getHeader() {
+        return header;
+    }
+
+    public JTextField[] getTxt_NhanVien_Them() {
+        return txt_NhanVien_Them;
+    }
+
+    public JTextField[] getTxt_NhanVien_Sua() {
+        return txt_NhanVien_Sua;
+    }
+
+    public JTextField getTen() {
+        return Ten;
+    }
+
+    public JComboBox getCbSearch() {
+        return cbSearch;
+    }
+    
 }
 
 
