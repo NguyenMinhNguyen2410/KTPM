@@ -93,7 +93,6 @@ public class GUIThongKeTest {
         String text="MA0";
         boolean check=true;
         thongke_hoang.txMonAn.setText(text);
-        System.out.println(thongke_hoang.txMonAn.getText());
         for(int i=0;i<thongke_hoang.tbThongKeHoaDon.tb.getRowCount();i++)
         {
             if(String.valueOf(thongke_hoang.tbThongKeHoaDon.tbModel.getValueAt(i, 3)).equals("")

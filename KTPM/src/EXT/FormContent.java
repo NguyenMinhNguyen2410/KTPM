@@ -44,7 +44,7 @@ public class FormContent extends JPanel {
     protected JDialog Them_Frame,Sua_Frame;
     //Tạo cờ hiệu cho việc các Dialog có được tắt đúng cách hay không
     protected  int cohieu = 0;
-    protected JButton Them,Sua,Xoa,InPDF,LamMoi,ChiTiet,NhapExcel,XuatExcel;
+    protected JButton Them,Sua,Xoa,InPDF,LamMoi,ChiTiet,NhapExcel,XuatExcel,Thoat,Luu;
     //Font button
     private final Font font=new Font("Segoe UI", 0, 14);
     //Màu button
@@ -135,7 +135,7 @@ public class FormContent extends JPanel {
         Them_Frame.setVisible(true);
         
         //Tạo nút lưu
-        JButton Luu = new JButton("Lưu");
+        Luu = new JButton("Lưu");
         Luu.setBackground(background);
         Luu.setBounds(100, 420, 100, 50);
         //Sự kiện khi click
@@ -149,7 +149,7 @@ public class FormContent extends JPanel {
         Them_Frame.add(Luu);
         
         //Tạo nút thoát
-        JButton Thoat = new JButton("Thoát");
+        Thoat = new JButton("Thoát");
         Thoat.setBackground(background);
         Thoat.setBounds(250, 420, 100, 50);
         //Sự kiên khi click lưu
@@ -199,7 +199,7 @@ public class FormContent extends JPanel {
         Sua_Frame.setUndecorated(true);
         
         //Tạo nút lưu
-        JButton Luu = new JButton("Lưu");
+        Luu = new JButton("Lưu");
         Luu.setBackground(background);
         Luu.setBounds(100, 420, 100, 50);
         //Sự kiện khi click
@@ -207,13 +207,13 @@ public class FormContent extends JPanel {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 luuSua_Frame();
-                clearSua_Frame();
+//                clearSua_Frame();
             }
         });
         Sua_Frame.add(Luu);
         
         //Tạo nút thoát
-        JButton Thoat = new JButton("Thoát");
+        Thoat = new JButton("Thoát");
         Thoat.setBackground(background);
         Thoat.setBounds(250, 420, 100, 50);
         //Sự kiên khi click lưu
@@ -453,6 +453,14 @@ public class FormContent extends JPanel {
 
     public FormChon getFormchon() {
         return formchon;
+    }
+
+    public JButton getThoat() {
+        return Thoat;
+    }
+
+    public JButton getLuu() {
+        return Luu;
     }
     
 }

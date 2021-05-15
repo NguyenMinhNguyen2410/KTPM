@@ -629,7 +629,7 @@ public class DocExcel {
     
      //Đọc file excel Khách hàng
     public void docFileExcelKhachHang() {
-        fd.setTitle("Nhập dữ liệu món ăn từ excel");
+        fd.setTitle("Nhập dữ liệu khách hàng từ excel");
         String url = getFile();
         if (url == null) {
             return;

@@ -46,7 +46,7 @@ public class XuatExcel {
     }
         // Xuất file Excel Món Ăn   
     public void xuatFileExcelMonAn() {
-        fd.setTitle("Xuất dữ liệu Món ăn ra excel"); //Set tên
+        fd.setTitle("Xuất dữ liệu món ăn ra excel"); //Set tên
         String url = getFile(); //Kiểm tra getfile()
         if (url == null) {
             return;
@@ -112,7 +112,7 @@ public class XuatExcel {
     
     //Xuất file Excel Nguyên Liệu
     public void xuatFileExcelNguyenLieu() {
-        fd.setTitle("Xuất dữ liệu Nguyên liệu ra excel");
+        fd.setTitle("Xuất dữ liệu nguyên liệu ra excel");
         String url = getFile();
         if (url == null) {
             return;
@@ -177,7 +177,7 @@ public class XuatExcel {
     
     //Xuất file Excel Công Thức
         public void xuatFileExcelCongThuc() {
-        fd.setTitle("Xuất dữ liệu Công thức ra excel");
+        fd.setTitle("Xuất dữ liệu công thức ra excel");
         String url = getFile();
         if (url == null) {
             return;
@@ -234,7 +234,7 @@ public class XuatExcel {
     
     //Xuất file Excel Hóa Đơn
     public void xuatFileExcelHoaDon() {
-        fd.setTitle("Xuất dữ liệu Hóa đơn ra excel");
+        fd.setTitle("Xuất dữ liệu hóa đơn ra excel");
         String url = getFile();
         if (url == null) {
             return;
@@ -322,7 +322,7 @@ public class XuatExcel {
     
     //Xuất file Excel Hóa Đơn Nhập
     public void xuatFileExcelHoaDonNhap() throws Exception {
-        fd.setTitle("Xuất dữ liệu Hóa đơn nhập ra excel");
+        fd.setTitle("Xuất dữ liệu hóa đơn nhập ra excel");
         String url = getFile();
         if (url == null) {
             return;
@@ -406,7 +406,7 @@ public class XuatExcel {
     
     //Xuất file Excel Khuyến Mãi
     public void xuatFileExcelKhuyenMai() {
-        fd.setTitle("Xuất dữ liệu Khuyến mãi ra excel");
+        fd.setTitle("Xuất dữ liệu khuyến mãi ra excel");
         String url = getFile();
         if (url == null) {
             return;
@@ -470,7 +470,7 @@ public class XuatExcel {
     }
     //Xuất file Excel Khách Hàng
     public void xuatFileExcelKhachHang() {
-        fd.setTitle("Xuất dữ liệu Khách hàng ra excel");
+        fd.setTitle("Xuất dữ liệu khách hàng ra excel");
         String url = getFile();
         if (url == null) {
             return;
@@ -535,7 +535,7 @@ public class XuatExcel {
     
     //Xuất file Excel Nhân viên
     public void xuatFileExcelNhanVien() {
-        fd.setTitle("Xuất dữ liệu Nhân viên ra excel");
+        fd.setTitle("Xuất dữ liệu nhân viên ra excel");
         String url = getFile();
         if (url == null) {
             return;
@@ -601,7 +601,7 @@ public class XuatExcel {
     
     //Xuất file Excel Nhà Cung Cấp
     public void xuatFileExcelNhaCungCap() {
-        fd.setTitle("Xuất dữ liệu Nhà cung cấp ra excel");
+        fd.setTitle("Xuất dữ liệu nhà cung cấp ra excel");
         String url = getFile();
         if (url == null) {
             return;
@@ -663,7 +663,7 @@ public class XuatExcel {
     
     //Xuất file Excel Tài Khoản
     public void xuatFileExcelTaiKhoan() {
-        fd.setTitle("Xuất dữ liệu Tài khoản ra excel");
+        fd.setTitle("Xuất dữ liệu tài khoản ra excel");
         String url = getFile();
         if (url == null) {
             return;
@@ -722,7 +722,7 @@ public class XuatExcel {
     
     //Xuất file Excel Phân Quyền
     public void xuatFileExcelPhanQuyen() {
-        fd.setTitle("Xuất dữ liệu Phân quyền ra excel");
+        fd.setTitle("Xuất dữ liệu phân quyền ra excel");
         String url = getFile();
         if (url == null) {
             return;
