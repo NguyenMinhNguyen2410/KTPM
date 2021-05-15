@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 24, 2020 lúc 07:34 PM
--- Phiên bản máy phục vụ: 10.4.11-MariaDB
--- Phiên bản PHP: 7.4.5
+-- Thời gian đã tạo: Th5 15, 2021 lúc 02:22 PM
+-- Phiên bản máy phục vụ: 10.4.18-MariaDB
+-- Phiên bản PHP: 8.0.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -65,7 +65,22 @@ INSERT INTO `chitiethoadon` (`IDHoaDon`, `IDMonAn`, `SoLuong`, `DonGia`, `ThanhT
 ('HD11', 'MA07', 1, 80000, 80000),
 ('HD12', 'MA05', 2, 30000, 60000),
 ('HD13', 'MA02', 1, 30000, 30000),
-('HD13', 'MA06', 2, 80000, 160000);
+('HD13', 'MA06', 2, 80000, 160000),
+('HD14', 'MA01', 1, 70000, 70000),
+('HD15', 'MA01', 1, 70000, 70000),
+('HD16', 'MA01', 1, 70000, 70000),
+('HD17', 'MA01', 1, 70000, 70000),
+('HD18', 'MA01', 1, 70000, 70000),
+('HD19', 'MA01', 1, 70000, 70000),
+('HD20', 'MA01', 1, 70000, 70000),
+('HD21', 'MA01', 1, 70000, 70000),
+('HD22', 'MA01', 1, 70000, 70000),
+('HD23', 'MA01', 1, 70000, 70000),
+('HD24', 'MA01', 1, 70000, 70000),
+('HD25', 'MA01', 1, 70000, 70000),
+('HD26', 'MA01', 1, 70000, 70000),
+('HD27', 'MA01', 1, 70000, 70000),
+('HD28', 'MA01', 1, 70000, 70000);
 
 -- --------------------------------------------------------
 
@@ -112,7 +127,16 @@ INSERT INTO `chitiethoadonnhap` (`IDHoaDonNhap`, `IDNguyenLieu`, `SoLuong`, `Gia
 ('HDN08', 'NL20', 8, 25000, 400000),
 ('HDN08', 'NL27', 50, 7000, 350000),
 ('HDN08', 'NL28', 50, 10000, 500000),
-('HDN9', 'NL07', 2, 30000, 60000);
+('HDN09', 'NL07', 2, 30000, 60000),
+('HDN10', 'NL01', 1, 20000, 20000),
+('HDN11', 'NL01', 1, 20000, 20000),
+('HDN12', 'NL01', 1, 20000, 20000),
+('HDN13', 'NL01', 1, 20000, 20000),
+('HDN14', 'NL01', 1, 20000, 20000),
+('HDN15', 'NL01', 1, 20000, 20000),
+('HDN16', 'NL01', 1, 20000, 20000),
+('HDN17', 'NL01', 1, 20000, 20000),
+('HDN18', 'NL01', 1, 20000, 20000);
 
 -- --------------------------------------------------------
 
@@ -219,7 +243,22 @@ INSERT INTO `hoadon` (`IDHoaDon`, `IDNhanVien`, `IDKhachHang`, `IDKhuyenMai`, `N
 ('HD10', 'NV01', 'KH01', 'KM02', '2020-06-18', 30000, 40000, 'Hiện'),
 ('HD11', 'NV01', 'KH10', 'KM01', '2020-06-23', 0, 80000, 'Hiện'),
 ('HD12', 'NV01', 'KH05', 'KM01', '2020-06-23', 0, 60000, 'Hiện'),
-('HD13', 'NV01', 'KH04', 'KM01', '2020-06-24', 0, 190000, 'Hiện');
+('HD13', 'NV01', 'KH04', 'KM01', '2020-06-24', 0, 190000, 'Hiện'),
+('HD14', 'NV01', 'KH01', 'KM01', '2021-05-14', 0, 70000, 'Hiện'),
+('HD15', 'NV01', 'KH01', 'KM01', '2021-05-14', 0, 70000, 'Hiện'),
+('HD16', 'NV01', 'KH01', 'KM01', '2021-05-14', 0, 70000, 'Hiện'),
+('HD17', 'NV01', 'KH01', 'KM01', '2021-05-14', 0, 70000, 'Hiện'),
+('HD18', 'NV01', 'KH01', 'KM01', '2021-05-14', 0, 70000, 'Hiện'),
+('HD19', 'NV01', 'KH01', 'KM01', '2021-05-14', 0, 70000, 'Hiện'),
+('HD20', 'NV01', 'KH01', 'KM01', '2021-05-14', 0, 70000, 'Hiện'),
+('HD21', 'NV01', 'KH01', 'KM01', '2021-05-14', 0, 70000, 'Hiện'),
+('HD22', 'NV01', 'KH01', 'KM01', '2021-05-14', 0, 70000, 'Hiện'),
+('HD23', 'NV01', 'KH01', 'KM01', '2021-05-14', 0, 70000, 'Hiện'),
+('HD24', 'NV01', 'KH01', 'KM01', '2021-05-14', 0, 70000, 'Hiện'),
+('HD25', 'NV01', 'KH01', 'KM01', '2021-05-14', 0, 70000, 'Hiện'),
+('HD26', 'NV01', 'KH01', 'KM01', '2021-05-14', 0, 70000, 'Hiện'),
+('HD27', 'NV01', 'KH01', 'KM01', '2021-05-14', 0, 70000, 'Hiện'),
+('HD28', 'NV01', 'KH01', 'KM01', '2021-05-14', 0, 70000, 'Hiện');
 
 -- --------------------------------------------------------
 
@@ -249,7 +288,16 @@ INSERT INTO `hoadonnhap` (`IDHoaDonNhap`, `IDNhanVien`, `IDNhaCungCap`, `NgayNha
 ('HDN06', 'NV03', 'NCC5', '2020-04-17', 650000, 'Hiện'),
 ('HDN07', 'NV02', 'NCC2', '2020-05-23', 1000000, 'Hiện'),
 ('HDN08', 'NV06', 'NCC1', '2020-02-01', 1500000, 'Hiện'),
-('HDN9', 'NV01', 'NCC4', '2020-06-23', 60000, 'Hiện');
+('HDN09', 'NV01', 'NCC4', '2020-06-23', 60000, 'Hiện'),
+('HDN10', 'NV01', 'NCC1', '2021-05-14', 20000, 'Hiện'),
+('HDN11', 'NV01', 'NCC1', '2021-05-14', 20000, 'Hiện'),
+('HDN12', 'NV01', 'NCC1', '2021-05-14', 20000, 'Hiện'),
+('HDN13', 'NV01', 'NCC1', '2021-05-14', 20000, 'Hiện'),
+('HDN14', 'NV01', 'NCC1', '2021-05-14', 20000, 'Hiện'),
+('HDN15', 'NV01', 'NCC1', '2021-05-14', 20000, 'Hiện'),
+('HDN16', 'NV01', 'NCC1', '2021-05-14', 20000, 'Hiện'),
+('HDN17', 'NV01', 'NCC1', '2021-05-14', 20000, 'Hiện'),
+('HDN18', 'NV01', 'NCC1', '2021-05-14', 20000, 'Hiện');
 
 -- --------------------------------------------------------
 
@@ -273,7 +321,7 @@ CREATE TABLE `khachhang` (
 --
 
 INSERT INTO `khachhang` (`IDKhachHang`, `HoKhachHang`, `TenKhachHang`, `Gmail`, `GioiTinh`, `SoDienThoai`, `TongChiTieu`, `TrangThai`) VALUES
-('KH01', 'Lê', 'Lợi', 'LeLoi@gmail.com', 'Nam', '0985444326', 200000, 'Hiện'),
+('KH01', 'Lê', 'Lợi', 'LeLoi@gmail.com', 'Nam', '0985444326', 1250000, 'Hiện'),
 ('KH02', 'Phan Bội', 'A', 'BoiChau@gmail.com', 'Nam', '0903121212', 5000000, 'Hiện'),
 ('KH03', 'Lê Văn', 'Long', 'VanLong@gmail.com', 'Nam', '0323232323', 1000000, 'Hiện'),
 ('KH04', 'Nguyễn Thị', 'A', 'ThiA@gmail.com', 'Nữ', '0902030401', 690000, 'Hiện'),
@@ -284,7 +332,8 @@ INSERT INTO `khachhang` (`IDKhachHang`, `HoKhachHang`, `TenKhachHang`, `Gmail`, 
 ('KH09', 'Nguyễn Thị Ngọc', 'Giàu', 'BanThucAnNhanh@gmail.com', 'Nữ', '0367010324', 0, 'Hiện'),
 ('KH10', 'Đặng Cao Phúc', 'Hòa', 'BanThucAnNhanh@gmail.com', 'Nữ', '0367010132', 80000, 'Hiện'),
 ('KH11', 'Trần Ngọc Huy', 'Hoàng', 'BanThucAnNhanh@gmail.com', 'Nam', '0377018963', 0, 'Hiện'),
-('KH12', 'Nguyễn Mai Kim ', 'Ngân', 'BanThucAnNhanh@gmail.com', 'Nữ', '0377075320', 0, 'Hiện');
+('KH12', 'Nguyễn Mai Kim ', 'Ngân', 'BanThucAnNhanh@gmail.com', 'Nữ', '0377075320', 0, 'Ẩn'),
+('KH13', 'fàaaa', 'aaaâ', 'aihf@gmail.com', 'Nam', '0327377921', 0, 'Hiện');
 
 -- --------------------------------------------------------
 
@@ -307,7 +356,7 @@ CREATE TABLE `khuyenmai` (
 --
 
 INSERT INTO `khuyenmai` (`IDKhuyenMai`, `TenChuongTrinh`, `TienGiam`, `NgayBatDau`, `NgayKetThuc`, `NoiDungGiamGia`, `TrangThai`) VALUES
-('KM01', 'Không khuyến mãi', 0, '2020-06-01', '2020-06-01', 'Áp dụng cho những ngày thường', 'Hiện'),
+('KM01', 'Không khuyến mãi#', 10000, '2021-05-08', '2021-05-21', 'Áp dụng cho những ngày thường', 'Hiện'),
 ('KM02', 'Lễ 30/4', 30000, '2020-04-27', '2020-05-03', 'Mừng ngày lễ 30 tháng 4', 'Hiện'),
 ('KM03', 'Tết Dương lịch', 50000, '2019-12-27', '2020-01-04', 'Nhân ngày Tết Dương lịch ', 'Hiện');
 
@@ -333,13 +382,13 @@ CREATE TABLE `monan` (
 --
 
 INSERT INTO `monan` (`IDMonAn`, `TenMonAn`, `DonViTinh`, `DonGia`, `HinhAnh`, `Loai`, `SoLuong`, `TrangThai`) VALUES
-('MA01', 'Cơm Bò Trứng', 'Phần', 70000, 'Cơm Bò Trứng.jpg', 'Món chính', 11, 'Hiện'),
+('MA01', 'Cơm Bò Trứng', 'Phần', 70000, 'Cơm Bò Trứng.jpg', 'Món chính', 96, 'Hiện'),
 ('MA02', 'Cơm Bò xào Đậu que', 'Dĩa', 30000, 'Cơm Bò xào Đậu que.jpg', 'Món chính', 12, 'Hiện'),
 ('MA03', 'Cơm chiên Trứng', 'Dĩa', 50000, 'Cơm chiên Trứng.jpg', 'Món chính', 31, 'Hiện'),
 ('MA04', 'Cơm gà Sốt Cà chua', 'Dĩa', 50000, 'Cơm gà Sốt Cà chua.jpg', 'Món chính', 112, 'Hiện'),
 ('MA05', 'Cơm Thịt heo xào Kim Chi', 'Dĩa', 30000, 'Cơm Thịt heo xào Kim Chi.jpg', 'Món chính', 29, 'Hiện'),
 ('MA06', 'Gà Nướng', 'Phần', 80000, 'Gà Nướng.jpg', 'Món chính', 8, 'Hiện'),
-('MA07', 'Gà sốt Cay', 'Phần', 80000, 'Gà sốt Cay.jpg', 'Món chính', 11, 'Hiện'),
+('MA07', 'Gà sốt Cay', 'Phần', 10000, 'Gà sốt Cay.jpg', 'Món chính', 11, 'Hiện'),
 ('MA08', 'Gà sốt Đậu', 'Phần', 80000, 'Gà sốt Đậu.jpg', 'Món chính', 40, 'Hiện'),
 ('MA09', 'Mì gà quay', 'Dĩa', 35000, 'Mì gà quay.jpg', 'Món chính', 32, 'Hiện'),
 ('MA10', 'Mì trộn thịt heo xào', 'Dĩa', 35000, 'Mì trộn thịt heo xào.jpg', 'Món chính', 22, 'Hiện'),
@@ -392,11 +441,11 @@ CREATE TABLE `nguyenlieu` (
 --
 
 INSERT INTO `nguyenlieu` (`IDNguyenLieu`, `TenNguyenLieu`, `DonGia`, `HinhAnh`, `Loai`, `DonViTinh`, `SoLuong`, `TrangThai`) VALUES
-('NL01', 'Gạo', 20000, 'Gạo.jpg', 'a', 'Quả', 10, 'Hiện'),
-('NL02', 'Thịt bò', 70000, 'Thịt bò.jpg', '', 'Kg', 10, 'Hiện'),
-('NL03', 'Thịt heo', 50000, 'Thịt heo.jpg', '', 'Kg', 40, 'Hiện'),
-('NL04', 'Trứng', 4000, 'Trứng.jpg', '', 'Quả', 101, 'Hiện'),
-('NL05', 'Rau củ', 40000, 'Rau củ.jpg', '', 'Kg', 21, 'Hiện'),
+('NL01', 'Gạo', 20000, 'Gạo.jpg', 'a', 'Quả', 20, 'Hiện'),
+('NL02', 'Thịt bò', 70000, 'Thịt bò.jpg', 'a', 'Kg', 10, 'Hiện'),
+('NL03', 'Thịt heo', 50000, 'Thịt heo.jpg', 'a', 'Kg', 40, 'Hiện'),
+('NL04', 'Trứng', 4000, 'Trứng.jpg', 'a', 'Quả', 101, 'Hiện'),
+('NL05', 'Rau củ', 40000, 'Rau củ.jpg', 'a', 'Kg', 21, 'Hiện'),
 ('NL06', 'Thịt gà', 70000, 'Thịt gà.jpg', 'a', 'Kg', 40, 'Hiện'),
 ('NL07', 'Kim chi', 30000, 'Kim chi.jpg', 'a', 'Kg', 7, 'Hiện'),
 ('NL08', 'Gia vị ướp', 15000, 'Gia vị ướp.jpg', 'a', 'Kg', 30, 'Hiện'),
@@ -502,7 +551,9 @@ INSERT INTO `phanquyen` (`IDPhanQuyen`, `TenQuyen`, `MoTaQuyen`, `TrangThai`) VA
 ('PQ1', 'Quản lý', 'QLBanHangQLNhapHangQLMonAnQLNguyenLieuQLCongThucQLHoaDonQLHDNhapQLKhuyenMaiQLKhachHangQLNhanVienQLNhaCungCapQLThongKe', 'Hiện'),
 ('PQ2', 'Bán hàng', 'QLBanHangQLHoaDonQLKhachHang', 'Hiện'),
 ('PQ3', 'Nhập hàng', 'QLNhapHangQLHDNhap', 'Hiện'),
-('PQ4', 'Bán và nhập hàng', 'QLBanHangQLNhapHangQLHoaDonQLHDNhapQLKhachHang', 'Hiện');
+('PQ4', 'Bán và nhập hàng', 'QLBanHangQLNhapHangQLHoaDonQLHDNhapQLKhachHang', 'Hiện'),
+('PQ5', 'jbskughfwiebgiu', 'QLBanHangQLMonAn', 'null'),
+('PQ6', 'se;ouigrfiwehgbhjwe', 'QLBanHangQLMonAn', 'null');
 
 -- --------------------------------------------------------
 
